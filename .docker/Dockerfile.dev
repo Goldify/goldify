@@ -4,8 +4,8 @@ WORKDIR /app
 
 COPY package.json /app
 
-RUN yarn install && yarn cache clean
+RUN yarn install
 
 COPY . /app
 
-CMD ["yarn", "run", "build"]
+CMD ["yarn", "run", "start"]
