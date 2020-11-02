@@ -1,0 +1,15 @@
+name: Goldify CI
+
+on: [push]
+
+jobs:
+  ci:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v1
+      - name: Build
+        run: docker-compose up -d
+      - name: Lint
+        run: docker-compose exec goldify yarn lint
+      - name: Test
+        run: docker-compose exec goldify yarn test
