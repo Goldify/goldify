@@ -10,6 +10,6 @@ jobs:
       - name: Build
         run: docker-compose up -d
       - name: Lint
-        run: docker-compose exec goldify yarn lint
+        run: docker-compose exec -T goldify yarn lint
       - name: Test
-        run: docker-compose exec goldify yarn test
+        run: docker-compose exec -T goldify yarn test
