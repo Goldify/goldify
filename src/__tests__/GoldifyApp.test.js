@@ -1,10 +1,10 @@
 import React from 'react';
 import { render, screen } from '@testing-library/react';
 import '@testing-library/jest-dom';
-import App from '../js/App';
+import GoldifyApp from '../js/GoldifyApp';
 
 test('renders learn react link', () => {
-  render(<App />);
+  render(<GoldifyApp />);
   const linkElement = screen.getByText(/Goldify/i);
   expect(linkElement).toBeInTheDocument();
 });

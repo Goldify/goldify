@@ -1,0 +1,82 @@
+.GoldifyApp {
+  text-align: center;
+}
+
+.GoldifyApp-logo {
+  height: 60px;
+  float: left;
+  margin: 17px;
+}
+.GoldifyApp-header {
+  background-color: #282c34;
+  display: flex;
+  font-size: calc(10px + 2vmin);
+  color: white;
+}
+
+.GoldifyApp-link {
+  color: #61dafb;
+}
+
+nav {
+  background-color:#0b162a;
+  width: 100%;
+}
+
+nav a {
+  font-size: 0.9em;
+  color: #FCC201;
+  text-decoration: none;
+  margin: 10px 0 0 40px;
+  display: block;
+}
+
+nav ul {
+  float: right;
+  list-style: none;
+  padding: 25px;
+  margin: 0;
+}
+
+nav li {
+  float: left;
+}
+
+.headline {
+  height: 100px;
+  color: #fff;
+  text-align: center;
+  background-color:#0b162a;
+}
+
+.headline:after {
+  content: '';
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(#111, 0.5);
+}
+
+.inner {
+  position: absolute;
+  top: 10%;
+  left: 50%;
+  color: #FCC201;
+  z-index: 10;
+  transform: translateX(-50%) translateY(-50%);
+  animation: fade-in 0.75s 0.25s ease-in forwards;
+}
+
+.inner h1 {
+  margin: 0;
+  font-size: 4em;
+  line-height: 1.2em;
+}
+
+.inner p {
+  margin: 0;
+  font-size: 1.4em;
+  font-style: italic;
+  font-family: serif;
+}

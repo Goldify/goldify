@@ -1,12 +1,12 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
-import App from './js/App';
+import GoldifyApp from './js/GoldifyApp';
 import reportWebVitals from './utils/reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
-    <App />
+    <GoldifyApp />
   </React.StrictMode>,
   document.getElementById('root')
 );
