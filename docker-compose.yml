@@ -1,15 +1,16 @@
 version: "3.8"
 services:
-  client:
+  goldify:
     stdin_open: true
     build:
-      context: ..
-      dockerfile: .docker/Dockerfile.dev
+      context: .
+      dockerfile: Dockerfile.dev
     ports:
       - "3000:3000"
     environment:
       HOST: "0.0.0.0"
       PORT: 3000
+    container_name: "goldify"
     volumes:
       - "/app/node_modules"
-      - "..:/app"
+      - ".:/app"
