@@ -5,7 +5,10 @@ class GoldifyLandingPage extends Component {
   render() {
     return (
       <div>
-        <h1 className="landingHeader">Landing Page</h1>
+        <h1 className="landingHeader">Welcome to Goldify!</h1>
+        <p>
+          To get started, click &quot;Getting Started&quot; in the top right of the page!
+        </p>
       </div>
     );
   }

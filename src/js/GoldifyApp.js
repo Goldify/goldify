@@ -24,12 +24,10 @@ class GoldifyApp extends Component {
               </div>
             </div>
           </header>
-          <body>
-            <Switch>
-              <Route exact path='/' component={GoldifyLandingPage} />
-              <Route path='/goldify' component={GoldifyExecutePage} />
-            </Switch>
-          </body>
+          <Switch>
+            <Route exact path='/' component={GoldifyLandingPage} />
+            <Route path='/goldify' component={GoldifyExecutePage} />
+          </Switch>
         </div>
       </Router>
     );
