@@ -1,7 +1,9 @@
-import React, { Component } from 'react';
+import React, { Component } from "react";
 import "../css/GoldifyExecutePage.css";
 
 const queryString = require("query-string");
+const goldifyUtils = require("../utils/GoldifyUtils");
+const goldifyTestUtils = require("../utils/GoldifyTestUtils");
 
 var clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID; // Your client id
 var clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
@@ -36,11 +38,13 @@ function retrieveAuthorization() {
       redirect_uri: redirectUri,
       state: generateRandomString(16)
     });
-  window.location.replace(spotifyApiURL);
+  replaceWindowURL(spotifyApiURL);
 }
 
-function loadHomePage() {
-  window.location.replace("/");
+function replaceWindowURL(url) {
+  if (!goldifyUtils.jestTestIsRunning()) {
+    window.location.replace(url);
+  }
 }
 
 class GoldifyExecutePage extends Component {
@@ -62,6 +66,9 @@ class GoldifyExecutePage extends Component {
     let code = useQuery().get('code');
     if (code == undefined || code == null) {
       retrieveAuthorization();
+      if (goldifyUtils.jestTestIsRunning()) {
+        this.retrieveTokens("TEST_AUTH_CODE");
+      }
     } else {
       this.retrieveTokens(code);
     }
@@ -82,8 +89,7 @@ class GoldifyExecutePage extends Component {
     })
       .then((response) => {
         if (!response.ok) {
-          console.log(response);
-          loadHomePage();
+          replaceWindowURL("/");
         }
         return response.json();
       })
@@ -91,6 +97,9 @@ class GoldifyExecutePage extends Component {
         this.retrieveUserData(code, data);
       })
       .catch(error => console.log(error)); // eslint-disable-line no-console
+    if (goldifyUtils.jestTestIsRunning()) {
+      this.setStateForTest();
+    }
   }
 
   retrieveUserData(code, data) {
@@ -101,15 +110,22 @@ class GoldifyExecutePage extends Component {
     })
       .then((response) => {
         if (!response.ok) {
-          console.log(response);
-          loadHomePage();
+          replaceWindowURL("/");
         }
         return response.json();
       })
       .then((retrievedUserData) => {
         this.setStateTokensAndUserData(code, data, retrievedUserData);
       })
-      .catch(error => console.log(error));
+      .catch(error => console.log(error)); // eslint-disable-line no-console
+  }
+
+  setStateForTest() {
+    this.setStateTokensAndUserData(
+      "TEST_AUTH_CODE",
+      goldifyTestUtils.getTokensTestData(),
+      goldifyTestUtils.getUserTestData()
+    );
   }
 
   setStateTokensAndUserData(code, data, retrievedUserData) {

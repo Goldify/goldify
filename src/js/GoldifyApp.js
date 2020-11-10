@@ -11,10 +11,10 @@ class GoldifyApp extends Component {
       <Router>
         <div className="GoldifyApp">
           <nav>
-            <img src={logo} alt="Chicago Bears Logo" className="GoldifyApp-logo" />
+            <img src={logo} alt="Goldify Logo" className="GoldifyApp-logo" />
             <ul>
-              <li><Link to={'/'}> Home </Link></li>
-              <li><Link to={'/goldify'}> Get Started </Link></li>
+              <li><Link id="home-link" to={'/'} >Home</Link></li>
+              <li><Link id="get-started-link" to={'/goldify'}>Get Started</Link></li>
             </ul>
           </nav>
           <header>
