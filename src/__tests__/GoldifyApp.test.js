@@ -28,33 +28,11 @@ test("Content changes on click of Get Started", () => {
 
   userEvent.click(getStartedButton, leftClick);
 
-  const viewProfile = screen.getByText(/View Profile/i);
+  const viewProfile = screen.getByText(/Loading.../i);
   expect(homeBody).not.toBeInTheDocument();
   expect(viewProfile).toBeInTheDocument();
 });
 
-test("Confirm test items exist on the page", () => {
-  render(<GoldifyApp />);
-  const leftClick = { button: 0 }
-  const getStartedButton = screen.getByText("Get Started").closest("a");
-  userEvent.click(getStartedButton, leftClick);
-
-  const viewProfile = screen.getByText(/View Profile/i);
-  const userId = screen.getByText(goldifyTestUtils.testUserId);
-  const userDisplayName = screen.getByText(goldifyTestUtils.testUserDisplayName);
-  const userEmail = screen.getByText(goldifyTestUtils.testUserEmail);
-  const userFollowersTotal = screen.getByText(String(goldifyTestUtils.testUserFollowersTotal));
-  const userCountry = screen.getByText(goldifyTestUtils.testUserCountry);
-
-  expect(viewProfile).toBeInTheDocument();
-  expect(userId).toBeInTheDocument();
-  expect(userDisplayName).toBeInTheDocument();
-  expect(userEmail).toBeInTheDocument();
-  expect(userFollowersTotal).toBeInTheDocument();
-  expect(userCountry).toBeInTheDocument();
-});
-
-const goldifyTestUtils = require("../utils/GoldifyTestUtils");
 test("Run Web Vitals", () => {
   reportWebVitals(console.log);
 

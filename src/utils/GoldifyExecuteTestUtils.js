@@ -1,3 +1,5 @@
+exports.testAuthenticationCode = "TEST_AUTH_CODE";
+
 exports.testRefreshToken = "TEST_REFRESH_TOKEN";
 exports.testAccessToken = "TEST_ACCESS_TOKEN";
 

@@ -1,59 +1,19 @@
 import React, { Component } from "react";
 import "../css/GoldifyExecutePage.css";
-
-const queryString = require("query-string");
-const goldifyUtils = require("../utils/GoldifyUtils");
-const goldifyTestUtils = require("../utils/GoldifyTestUtils");
-
-var clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID; // Your client id
-var clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
-var redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI; // Your redirect uri
-
-/**
- * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
- */
-var generateRandomString = function(length) {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-  for (var i = 0; i < length; i++) {
-    text += possible.charAt(Math.floor(Math.random() * possible.length));
-  }
-  return text;
-};
-
-function useQuery() {
-  return new URLSearchParams(window.location.search);
-}
-
-function retrieveAuthorization() {
-  let spotifyApiURL =
-    "https://accounts.spotify.com/authorize?" +
-    queryString.stringify({
-      response_type: "code",
-      client_id: clientId,
-      scope: "user-read-private user-read-email",
-      redirect_uri: redirectUri,
-      state: generateRandomString(16)
-    });
-  replaceWindowURL(spotifyApiURL);
-}
-
-function replaceWindowURL(url) {
-  if (!goldifyUtils.jestTestIsRunning()) {
-    window.location.replace(url);
-  }
-}
+import {
+  retrieveAuthenticationCode,
+  retrieveAuthorization,
+  retrieveTokensAxios,
+  retrieveUserDataAxios,
+  replaceWindowURL
+} from "../utils/GoldifyExecuteUtils"
 
 class GoldifyExecutePage extends Component {
-  
+
   constructor(props) {
     // Initialize mutable state
     super(props);
     this.state = {
-      initFailed: false,
       authorizationCode: "",
       refreshToken: "",
       accessToken: "",
@@ -63,76 +23,41 @@ class GoldifyExecutePage extends Component {
   }
 
   componentDidMount() {
-    let code = useQuery().get('code');
+    let code = retrieveAuthenticationCode();
     if (code == undefined || code == null) {
       retrieveAuthorization();
-      if (goldifyUtils.jestTestIsRunning()) {
-        this.retrieveTokens("TEST_AUTH_CODE");
-      }
     } else {
-      this.retrieveTokens(code);
+      this.retrieveDataOnPageLoad(code);
     }
   }
 
-  retrieveTokens(code) {
-    let apiTokenBody = new URLSearchParams();
-    apiTokenBody.set("grant_type", "authorization_code");
-    apiTokenBody.set("redirect_uri", redirectUri);
-    apiTokenBody.set("code", code);
-    let spotifyApiTokenURL = "https://accounts.spotify.com/api/token";
-    fetch(spotifyApiTokenURL, {
-      method: "POST",
-      headers: {
-        "Authorization": " Basic " + btoa(clientId + ":" + clientSecret)
-      },
-      body: apiTokenBody
-    })
-      .then((response) => {
-        if (!response.ok) {
+  async retrieveDataOnPageLoad(code) {
+    await retrieveTokensAxios(code)
+      .then((retrievedTokenData) => {
+        if (retrievedTokenData === undefined || retrievedTokenData.error) {
           replaceWindowURL("/");
+        } else {
+          this.retrieveUserData(code, retrievedTokenData);
         }
-        return response.json();
-      })
-      .then((data) => {
-        this.retrieveUserData(code, data);
-      })
-      .catch(error => console.log(error)); // eslint-disable-line no-console
-    if (goldifyUtils.jestTestIsRunning()) {
-      this.setStateForTest();
-    }
+      });
   }
 
-  retrieveUserData(code, data) {
-    fetch("https://api.spotify.com/v1/me", {
-      headers: {
-        "Authorization": "Bearer " + data.access_token
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
+  async retrieveUserData(code, retrievedTokenData) {
+    await retrieveUserDataAxios(retrievedTokenData)
+      .then((userData) => {
+        if (userData === undefined || userData.error) {
           replaceWindowURL("/");
+        } else {
+          this.setStateTokensAndUserData(code, retrievedTokenData, userData);
         }
-        return response.json();
-      })
-      .then((retrievedUserData) => {
-        this.setStateTokensAndUserData(code, data, retrievedUserData);
-      })
-      .catch(error => console.log(error)); // eslint-disable-line no-console
+      });
   }
 
-  setStateForTest() {
-    this.setStateTokensAndUserData(
-      "TEST_AUTH_CODE",
-      goldifyTestUtils.getTokensTestData(),
-      goldifyTestUtils.getUserTestData()
-    );
-  }
-
-  setStateTokensAndUserData(code, data, retrievedUserData) {
+  setStateTokensAndUserData(code, retrievedTokenData, retrievedUserData) {
     this.setState({
       authorizationCode: code,
-      refreshToken: data.refresh_token,
-      accessToken: data.access_token,
+      refreshToken: retrievedTokenData.refresh_token,
+      accessToken: retrievedTokenData.access_token,
       userData: retrievedUserData,
       userDataString: JSON.stringify(retrievedUserData)
     });
