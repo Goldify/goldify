@@ -13,3 +13,7 @@ jobs:
       - run: yarn install
       - run: yarn lint
       - run: yarn test
+        env:
+          REACT_APP_SPOTIFY_CLIENT_ID: ${{ secrets.REACT_APP_SPOTIFY_CLIENT_ID }}
+          REACT_APP_SPOTIFY_CLIENT_SECRET: ${{ secrets.REACT_APP_SPOTIFY_CLIENT_SECRET }}
+          REACT_APP_SPOTIFY_REDIRECT_URI: "http://localhost:3000/goldify"
