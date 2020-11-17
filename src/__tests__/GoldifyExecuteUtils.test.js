@@ -11,12 +11,13 @@ import {
   retrieveAuthenticationCode,
   retrieveTokensAxios,
   retrieveUserDataAxios,
-  replaceWindowURL
-} from '../utils/GoldifyExecuteUtils';
+  replaceWindowURL,
+  getLoadingPage
+} from '../js/utils/GoldifyExecuteUtils';
 
 jest.mock('axios');
 
-const goldifyExecuteTestUtils = require("../utils/GoldifyExecuteTestUtils");
+const goldifyExecuteTestUtils = require("../__test_utils__/GoldifyExecuteTestUtils");
 
 test("Function to generate random function is random", () => {
   let randomStr1 = generateRandomString(16);
@@ -98,4 +99,9 @@ test("Confirm replaceWindowURL replaces the window with the given URL", async ()
   replaceWindowURL("TEST_URL");
   expect(window.location.replace).toHaveBeenCalledTimes(1);
   expect(window.location.replace).toHaveBeenCalledWith("TEST_URL");
+});
+
+test("Check for Loading... in loading page", () => {
+  let loadingPageString = JSON.stringify(getLoadingPage());
+  expect(loadingPageString).toContain("Loading...");
 });
