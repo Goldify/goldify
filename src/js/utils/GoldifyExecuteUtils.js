@@ -1,3 +1,4 @@
+import React from "react";
 import axios from "axios";
 import qs from "qs";
 
@@ -98,3 +99,11 @@ export const retrieveUserDataAxios = async (retrievedTokenData) => {
 export const replaceWindowURL = (url) => {
   window.location.replace(url);
 };
+
+export const getLoadingPage = () => {
+  return (
+    <div className="goldify-page-container">
+      <h3>Loading...</h3>
+    </div>
+  );
+}

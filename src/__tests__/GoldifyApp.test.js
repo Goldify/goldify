@@ -5,7 +5,7 @@ import userEvent from '@testing-library/user-event';
 import GoldifyApp from '../js/GoldifyApp';
 import { configure } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import reportWebVitals from '../utils/reportWebVitals';
+import reportWebVitals from '../js/utils/reportWebVitals';
 
 configure({adapter: new Adapter()});
 

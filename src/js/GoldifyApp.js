@@ -1,7 +1,7 @@
 import React, { Component }  from 'react';
 import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import GoldifyLandingPage from './GoldifyLandingPage'
-import GoldifyExecutePage from './GoldifyExecutePage'
+import GoldifyLandingPage from './landing/GoldifyLandingPage'
+import GoldifyExecutePage from './execute/GoldifyExecutePage'
 import logo from "../assets/goldify_logo.png";
 import "../css/GoldifyApp.css";
 

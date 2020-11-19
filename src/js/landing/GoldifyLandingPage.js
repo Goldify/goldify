@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import "../css/GoldifyLandingPage.css";
+import "../../css/GoldifyLandingPage.css";
 
 class GoldifyLandingPage extends Component {
   render() {

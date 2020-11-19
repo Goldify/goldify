@@ -2,7 +2,7 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './css/index.css';
 import GoldifyApp from './js/GoldifyApp';
-import reportWebVitals from './utils/reportWebVitals';
+import reportWebVitals from './js/utils/reportWebVitals';
 
 ReactDOM.render(
   <React.StrictMode>
