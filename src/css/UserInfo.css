@@ -1,0 +1,13 @@
+.card {
+    position: sticky;
+    height: min-content;
+    top: 15px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    max-width: 250px;
+    left: 5%;
+    text-align: center;
+  }
+
+  .card img {
+    width: 100%;
+  }

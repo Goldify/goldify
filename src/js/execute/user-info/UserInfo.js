@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import "../../../css/UserInfo.css";
 import PropTypes from 'prop-types';
 import {
-  retrieveUserDataAxios,
-  replaceWindowURL,
-  getLoadingPage
+  replaceWindowURL
 } from "../../utils/GoldifyExecuteUtils"
+import {
+  retrieveUserDataAxios
+} from '../../utils/UserInfoUtils';
 
 class UserInfo extends Component {
 
@@ -67,7 +69,7 @@ class UserInfo extends Component {
 
   render() {
     if (this.state.userData == null) {
-      return getLoadingPage();
+      return (<div />);
     } else {
       return this.getUserInfoDiv();
     }

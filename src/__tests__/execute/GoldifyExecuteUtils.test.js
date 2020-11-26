@@ -10,14 +10,13 @@ import {
   retrieveAuthorization,
   retrieveAuthenticationCode,
   retrieveTokensAxios,
-  retrieveUserDataAxios,
   replaceWindowURL,
   getLoadingPage
-} from '../js/utils/GoldifyExecuteUtils';
+} from '../../js/utils/GoldifyExecuteUtils';
 
 jest.mock('axios');
 
-const goldifyExecuteTestUtils = require("../__test_utils__/GoldifyExecuteTestUtils");
+const goldifyExecuteTestUtils = require("../../__test_utils__/GoldifyExecuteTestUtils");
 
 test("Function to generate random function is random", () => {
   let randomStr1 = generateRandomString(16);
@@ -32,6 +31,7 @@ test("The Spotify API scopes string includes all scopes needed for Goldify", () 
   let spotifyApiScope = retrieveSpotifyApiScopesNeeded();
   expect(spotifyApiScope).toContain("user-read-private");
   expect(spotifyApiScope).toContain("user-read-email");
+  expect(spotifyApiScope).toContain("user-top-read");
 });
 
 test("The Spotify API Authorization URL has correct components in it", () => {
@@ -71,27 +71,6 @@ test("Check for to make sure retrieveTokensAxios throws error on bad data", asyn
   axios.post.mockResolvedValue(undefined);
   console.log = jest.fn();
   await retrieveTokensAxios();
-  expect(console.log).toHaveBeenCalledWith(TypeError("Cannot read property 'data' of undefined"));
-});
-
-test("Check for to make sure retrieveUserDataAxios returns correct mock data", async () => {
-  axios.get.mockResolvedValue({
-    data: goldifyExecuteTestUtils.getUserTestData()
-  });
-
-  const responseData = await retrieveUserDataAxios(goldifyExecuteTestUtils.getTokensTestData());
-  expect(responseData).toEqual(goldifyExecuteTestUtils.getUserTestData());
-});
-
-test("Check for to make sure retrieveUserDataAxios throws error on bad data", async () => {
-  axios.get.mockResolvedValue(null);
-  console.log = jest.fn();
-  await retrieveUserDataAxios(goldifyExecuteTestUtils.getTokensTestData());
-  expect(console.log).toHaveBeenCalledWith(TypeError("Cannot read property 'data' of null"));
-  
-  axios.get.mockResolvedValue(undefined);
-  console.log = jest.fn();
-  await retrieveUserDataAxios(goldifyExecuteTestUtils.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(TypeError("Cannot read property 'data' of undefined"));
 });
 

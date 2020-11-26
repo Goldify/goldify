@@ -38,11 +38,11 @@
     ]
   },
   "devDependencies": {
+    "axios": "^0.21.0",
     "babel-eslint": "^10.1.0",
-    "eslint-plugin-react": "^7.21.5",
-    "lint": "^0.7.0",
     "enzyme": "^3.11.0",
     "enzyme-adapter-react-16": "^1.15.5",
-    "axios": "^0.21.0"
+    "eslint-plugin-react": "^7.21.5",
+    "lint": "^0.7.0"
   }
 }
