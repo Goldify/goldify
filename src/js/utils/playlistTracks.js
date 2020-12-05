@@ -1,4 +1,5 @@
 import axios from "axios";
+import { basicHeaders } from "./axiosHelpers";
 
 /**
  * URL to get a playlist's tracks
@@ -16,17 +17,10 @@ export const playlistTracksUrl = (playlistId) => {
  * @return {object} The response data
  */
 export const getPlaylistTracksById = async (retrievedTokenData, playlistId) => {
-  const headers = {
-    headers: {
-      "Authorization": "Bearer " + retrievedTokenData.access_token
-    },
-  };
+  const headers = basicHeaders(retrievedTokenData);
 
   try {
-    const response = await axios.get(
-      playlistTracksUrl(playlistId),
-      headers
-    );
+    const response = await axios.get(playlistTracksUrl(playlistId), headers);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -39,12 +33,13 @@ export const getPlaylistTracksById = async (retrievedTokenData, playlistId) => {
  * @param  {string} playlistId ID of the requested playlist
  * @return {object} The response data
  */
-export const replacePlaylistTracks = async (retrievedTokenData, playlistId, trackUris) => {
-  const headers = {
-    headers: {
-      "Authorization": "Bearer " + retrievedTokenData.access_token
-    },
-  };
+export const replacePlaylistTracks = async (
+  retrievedTokenData,
+  playlistId,
+  trackUris
+) => {
+  const headers = basicHeaders(retrievedTokenData);
+
   const data = { uris: trackUris };
   try {
     const response = await axios.put(
@@ -64,8 +59,8 @@ export const replacePlaylistTracks = async (retrievedTokenData, playlistId, trac
  * @return {array} The list of track uris
  */
 export const getURIsFromList = (trackList) => {
-  return trackList.map(track => {
+  return trackList.map((track) => {
     // a playlist track object has a track object within
     return track.track.uri;
   });
-}
+};
