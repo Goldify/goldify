@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import "../../css/GoldifyExecutePage.css";
 import UserInfo from "./user-info/UserInfo";
+import TopListeningData from "./top-listens/TopListeningData";
 import {
   retrieveAuthenticationCode,
   retrieveAuthorization,
@@ -45,6 +46,7 @@ class GoldifyExecutePage extends Component {
     return (
       <div className="goldify-page-container">
         <UserInfo retrievedTokenData={this.state.retrievedTokenData} />
+        <TopListeningData retrievedTokenData={this.state.retrievedTokenData} />
       </div>
     );
   }

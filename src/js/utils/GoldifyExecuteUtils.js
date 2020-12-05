@@ -30,6 +30,7 @@ export const retrieveSpotifyApiScopesNeeded = () => {
   return [
     "user-read-private",
     "user-read-email",
+    "user-top-read",
   ].join(" ");
 }
 
@@ -70,24 +71,6 @@ export const retrieveTokensAxios = async (authCode) => {
     const response = await axios.post(
       "https://accounts.spotify.com/api/token",
       qs.stringify(data),
-      headers
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-  }
-};
-
-export const retrieveUserDataAxios = async (retrievedTokenData) => {
-  const headers = {
-    headers: {
-      "Authorization": "Bearer " + retrievedTokenData.access_token
-    },
-  };
-
-  try {
-    const response = await axios.get(
-      "https://api.spotify.com/v1/me",
       headers
     );
     return response.data;
