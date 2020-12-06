@@ -1,13 +1,12 @@
-exports.testPlaylistId = "TEST_PLAYLIST_ID";
-exports.testPlaylistName = "TEST_PLAYLIST_NAME";
-exports.testPlaylistDescription = "TEST_PLAYLIST_DESCRIPTION";
-exports.testNonGoldifyPlaylistId = "TEST_NON_GOLDIFY_PLAYLIST_ID";
-exports.testNonGoldifyPlaylistName = "TEST_NON_GOLDIFY_PLAYLIST_NAME";
-exports.testNonGoldifyPlaylistDescription =
+const testPlaylistId = "TEST_PLAYLIST_ID";
+const testPlaylistName = "TEST_PLAYLIST_NAME";
+const testPlaylistDescription = "TEST_PLAYLIST_DESCRIPTION";
+const testNonGoldifyPlaylistId = "TEST_NON_GOLDIFY_PLAYLIST_ID";
+const testNonGoldifyPlaylistName = "TEST_NON_GOLDIFY_PLAYLIST_NAME";
+const testNonGoldifyPlaylistDescription =
   "TEST_NON_GOLDIFY_PLAYLIST_DESCRIPTION";
-exports.testUserId = "TEST_USER_ID";
-exports.testAlbumArtImageURL = "test-album-art.com";
-exports.testSnapshotId = "abcd12345";
+const testUserId = "TEST_USER_ID";
+const testSnapshotId = "abcd12345";
 
 exports.createGoldifyPlaylist = function(
   userId,
@@ -22,7 +21,7 @@ exports.createGoldifyPlaylist = function(
         "http://open.spotify.com/user/" +
         userId +
         "/playlist/" +
-        this.testPlaylistId,
+        testPlaylistId,
     },
     followers: {
       href: null,
@@ -32,8 +31,8 @@ exports.createGoldifyPlaylist = function(
       "https://api.spotify.com/v1/users/" +
       userId +
       "/playlists/" +
-      this.testPlaylistId,
-    id: this.testPlaylistId,
+      testPlaylistId,
+    id: testPlaylistId,
     images: [],
     name: playlistName,
     owner: {
@@ -46,13 +45,13 @@ exports.createGoldifyPlaylist = function(
       uri: "spotify:user:" + userId,
     },
     public: false,
-    snapshot_id: this.testSnapshotId,
+    snapshot_id: testSnapshotId,
     tracks: {
       href:
         "https://api.spotify.com/v1/users/" +
         userId +
         "/playlists/" +
-        this.testPlaylistId +
+        testPlaylistId +
         "/tracks",
       items: [],
       limit: 100,
@@ -62,18 +61,18 @@ exports.createGoldifyPlaylist = function(
       total: 0,
     },
     type: "playlist",
-    uri: "spotify:user:" + userId + ":playlist:" + this.testPlaylistId,
+    uri: "spotify:user:" + userId + ":playlist:" + testPlaylistId,
   };
 };
 
 exports.getPlaylistById = function(playlistId) {
   return {
     collaborative: false,
-    description: this.testPlaylistDescription,
+    description: testPlaylistDescription,
     external_urls: {
       spotify:
         "http://open.spotify.com/user/" +
-        this.testUserId +
+        testUserId +
         "/playlist/" +
         playlistId,
     },
@@ -83,27 +82,27 @@ exports.getPlaylistById = function(playlistId) {
     },
     href:
       "https://api.spotify.com/v1/users/" +
-      this.testUserId +
+      testUserId +
       "/playlists/" +
       playlistId,
     id: playlistId,
     images: [],
-    name: this.testPlaylistName,
+    name: testPlaylistName,
     owner: {
       external_urls: {
-        spotify: "http://open.spotify.com/user/" + this.testUserId,
+        spotify: "http://open.spotify.com/user/" + testUserId,
       },
-      href: "https://api.spotify.com/v1/users/" + this.testUserId,
-      id: this.testUserId,
+      href: "https://api.spotify.com/v1/users/" + testUserId,
+      id: testUserId,
       type: "user",
-      uri: "spotify:user:" + this.testUserId,
+      uri: "spotify:user:" + testUserId,
     },
     public: false,
-    snapshot_id: this.testSnapshotId,
+    snapshot_id: testSnapshotId,
     tracks: {
       href:
         "https://api.spotify.com/v1/users/" +
-        this.testUserId +
+        testUserId +
         "/playlists/" +
         playlistId +
         "/tracks",
@@ -115,23 +114,23 @@ exports.getPlaylistById = function(playlistId) {
       total: 0,
     },
     type: "playlist",
-    uri: "spotify:user:" + this.testUserId + ":playlist:" + playlistId,
+    uri: "spotify:user:" + testUserId + ":playlist:" + playlistId,
   };
 };
 
 exports.userHasExistingGoldifyPlaylist = function(playlistName) {
   return {
-    href: "https://api.spotify.com/v1/users/" + this.testUserId + "/playlists",
+    href: "https://api.spotify.com/v1/users/" + testUserId + "/playlists",
     items: [
       {
         collaborative: false,
-        description: "Non Goldify Playlist",
+        description: testNonGoldifyPlaylistDescription,
         external_urls: {
           spotify:
             "http://open.spotify.com/user/" +
-            this.testUserId +
+            testUserId +
             "/playlist/" +
-            this.testNonGoldifyPlaylistId,
+            testNonGoldifyPlaylistId,
         },
         followers: {
           href: null,
@@ -139,29 +138,29 @@ exports.userHasExistingGoldifyPlaylist = function(playlistName) {
         },
         href:
           "https://api.spotify.com/v1/users/" +
-          this.testUserId +
+          testUserId +
           "/playlists/" +
-          this.testNonGoldifyPlaylistId,
-        id: this.testNonGoldifyPlaylistId,
+          testNonGoldifyPlaylistId,
+        id: testNonGoldifyPlaylistId,
         images: [],
-        name: "Non Goldify Playlist",
+        name: testNonGoldifyPlaylistName,
         owner: {
           external_urls: {
-            spotify: "http://open.spotify.com/user/" + this.testUserId,
+            spotify: "http://open.spotify.com/user/" + testUserId,
           },
-          href: "https://api.spotify.com/v1/users/" + this.testUserId,
-          id: this.testUserId,
+          href: "https://api.spotify.com/v1/users/" + testUserId,
+          id: testUserId,
           type: "user",
-          uri: "spotify:user:" + this.testUserId,
+          uri: "spotify:user:" + testUserId,
         },
         public: false,
-        snapshot_id: this.testSnapshotId,
+        snapshot_id: testSnapshotId,
         tracks: {
           href:
             "https://api.spotify.com/v1/users/" +
-            this.testUserId +
+            testUserId +
             "/playlists/" +
-            this.testNonGoldifyPlaylistId +
+            testNonGoldifyPlaylistId +
             "/tracks",
           items: [],
           limit: 100,
@@ -173,19 +172,19 @@ exports.userHasExistingGoldifyPlaylist = function(playlistName) {
         type: "playlist",
         uri:
           "spotify:user:" +
-          this.testUserId +
+          testUserId +
           ":playlist:" +
-          this.testNonGoldifyPlaylistId,
+          testNonGoldifyPlaylistId,
       },
       {
         collaborative: false,
-        description: this.testPlaylistDescription,
+        description: testPlaylistDescription,
         external_urls: {
           spotify:
             "http://open.spotify.com/user/" +
-            this.testUserId +
+            testUserId +
             "/playlist/" +
-            this.testPlaylistId,
+            testPlaylistId,
         },
         followers: {
           href: null,
@@ -193,29 +192,29 @@ exports.userHasExistingGoldifyPlaylist = function(playlistName) {
         },
         href:
           "https://api.spotify.com/v1/users/" +
-          this.testUserId +
+          testUserId +
           "/playlists/" +
-          this.testPlaylistId,
-        id: this.testPlaylistId,
+          testPlaylistId,
+        id: testPlaylistId,
         images: [],
         name: playlistName,
         owner: {
           external_urls: {
-            spotify: "http://open.spotify.com/user/" + this.testUserId,
+            spotify: "http://open.spotify.com/user/" + testUserId,
           },
-          href: "https://api.spotify.com/v1/users/" + this.testUserId,
-          id: this.testUserId,
+          href: "https://api.spotify.com/v1/users/" + testUserId,
+          id: testUserId,
           type: "user",
-          uri: "spotify:user:" + this.testUserId,
+          uri: "spotify:user:" + testUserId,
         },
         public: false,
-        snapshot_id: this.testSnapshotId,
+        snapshot_id: testSnapshotId,
         tracks: {
           href:
             "https://api.spotify.com/v1/users/" +
-            this.testUserId +
+            testUserId +
             "/playlists/" +
-            this.testPlaylistId +
+            testPlaylistId +
             "/tracks",
           items: [],
           limit: 100,
@@ -225,11 +224,7 @@ exports.userHasExistingGoldifyPlaylist = function(playlistName) {
           total: 0,
         },
         type: "playlist",
-        uri:
-          "spotify:user:" +
-          this.testUserId +
-          ":playlist:" +
-          this.testPlaylistId,
+        uri: "spotify:user:" + testUserId + ":playlist:" + testPlaylistId,
       },
     ],
     limit: 9,
@@ -244,13 +239,13 @@ exports.userHasExistingGoldifyPlaylist = function(playlistName) {
 exports.existingGoldifyPlaylist = function(playlistName) {
   return {
     collaborative: false,
-    description: this.testPlaylistDescription,
+    description: testPlaylistDescription,
     external_urls: {
       spotify:
         "http://open.spotify.com/user/" +
-        this.testUserId +
+        testUserId +
         "/playlist/" +
-        this.testPlaylistId,
+        testPlaylistId,
     },
     followers: {
       href: null,
@@ -258,29 +253,29 @@ exports.existingGoldifyPlaylist = function(playlistName) {
     },
     href:
       "https://api.spotify.com/v1/users/" +
-      this.testUserId +
+      testUserId +
       "/playlists/" +
-      this.testPlaylistId,
-    id: this.testPlaylistId,
+      testPlaylistId,
+    id: testPlaylistId,
     images: [],
     name: playlistName,
     owner: {
       external_urls: {
-        spotify: "http://open.spotify.com/user/" + this.testUserId,
+        spotify: "http://open.spotify.com/user/" + testUserId,
       },
-      href: "https://api.spotify.com/v1/users/" + this.testUserId,
-      id: this.testUserId,
+      href: "https://api.spotify.com/v1/users/" + testUserId,
+      id: testUserId,
       type: "user",
-      uri: "spotify:user:" + this.testUserId,
+      uri: "spotify:user:" + testUserId,
     },
     public: false,
-    snapshot_id: this.testSnapshotId,
+    snapshot_id: testSnapshotId,
     tracks: {
       href:
         "https://api.spotify.com/v1/users/" +
-        this.testUserId +
+        testUserId +
         "/playlists/" +
-        this.testPlaylistId +
+        testPlaylistId +
         "/tracks",
       items: [],
       limit: 100,
@@ -290,23 +285,23 @@ exports.existingGoldifyPlaylist = function(playlistName) {
       total: 0,
     },
     type: "playlist",
-    uri: "spotify:user:" + this.testUserId + ":playlist:" + this.testPlaylistId,
+    uri: "spotify:user:" + testUserId + ":playlist:" + testPlaylistId,
   };
 };
 
 exports.userDoesntHaveExistingGoldifyPlaylist = function() {
   return {
-    href: "https://api.spotify.com/v1/users/" + this.testUserId + "/playlists",
+    href: "https://api.spotify.com/v1/users/" + testUserId + "/playlists",
     items: [
       {
         collaborative: false,
-        description: "Non Goldify Playlist",
+        description: testNonGoldifyPlaylistDescription,
         external_urls: {
           spotify:
             "http://open.spotify.com/user/" +
-            this.testUserId +
+            testUserId +
             "/playlist/" +
-            this.testNonGoldifyPlaylistId,
+            testNonGoldifyPlaylistId,
         },
         followers: {
           href: null,
@@ -314,29 +309,29 @@ exports.userDoesntHaveExistingGoldifyPlaylist = function() {
         },
         href:
           "https://api.spotify.com/v1/users/" +
-          this.testUserId +
+          testUserId +
           "/playlists/" +
-          this.testNonGoldifyPlaylistId,
-        id: this.testNonGoldifyPlaylistId,
+          testNonGoldifyPlaylistId,
+        id: testNonGoldifyPlaylistId,
         images: [],
-        name: "Non Goldify Playlist",
+        name: testNonGoldifyPlaylistName,
         owner: {
           external_urls: {
-            spotify: "http://open.spotify.com/user/" + this.testUserId,
+            spotify: "http://open.spotify.com/user/" + testUserId,
           },
-          href: "https://api.spotify.com/v1/users/" + this.testUserId,
-          id: this.testUserId,
+          href: "https://api.spotify.com/v1/users/" + testUserId,
+          id: testUserId,
           type: "user",
-          uri: "spotify:user:" + this.testUserId,
+          uri: "spotify:user:" + testUserId,
         },
         public: false,
-        snapshot_id: this.testSnapshotId,
+        snapshot_id: testSnapshotId,
         tracks: {
           href:
             "https://api.spotify.com/v1/users/" +
-            this.testUserId +
+            testUserId +
             "/playlists/" +
-            this.testNonGoldifyPlaylistId +
+            testNonGoldifyPlaylistId +
             "/tracks",
           items: [],
           limit: 100,
@@ -348,9 +343,9 @@ exports.userDoesntHaveExistingGoldifyPlaylist = function() {
         type: "playlist",
         uri:
           "spotify:user:" +
-          this.testUserId +
+          testUserId +
           ":playlist:" +
-          this.testNonGoldifyPlaylistId,
+          testNonGoldifyPlaylistId,
       },
     ],
     limit: 9,
@@ -363,7 +358,7 @@ exports.userDoesntHaveExistingGoldifyPlaylist = function() {
 
 exports.userDoesntHavePlaylists = function() {
   return {
-    href: "https://api.spotify.com/v1/users/" + this.testUserId + "/playlists",
+    href: "https://api.spotify.com/v1/users/" + testUserId + "/playlists",
     items: [],
     limit: 9,
     next: null,

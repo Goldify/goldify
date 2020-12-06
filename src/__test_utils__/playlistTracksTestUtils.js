@@ -1,26 +1,23 @@
-exports.testPlaylistId = "TEST_PLAYLIST_ID";
-exports.testPlaylistName = "TEST_PLAYLIST_NAME";
-exports.testUserId = "TEST_USER_ID";
-exports.testAlbumArtImageURL = "test-album-art.com";
-exports.testAlbumName = "TEST_ALBUM_NAME";
-exports.testAlbumId = "TEST_ALBUM_ID";
-exports.testArtistName = "TEST_ARTIST_NAME";
-exports.testArtistId = "TEST_ARTIST_ID";
-exports.testTrackName1 = "TEST_SONG_NAME_1";
-exports.testTrackId1 = "TEST_SONG_ID_1";
-exports.testTrackName2 = "TEST_SONG_NAME_2";
-exports.testTrackId2 = "TEST_SONG_ID_2";
-exports.testAlbumArtImageURL = "test-album-art.com";
-exports.testTimeStamp = "2020-11-11T11:11:11Z";
+const testUserId = "TEST_USER_ID";
+const testAlbumArtImageURL = "test-album-art.com";
+const testAlbumName = "TEST_ALBUM_NAME";
+const testAlbumId = "TEST_ALBUM_ID";
+const testArtistName = "TEST_ARTIST_NAME";
+const testArtistId = "TEST_ARTIST_ID";
+const testTrackName1 = "TEST_SONG_NAME_1";
+const testTrackId1 = "TEST_SONG_ID_1";
+const testTrackName2 = "TEST_SONG_NAME_2";
+const testTrackId2 = "TEST_SONG_ID_2";
+const testTimeStamp = "2020-11-11T11:11:11Z";
 
 exports.testTrack = function(trackName, trackId) {
   return {
-    added_at: this.testTimeStamp,
+    added_at: testTimeStamp,
     added_by: {
-      href: "https://api.spotify.com/v1/users/" + this.testUserId,
-      id: this.testUserId,
+      href: "https://api.spotify.com/v1/users/" + testUserId,
+      id: testUserId,
       type: "user",
-      uri: "spotify:user:" + this.testUserId,
+      uri: "spotify:user:" + testUserId,
     },
     is_local: false,
     track: {
@@ -28,33 +25,33 @@ exports.testTrack = function(trackName, trackId) {
         album_type: "single",
         artists: [
           {
-            id: this.testArtistId,
-            name: this.testArtistName,
+            id: testArtistId,
+            name: testArtistName,
             type: "artist",
-            uri: "spotify:artist:" + this.testArtistId,
+            uri: "spotify:artist:" + testArtistId,
           },
         ],
         available_markets: ["US"],
-        href: "https://api.spotify.com/v1/albums/" + this.testAlbumId,
-        id: this.testAlbumId,
+        href: "https://api.spotify.com/v1/albums/" + testAlbumId,
+        id: testAlbumId,
         images: [
           {
             height: 640,
-            url: this.testAlbumArtImageURL,
+            url: testAlbumArtImageURL,
             width: 640,
           },
         ],
-        name: this.testAlbumName,
+        name: testAlbumName,
         type: "album",
-        uri: "spotify:album:" + this.testAlbumId,
+        uri: "spotify:album:" + testAlbumId,
       },
       artists: [
         {
-          href: "https://api.spotify.com/v1/artists/" + this.testArtistId,
-          id: this.testArtistId,
-          name: this.testArtistName,
+          href: "https://api.spotify.com/v1/artists/" + testArtistId,
+          id: testArtistId,
+          name: testArtistName,
           type: "artist",
-          uri: "spotify:artist:" + this.testArtistId,
+          uri: "spotify:artist:" + testArtistId,
         },
       ],
       available_markets: [],
@@ -76,13 +73,13 @@ exports.playlistTracksById = function(playlistId) {
   return {
     href:
       "https://api.spotify.com/v1/users/" +
-      this.testUserId +
+      testUserId +
       "/playlists/" +
       playlistId +
       "/tracks",
     items: [
-      this.testTrack(this.testTrackName1, this.testTrackId1),
-      this.testTrack(this.testTrackName2, this.testTrackId2),
+      this.testTrack(testTrackName1, testTrackId1),
+      this.testTrack(testTrackName2, testTrackId2),
     ],
     limit: 100,
     next: null,
@@ -96,13 +93,11 @@ exports.replacePlaylistTracksByIdAndURIs = function(playlistId, trackURIs) {
   return {
     href:
       "https://api.spotify.com/v1/users/" +
-      this.testUserId +
+      testUserId +
       "/playlists/" +
       playlistId +
       "/tracks",
-    items: [
-      trackURIs.forEach((uri) => this.testTrack(this.testTrackName1, uri)),
-    ],
+    items: [trackURIs.forEach((uri) => this.testTrack(testTrackName1, uri))],
     limit: 100,
     next: null,
     offset: 0,
@@ -113,13 +108,10 @@ exports.replacePlaylistTracksByIdAndURIs = function(playlistId, trackURIs) {
 
 exports.tracksWithURIs = function() {
   return [
-    this.testTrack(this.testTrackName1, this.testTrackId1),
-    this.testTrack(this.testTrackName2, this.testTrackId2),
+    this.testTrack(testTrackName1, testTrackId1),
+    this.testTrack(testTrackName2, testTrackId2),
   ];
 };
 exports.trackURIs = function() {
-  return [
-    "spotify:track:" + this.testTrackId1,
-    "spotify:track:" + this.testTrackId2,
-  ];
+  return ["spotify:track:" + testTrackId1, "spotify:track:" + testTrackId2];
 };
