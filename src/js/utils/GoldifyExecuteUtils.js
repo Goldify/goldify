@@ -12,8 +12,9 @@ export var redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI; // Your red
  * @return {string} The generated string
  */
 export const generateRandomString = (length) => {
-  var text = '';
-  var possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
+  var text = "";
+  var possible =
+    "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
 
   for (var i = 0; i < length; i++) {
     text += possible.charAt(Math.floor(Math.random() * possible.length));
@@ -31,20 +32,24 @@ export const retrieveSpotifyApiScopesNeeded = () => {
     "user-read-private",
     "user-read-email",
     "user-top-read",
+    "playlist-modify-public",
+    "ugc-image-upload",
   ].join(" ");
-}
+};
 
 export const retrieveSpotifyApiAuthorizeURL = () => {
-  return "" +
+  return (
+    "" +
     "https://accounts.spotify.com/authorize?" +
     qs.stringify({
       response_type: "code",
       client_id: clientId,
       scope: retrieveSpotifyApiScopesNeeded(),
       redirect_uri: redirectUri,
-      state: generateRandomString(16)
-    });
-}
+      state: generateRandomString(16),
+    })
+  );
+};
 
 export const retrieveAuthorization = () => {
   replaceWindowURL(retrieveSpotifyApiAuthorizeURL());
@@ -89,4 +94,4 @@ export const getLoadingPage = () => {
       <h3>Loading...</h3>
     </div>
   );
-}
+};
