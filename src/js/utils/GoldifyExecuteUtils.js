@@ -31,6 +31,8 @@ export const retrieveSpotifyApiScopesNeeded = () => {
     "user-read-private",
     "user-read-email",
     "user-top-read",
+    "playlist-read-private",
+    
   ].join(" ");
 }
 

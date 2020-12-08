@@ -2,47 +2,47 @@ import React, { Component } from "react";
 import PropTypes from 'prop-types';
 import "../../../css/TrackDataTable.css";
 import {
-  retrieveTopListeningDataAxios
-} from "../../utils/TopListeningDataUtils"
+    getPlaylistTracksById
+} from "../../utils/playlistTracks"
 import {
   replaceWindowURL
 } from "../../utils/GoldifyExecuteUtils"
 
-class TopListeningData extends Component {
+class GoldifyPlaylistData extends Component {
     
   constructor(props) {
     // Initialize mutable state
     super(props);
     this.state = {
-      topListeningData: null
+      goldifyPlaylistData: null
     };
   }
 
   componentDidMount() {
     if (this.props.retrievedTokenData.access_token != undefined) {
-      this.retrieveTopListeningData(this.props.retrievedTokenData);
+      this.retrieveGoldifyPlaylistData(this.props.retrievedTokenData, this.props.goldifyPlaylistId);
     }
   }
 
-  async retrieveTopListeningData(retrievedTokenData) {
-    await retrieveTopListeningDataAxios(retrievedTokenData)
+  async retrieveGoldifyPlaylistData(retrievedTokenData, goldifyPlaylistId) {
+    await getPlaylistTracksById(retrievedTokenData, goldifyPlaylistId)
       .then((data) => {
         if (data === undefined || data.error) {
           replaceWindowURL("/");
         } else {
           this.setState({
-            topListeningData: data
+            goldifyPlaylistData: data
           });
         }
       });
   }
 
-  getTopListeningDataDiv() {
+  getGoldifyPlaylistDiv() {
     return (
       <div className="track-data-table-container">
         <div className="track-data-table-header-container">
           <h1 className="track-data-table-header">
-            Your Top Recent Hits
+            Your Goldify Playlist
           </h1>
         </div>
         <table className="track-data-table">
@@ -56,22 +56,22 @@ class TopListeningData extends Component {
             </tr>
           </thead>
           <tbody className="track-data-tbody">
-            {this.state.topListeningData.items.map(( listValue, index ) => {
+            {this.state.goldifyPlaylistData.items.map(( listValue, index ) => {
               return (
                 <tr key={index} className="track-data-tr">
                   <td className="track-data-td">
-                    <img alt="Album Art" src={listValue.album.images[0].url} />
+                    <img alt="Album Art" src={listValue.track.album.images[0].url} />
                   </td>
-                  <td className="track-data-td">{listValue.name}</td>
+                  <td className="track-data-td">{listValue.track.name}</td>
                   <td className="track-data-td">
                     {
-                      listValue.album.artists
+                      listValue.track.album.artists
                         .map(( artist, index ) => <span key={index}>{artist.name}</span>)
                         .reduce((prev, curr) => [prev, ', ', curr])
                     }
                   </td>
-                  <td className="track-data-td">{listValue.album.name}</td>
-                  <td className="track-data-td">{listValue.popularity}</td>
+                  <td className="track-data-td">{listValue.track.album.name}</td>
+                  <td className="track-data-td">{listValue.track.popularity}</td>
                 </tr>
               );
             })}
@@ -82,17 +82,18 @@ class TopListeningData extends Component {
   }
 
   render() {
-    if (this.state.topListeningData == null) {
+    if (this.state.goldifyPlaylistData == null) {
       return (<div />);
     } else {
-      return this.getTopListeningDataDiv();
+      return this.getGoldifyPlaylistDiv();
     }
   }
 
 }
 
-TopListeningData.propTypes = {
-  retrievedTokenData: PropTypes.object.isRequired
+GoldifyPlaylistData.propTypes = {
+  retrievedTokenData: PropTypes.object.isRequired,
+  goldifyPlaylistId: PropTypes.string.isRequired
 };
 
-export default TopListeningData;
+export default GoldifyPlaylistData;
