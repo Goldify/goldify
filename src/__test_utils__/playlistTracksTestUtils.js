@@ -2,8 +2,10 @@ const testUserId = "TEST_USER_ID";
 const testAlbumArtImageURL = "test-album-art.com";
 const testAlbumName = "TEST_ALBUM_NAME";
 const testAlbumId = "TEST_ALBUM_ID";
-const testArtistName = "TEST_ARTIST_NAME";
-const testArtistId = "TEST_ARTIST_ID";
+const testArtistName1 = "TEST_ARTIST_NAME_1";
+const testArtistId1 = "TEST_ARTIST_ID_1";
+const testArtistName2 = "TEST_ARTIST_NAME_2";
+const testArtistId2 = "TEST_ARTIST_ID_2";
 const testTrackName1 = "TEST_SONG_NAME_1";
 const testTrackId1 = "TEST_SONG_ID_1";
 const testTrackName2 = "TEST_SONG_NAME_2";
@@ -25,10 +27,16 @@ exports.testTrack = function(trackName, trackId) {
         album_type: "single",
         artists: [
           {
-            id: testArtistId,
-            name: testArtistName,
+            id: testArtistId1,
+            name: testArtistName1,
             type: "artist",
-            uri: "spotify:artist:" + testArtistId,
+            uri: "spotify:artist:" + testArtistId1,
+          },
+          {
+            id: testArtistId2,
+            name: testArtistName2,
+            type: "artist",
+            uri: "spotify:artist:" + testArtistId2,
           },
         ],
         available_markets: ["US"],
@@ -47,11 +55,16 @@ exports.testTrack = function(trackName, trackId) {
       },
       artists: [
         {
-          href: "https://api.spotify.com/v1/artists/" + testArtistId,
-          id: testArtistId,
-          name: testArtistName,
+          id: testArtistId1,
+          name: testArtistName1,
           type: "artist",
-          uri: "spotify:artist:" + testArtistId,
+          uri: "spotify:artist:" + testArtistId1,
+        },
+        {
+          id: testArtistId2,
+          name: testArtistName2,
+          type: "artist",
+          uri: "spotify:artist:" + testArtistId2,
         },
       ],
       available_markets: [],
