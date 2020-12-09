@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import "../../css/GoldifyExecutePage.css";
 import UserInfo from "./user-info/UserInfo";
 import TopListeningData from "./top-listens/TopListeningData";
+import GoldifyPlaylist from "./goldify-playlist/GoldifyPlaylist";
 import {
   retrieveAuthenticationCode,
   retrieveAuthorization,
@@ -46,7 +47,10 @@ class GoldifyExecutePage extends Component {
     return (
       <div className="goldify-page-container">
         <UserInfo retrievedTokenData={this.state.retrievedTokenData} />
-        <TopListeningData retrievedTokenData={this.state.retrievedTokenData} />
+        <div className="container">
+          <GoldifyPlaylist retrievedTokenData={this.state.retrievedTokenData} />
+          <TopListeningData retrievedTokenData={this.state.retrievedTokenData} />
+        </div>
       </div>
     );
   }

@@ -33,7 +33,9 @@ export const retrieveSpotifyApiScopesNeeded = () => {
     "user-read-email",
     "user-top-read",
     "playlist-modify-public",
+    "playlist-modify-private",
     "ugc-image-upload",
+    "playlist-read-private", 
   ].join(" ");
 };
 
