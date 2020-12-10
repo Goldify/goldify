@@ -1,7 +1,7 @@
 import React from "react";
 import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
-import TopListeningData from "../../../js/Solo/top-listens/TopListeningData";
+import TopListeningData from "../../../js/solo/top-listens/TopListeningData";
 import Adapter from "enzyme-adapter-react-16";
 import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
 import { retrieveTopListeningDataAxios } from "../../../js/utils/TopListeningDataUtils";

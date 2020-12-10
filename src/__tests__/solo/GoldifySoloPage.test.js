@@ -2,7 +2,7 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import GoldifySoloPage from "../../js/Solo/GoldifySoloPage";
+import GoldifySoloPage from "../../js/solo/GoldifySoloPage";
 import {
   retrieveTokensAxios,
   retrieveAuthenticationCode,

@@ -2,8 +2,8 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import GoldifyPlaylist from "../../../js/Solo/goldify-playlist/GoldifyPlaylist";
-import GoldifyPlaylistData from "../../../js/Solo/goldify-playlist/GoldifyPlaylistData";
+import GoldifyPlaylist from "../../../js/solo/goldify-playlist/GoldifyPlaylist";
+import GoldifyPlaylistData from "../../../js/solo/goldify-playlist/GoldifyPlaylistData";
 import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
 import { findExistingGoldifyPlaylistByName } from "../../../js/utils/playlist";
 

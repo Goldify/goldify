@@ -2,7 +2,7 @@ import React from "react";
 import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
-import UserInfo from "../../../js/Solo/user-info/UserInfo";
+import UserInfo from "../../../js/solo/user-info/UserInfo";
 import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
 import { retrieveUserDataAxios } from "../../../js/utils/UserInfoUtils";
 
