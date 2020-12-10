@@ -1,9 +1,9 @@
 import { basicHeaders } from "../../js/utils/axiosHelpers";
 
-const goldifyExecuteTestUtils = require("../../__test_utils__/GoldifyExecuteTestUtils");
-const axiosHeadersTestUtils = require("../../__test_utils__/axiosHelpersTestUtils");
+const goldifySolofixtures = require("../../__fixtures__/GoldifySolofixtures");
+const axiosHeadersfixtures = require("../../__fixtures__/axiosHelpersfixtures");
 
 test("basicHeaders returns a properly formatted header", async () => {
-  const headers = basicHeaders(goldifyExecuteTestUtils.getTokensTestData());
-  expect(headers).toEqual(axiosHeadersTestUtils.basicHeaders());
+  const headers = basicHeaders(goldifySolofixtures.getTokensTestData());
+  expect(headers).toEqual(axiosHeadersfixtures.basicHeaders());
 });

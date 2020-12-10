@@ -1,7 +1,7 @@
-import React, { Component }  from 'react';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
-import GoldifyLandingPage from './landing/GoldifyLandingPage'
-import GoldifyExecutePage from './execute/GoldifyExecutePage'
+import React, { Component } from "react";
+import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import GoldifyLandingPage from "./landing/GoldifyLandingPage";
+import GoldifySoloPage from "./Solo/GoldifySoloPage";
 import logo from "../assets/goldify_logo.png";
 import "../css/GoldifyApp.css";
 
@@ -13,8 +13,16 @@ class GoldifyApp extends Component {
           <nav>
             <img src={logo} alt="Goldify Logo" className="GoldifyApp-logo" />
             <ul>
-              <li><Link id="home-link" to={'/'} >Home</Link></li>
-              <li><Link id="get-started-link" to={'/goldify'}>Get Started</Link></li>
+              <li>
+                <Link id="home-link" to={"/"}>
+                  Home
+                </Link>
+              </li>
+              <li>
+                <Link id="get-started-link" to={"/goldify"}>
+                  Get Started
+                </Link>
+              </li>
             </ul>
           </nav>
           <header>
@@ -25,8 +33,8 @@ class GoldifyApp extends Component {
             </div>
           </header>
           <Switch>
-            <Route exact path='/' component={GoldifyLandingPage} />
-            <Route path='/goldify' component={GoldifyExecutePage} />
+            <Route exact path="/" component={GoldifyLandingPage} />
+            <Route path="/goldify" component={GoldifySoloPage} />
           </Switch>
         </div>
       </Router>
