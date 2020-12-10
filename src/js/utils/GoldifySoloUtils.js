@@ -32,7 +32,10 @@ export const retrieveSpotifyApiScopesNeeded = () => {
     "user-read-private",
     "user-read-email",
     "user-top-read",
-    "playlist-read-private",
+    "playlist-modify-public",
+    "playlist-modify-private",
+    "ugc-image-upload",
+    "playlist-read-private", 
   ].join(" ");
 };
 

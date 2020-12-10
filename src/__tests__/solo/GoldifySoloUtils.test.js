@@ -12,7 +12,11 @@ import {
   retrieveTokensAxios,
   replaceWindowURL,
   getLoadingPage,
+<<<<<<< HEAD:src/__tests__/solo/GoldifySoloUtils.test.js
 } from "../../js/utils/GoldifySoloUtils";
+=======
+} from "../../js/utils/GoldifyExecuteUtils";
+>>>>>>> b57c8ad14a5fb4883b53daed1559bcc723b47d1d:src/__tests__/execute/GoldifyExecuteUtils.test.js
 
 jest.mock("axios");
 
@@ -32,6 +36,8 @@ test("The Spotify API scopes string includes all scopes needed for Goldify", () 
   expect(spotifyApiScope).toContain("user-read-private");
   expect(spotifyApiScope).toContain("user-read-email");
   expect(spotifyApiScope).toContain("user-top-read");
+  expect(spotifyApiScope).toContain("playlist-modify-public");
+  expect(spotifyApiScope).toContain("ugc-image-upload");
 });
 
 test("The Spotify API Authorization URL has correct components in it", () => {
@@ -59,7 +65,11 @@ test("Landing page should render null authentication code", () => {
 
 test("Check for to make sure retrieveTokensAxios returns correct mock data", async () => {
   axios.post.mockResolvedValue({
+<<<<<<< HEAD:src/__tests__/solo/GoldifySoloUtils.test.js
     data: goldifySolofixtures.getTokensTestData(),
+=======
+    data: goldifyExecuteTestUtils.getTokensTestData(),
+>>>>>>> b57c8ad14a5fb4883b53daed1559bcc723b47d1d:src/__tests__/execute/GoldifyExecuteUtils.test.js
   });
 
   const responseData = await retrieveTokensAxios();
