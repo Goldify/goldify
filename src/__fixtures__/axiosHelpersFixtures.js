@@ -1,4 +1,4 @@
-const { testAccessToken } = require("./GoldifySolofixtures");
+const { testAccessToken } = require("./GoldifySoloFixtures");
 
 exports.basicHeaders = function () {
   return {
