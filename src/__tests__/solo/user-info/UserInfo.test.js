@@ -16,8 +16,8 @@ jest.mock("../../../js/utils/UserInfoUtils", () => ({
 
 configure({ adapter: new Adapter() });
 
-const goldifySolofixtures = require("../../../__fixtures__/GoldifySolofixtures");
-const userInfofixtures = require("../../../__fixtures__/UserInfofixtures");
+const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
+const userInfoFixtures = require("../../../__fixtures__/UserInfoFixtures");
 
 test("Test UserInfo with and without retrievedTokenData", async () => {
   const wrapper = shallow(<UserInfo retrievedTokenData={{}} />);
@@ -26,28 +26,28 @@ test("Test UserInfo with and without retrievedTokenData", async () => {
   expect(wrapper.instance().retrieveUserData).not.toHaveBeenCalled();
 
   wrapper.setProps({
-    retrievedTokenData: goldifySolofixtures.getTokensTestData(),
+    retrievedTokenData: goldifySoloFixtures.getTokensTestData(),
   });
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveUserData).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().retrieveUserData).toHaveBeenCalledWith(
-    goldifySolofixtures.getTokensTestData()
+    goldifySoloFixtures.getTokensTestData()
   );
 });
 
 test("Test GoldifySoloPage functionality: retrieveUserData", async () => {
   retrieveUserDataAxios.mockImplementation(() =>
-    Promise.resolve(userInfofixtures.getUserTestData())
+    Promise.resolve(userInfoFixtures.getUserTestData())
   );
 
   const wrapper = shallow(<UserInfo retrievedTokenData={{}} />);
   wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
-    .retrieveUserData(goldifySolofixtures.getTokensTestData());
+    .retrieveUserData(goldifySoloFixtures.getTokensTestData());
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    userData: userInfofixtures.getUserTestData(),
+    userData: userInfoFixtures.getUserTestData(),
   });
 });
 
@@ -57,7 +57,7 @@ test("Expect home page to load when running retrieveUserData with bad data", asy
   const wrapper = shallow(<UserInfo retrievedTokenData={{}} />);
   await wrapper
     .instance()
-    .retrieveUserData(goldifySolofixtures.getTokensTestData());
+    .retrieveUserData(goldifySoloFixtures.getTokensTestData());
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
   expect(replaceWindowURL).toHaveBeenCalledWith("/");
 });
@@ -77,18 +77,18 @@ test("Confirm an error occurs when attempting to grab the user data component wi
 test("Check for user data in user data page after setting the state", () => {
   const wrapper = shallow(<UserInfo retrievedTokenData={{}} />);
   wrapper.instance().state = {
-    userData: userInfofixtures.getUserTestData(),
+    userData: userInfoFixtures.getUserTestData(),
   };
   let userInfoDivString = JSON.stringify(wrapper.instance().getUserInfoDiv());
-  expect(userInfoDivString).toContain(userInfofixtures.testUserImageURL);
-  expect(userInfoDivString).toContain(userInfofixtures.testUserFollowersTotal);
+  expect(userInfoDivString).toContain(userInfoFixtures.testUserImageURL);
+  expect(userInfoDivString).toContain(userInfoFixtures.testUserFollowersTotal);
   expect(userInfoDivString).toContain(
-    userInfofixtures.testUserExternalUrlSpotify
+    userInfoFixtures.testUserExternalUrlSpotify
   );
-  expect(userInfoDivString).toContain(userInfofixtures.testUserCountry);
-  expect(userInfoDivString).toContain(userInfofixtures.testUserId);
-  expect(userInfoDivString).toContain(userInfofixtures.testUserDisplayName);
-  expect(userInfoDivString).toContain(userInfofixtures.testUserEmail);
+  expect(userInfoDivString).toContain(userInfoFixtures.testUserCountry);
+  expect(userInfoDivString).toContain(userInfoFixtures.testUserId);
+  expect(userInfoDivString).toContain(userInfoFixtures.testUserDisplayName);
+  expect(userInfoDivString).toContain(userInfoFixtures.testUserEmail);
 });
 
 test("Check for which div is loaded on render for UserInfo", () => {
@@ -97,6 +97,6 @@ test("Check for which div is loaded on render for UserInfo", () => {
     .fn()
     .mockReturnValue("User Info Div!");
   expect(wrapper.instance().render()).toEqual(<div />);
-  wrapper.instance().state.userData = userInfofixtures.getUserTestData();
+  wrapper.instance().state.userData = userInfoFixtures.getUserTestData();
   expect(wrapper.instance().render()).toEqual("User Info Div!");
 });

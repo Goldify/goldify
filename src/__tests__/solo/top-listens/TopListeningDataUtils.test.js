@@ -10,24 +10,20 @@ import {
 
 jest.mock("axios");
 
-const goldifySolofixtures = require("../../../__fixtures__/GoldifySolofixtures");
-const topListeningDatafixtures = require("../../../__fixtures__/TopListeningDatafixtures");
+const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
+const topListeningDataFixtures = require("../../../__fixtures__/TopListeningDataFixtures");
 
 test("Check for to make sure retrieveTopListeningDataAxios throws error on bad data", async () => {
   axios.get.mockResolvedValue(null);
   console.log = jest.fn();
-  await retrieveTopListeningDataAxios(
-    goldifySolofixtures.getTokensTestData()
-  );
+  await retrieveTopListeningDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
     TypeError("Cannot read property 'data' of null")
   );
 
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
-  await retrieveTopListeningDataAxios(
-    goldifySolofixtures.getTokensTestData()
-  );
+  await retrieveTopListeningDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
     TypeError("Cannot read property 'data' of undefined")
   );
@@ -35,13 +31,13 @@ test("Check for to make sure retrieveTopListeningDataAxios throws error on bad d
 
 test("Check for to make sure retrieveTopListeningDataAxios returns correct mock data", async () => {
   axios.get.mockResolvedValue({
-    data: topListeningDatafixtures.getTopListeningData(),
+    data: topListeningDataFixtures.getTopListeningData(),
   });
 
   const responseData = await retrieveTopListeningDataAxios(
-    goldifySolofixtures.getTokensTestData()
+    goldifySoloFixtures.getTokensTestData()
   );
-  expect(responseData).toEqual(topListeningDatafixtures.getTopListeningData());
+  expect(responseData).toEqual(topListeningDataFixtures.getTopListeningData());
 });
 
 test("Confirm getTopListeningDataSpotifyApiURL returns the correct Spotify API URL including params", () => {

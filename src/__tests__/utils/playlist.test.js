@@ -14,8 +14,8 @@ import { goldifyBase64 } from "../../assets/goldifyBase64String";
 
 jest.mock("axios");
 
-const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
-const playlistFixtures = require("../../../__fixtures__/playlistFixtures");
+const goldifySoloFixtures = require("../../__fixtures__/GoldifySoloFixtures");
+const playlistFixtures = require("../../__fixtures__/playlistFixtures");
 
 test("Confirm createPlaylistUrl returns the correct Spotify API URL including params", () => {
   const userId = "abc123";

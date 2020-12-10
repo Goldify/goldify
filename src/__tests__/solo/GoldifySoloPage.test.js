@@ -24,36 +24,36 @@ jest.mock("../../js/utils/UserInfoUtils", () => ({
 
 configure({ adapter: new Adapter() });
 
-const goldifySolofixtures = require("../../__fixtures__/GoldifySolofixtures");
+const goldifySoloFixtures = require("../../__fixtures__/GoldifySoloFixtures");
 
 test("Confirm authorization code in componentDidMount is sent to retrieveTokensOnPageLoad", () => {
   const wrapper = shallow(<GoldifySoloPage />);
   wrapper.instance().retrieveTokensOnPageLoad = jest.fn();
 
   retrieveAuthenticationCode.mockReturnValue(
-    goldifySolofixtures.testAuthenticationCode
+    goldifySoloFixtures.testAuthenticationCode
   );
 
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveTokensOnPageLoad).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().retrieveTokensOnPageLoad).toHaveBeenCalledWith(
-    goldifySolofixtures.testAuthenticationCode
+    goldifySoloFixtures.testAuthenticationCode
   );
 });
 
 test("Test GoldifySoloPage functionality: retrieveTokensOnPageLoad", async () => {
   retrieveTokensAxios.mockImplementation(() =>
-    Promise.resolve(goldifySolofixtures.getTokensTestData())
+    Promise.resolve(goldifySoloFixtures.getTokensTestData())
   );
 
   const wrapper = shallow(<GoldifySoloPage />);
   wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
-    .retrieveTokensOnPageLoad(goldifySolofixtures.testAuthenticationCode);
+    .retrieveTokensOnPageLoad(goldifySoloFixtures.testAuthenticationCode);
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    retrievedTokenData: goldifySolofixtures.getTokensTestData(),
+    retrievedTokenData: goldifySoloFixtures.getTokensTestData(),
   });
 });
 
@@ -63,7 +63,7 @@ test("Expect home page to load when running retrieveTokensOnPageLoad with bad da
   const wrapper = shallow(<GoldifySoloPage />);
   await wrapper
     .instance()
-    .retrieveTokensOnPageLoad(goldifySolofixtures.testAuthenticationCode);
+    .retrieveTokensOnPageLoad(goldifySoloFixtures.testAuthenticationCode);
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
   expect(replaceWindowURL).toHaveBeenCalledWith("/");
 });
@@ -75,13 +75,13 @@ test("Check for which page is loaded on render for GoldifySoloPage", () => {
     .fn()
     .mockReturnValue("Goldify Page!");
   expect(wrapper.instance().render()).toEqual("Loading Page!");
-  wrapper.instance().state.retrievedTokenData = goldifySolofixtures.getTokensTestData();
+  wrapper.instance().state.retrievedTokenData = goldifySoloFixtures.getTokensTestData();
   expect(wrapper.instance().render()).toEqual("Goldify Page!");
 });
 
 test("Check for goldify page container class", () => {
   const wrapper = shallow(<GoldifySoloPage />);
-  wrapper.instance().state.retrievedTokenData = goldifySolofixtures.getTokensTestData();
+  wrapper.instance().state.retrievedTokenData = goldifySoloFixtures.getTokensTestData();
   let goldifyPageString = JSON.stringify(wrapper.instance().getGoldifyPage());
   expect(goldifyPageString).toContain('"className":"goldify-page-container"');
 });

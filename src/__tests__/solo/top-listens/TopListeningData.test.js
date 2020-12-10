@@ -16,8 +16,8 @@ jest.mock("../../../js/utils/TopListeningDataUtils", () => ({
 
 configure({ adapter: new Adapter() });
 
-const goldifySolofixtures = require("../../../__fixtures__/GoldifySolofixtures");
-const topListeningDatafixtures = require("../../../__fixtures__/TopListeningDatafixtures");
+const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
+const topListeningDataFixtures = require("../../../__fixtures__/TopListeningDataFixtures");
 
 test("Test TopListeningData with and without retrievedTokenData", async () => {
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
@@ -26,28 +26,28 @@ test("Test TopListeningData with and without retrievedTokenData", async () => {
   expect(wrapper.instance().retrieveTopListeningData).not.toHaveBeenCalled();
 
   wrapper.setProps({
-    retrievedTokenData: goldifySolofixtures.getTokensTestData(),
+    retrievedTokenData: goldifySoloFixtures.getTokensTestData(),
   });
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveTopListeningData).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().retrieveTopListeningData).toHaveBeenCalledWith(
-    goldifySolofixtures.getTokensTestData()
+    goldifySoloFixtures.getTokensTestData()
   );
 });
 
 test("Test functionality: retrieveTopListeningData", async () => {
   retrieveTopListeningDataAxios.mockImplementation(() =>
-    Promise.resolve(topListeningDatafixtures.getTopListeningData())
+    Promise.resolve(topListeningDataFixtures.getTopListeningData())
   );
 
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
   wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
-    .retrieveTopListeningData(goldifySolofixtures.getTokensTestData());
+    .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    topListeningData: topListeningDatafixtures.getTopListeningData(),
+    topListeningData: topListeningDataFixtures.getTopListeningData(),
   });
 });
 
@@ -57,7 +57,7 @@ test("Expect home page to load when running retrieveTopListeningData with bad da
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
   await wrapper
     .instance()
-    .retrieveTopListeningData(goldifySolofixtures.getTokensTestData());
+    .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
   expect(replaceWindowURL).toHaveBeenCalledWith("/");
 });
@@ -77,28 +77,28 @@ test("Confirm an error occurs when attempting to grab the top listen data compon
 test("Check for top listen data in top listen data page after setting the state", () => {
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
   wrapper.instance().state = {
-    topListeningData: topListeningDatafixtures.getTopListeningData(),
+    topListeningData: topListeningDataFixtures.getTopListeningData(),
   };
   let topListeningDataDivString = JSON.stringify(
     wrapper.instance().getTopListeningDataDiv()
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDatafixtures.testAlbumName
+    topListeningDataFixtures.testAlbumName
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDatafixtures.testSongName
+    topListeningDataFixtures.testSongName
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDatafixtures.testPopularity
+    topListeningDataFixtures.testPopularity
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDatafixtures.testAlbumArtImageURL
+    topListeningDataFixtures.testAlbumArtImageURL
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDatafixtures.testArtistName1
+    topListeningDataFixtures.testArtistName1
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDatafixtures.testArtistName2
+    topListeningDataFixtures.testArtistName2
   );
 });
 
@@ -108,6 +108,6 @@ test("Check for which div is loaded on render for TopListeningData", () => {
     .fn()
     .mockReturnValue("Top Listens Table!");
   expect(wrapper.instance().render()).toEqual(<div />);
-  wrapper.instance().state.topListeningData = topListeningDatafixtures.getTopListeningData();
+  wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData();
   expect(wrapper.instance().render()).toEqual("Top Listens Table!");
 });

@@ -4,31 +4,31 @@ import { retrieveUserDataAxios } from "../../../js/utils/UserInfoUtils";
 
 jest.mock("axios");
 
-const goldifySolofixtures = require("../../../__fixtures__/GoldifySolofixtures");
-const userInfofixtures = require("../../../__fixtures__/UserInfofixtures");
+const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
+const userInfoFixtures = require("../../../__fixtures__/UserInfoFixtures");
 
 test("Check for to make sure retrieveUserDataAxios returns correct mock data", async () => {
   axios.get.mockResolvedValue({
-    data: userInfofixtures.getUserTestData(),
+    data: userInfoFixtures.getUserTestData(),
   });
 
   const responseData = await retrieveUserDataAxios(
-    goldifySolofixtures.getTokensTestData()
+    goldifySoloFixtures.getTokensTestData()
   );
-  expect(responseData).toEqual(userInfofixtures.getUserTestData());
+  expect(responseData).toEqual(userInfoFixtures.getUserTestData());
 });
 
 test("Check for to make sure retrieveUserDataAxios throws error on bad data", async () => {
   axios.get.mockResolvedValue(null);
   console.log = jest.fn();
-  await retrieveUserDataAxios(goldifySolofixtures.getTokensTestData());
+  await retrieveUserDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
     TypeError("Cannot read property 'data' of null")
   );
 
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
-  await retrieveUserDataAxios(goldifySolofixtures.getTokensTestData());
+  await retrieveUserDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
     TypeError("Cannot read property 'data' of undefined")
   );

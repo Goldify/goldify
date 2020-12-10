@@ -18,8 +18,8 @@ configure({ adapter: new Adapter() });
 
 const TEST_PLAYLIST_ID = "TEST_PLAYLIST_ID";
 
-const goldifySolofixtures = require("../../../__fixtures__/GoldifySolofixtures");
-const playlistTracksfixtures = require("../../../__fixtures__/playlistTracksfixtures");
+const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
+const playlistTracksFixtures = require("../../../__fixtures__/playlistTracksFixtures");
 
 const goldifyPlaylistDataWrapper = () => {
   return shallow(
@@ -37,21 +37,21 @@ test("Test GoldifyPlaylistData with and without retrievedTokenData", async () =>
   expect(wrapper.instance().retrieveGoldifyPlaylistData).not.toHaveBeenCalled();
 
   wrapper.setProps({
-    retrievedTokenData: goldifySolofixtures.getTokensTestData(),
+    retrievedTokenData: goldifySoloFixtures.getTokensTestData(),
   });
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveGoldifyPlaylistData).toHaveBeenCalledTimes(
     1
   );
   expect(wrapper.instance().retrieveGoldifyPlaylistData).toHaveBeenCalledWith(
-    goldifySolofixtures.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     TEST_PLAYLIST_ID
   );
 });
 
 test("Test functionality: retrieveGoldifyPlaylistData", async () => {
   getPlaylistTracksById.mockImplementation(() =>
-    Promise.resolve(playlistTracksfixtures.playlistTracksById(TEST_PLAYLIST_ID))
+    Promise.resolve(playlistTracksFixtures.playlistTracksById(TEST_PLAYLIST_ID))
   );
 
   const wrapper = goldifyPlaylistDataWrapper();
@@ -59,12 +59,12 @@ test("Test functionality: retrieveGoldifyPlaylistData", async () => {
   await wrapper
     .instance()
     .retrieveGoldifyPlaylistData(
-      goldifySolofixtures.getTokensTestData(),
+      goldifySoloFixtures.getTokensTestData(),
       TEST_PLAYLIST_ID
     );
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    goldifyPlaylistData: playlistTracksfixtures.playlistTracksById(
+    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
       TEST_PLAYLIST_ID
     ),
   });
@@ -77,7 +77,7 @@ test("Expect home page to load when running retrieveGoldifyPlaylistData with bad
   await wrapper
     .instance()
     .retrieveGoldifyPlaylistData(
-      goldifySolofixtures.getTokensTestData(),
+      goldifySoloFixtures.getTokensTestData(),
       TEST_PLAYLIST_ID
     );
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
@@ -87,7 +87,7 @@ test("Expect home page to load when running retrieveGoldifyPlaylistData with bad
 test("Check for goldify playlist data in goldify playlist data page after setting the state", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().state = {
-    goldifyPlaylistData: playlistTracksfixtures.playlistTracksById(
+    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
       TEST_PLAYLIST_ID
     ),
   };
@@ -103,7 +103,7 @@ test("Check for which div is loaded on render for GoldifyPlaylistData", () => {
     .fn()
     .mockReturnValue("Goldify Playlist Table!");
   expect(wrapper.instance().render()).toEqual(<div />);
-  wrapper.instance().state.goldifyPlaylistData = playlistTracksfixtures.playlistTracksById(
+  wrapper.instance().state.goldifyPlaylistData = playlistTracksFixtures.playlistTracksById(
     TEST_PLAYLIST_ID
   );
   expect(wrapper.instance().render()).toEqual("Goldify Playlist Table!");

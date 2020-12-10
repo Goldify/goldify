@@ -12,15 +12,11 @@ import {
   retrieveTokensAxios,
   replaceWindowURL,
   getLoadingPage,
-<<<<<<< HEAD:src/__tests__/solo/GoldifySoloUtils.test.js
 } from "../../js/utils/GoldifySoloUtils";
-=======
-} from "../../js/utils/GoldifyExecuteUtils";
->>>>>>> b57c8ad14a5fb4883b53daed1559bcc723b47d1d:src/__tests__/execute/GoldifyExecuteUtils.test.js
 
 jest.mock("axios");
 
-const goldifySolofixtures = require("../../__fixtures__/GoldifySolofixtures");
+const goldifySoloFixtures = require("../../__fixtures__/GoldifySoloFixtures");
 
 test("Function to generate random function is random", () => {
   let randomStr1 = generateRandomString(16);
@@ -65,15 +61,11 @@ test("Landing page should render null authentication code", () => {
 
 test("Check for to make sure retrieveTokensAxios returns correct mock data", async () => {
   axios.post.mockResolvedValue({
-<<<<<<< HEAD:src/__tests__/solo/GoldifySoloUtils.test.js
-    data: goldifySolofixtures.getTokensTestData(),
-=======
-    data: goldifyExecuteTestUtils.getTokensTestData(),
->>>>>>> b57c8ad14a5fb4883b53daed1559bcc723b47d1d:src/__tests__/execute/GoldifyExecuteUtils.test.js
+    data: goldifySoloFixtures.getTokensTestData(),
   });
 
   const responseData = await retrieveTokensAxios();
-  expect(responseData).toEqual(goldifySolofixtures.getTokensTestData());
+  expect(responseData).toEqual(goldifySoloFixtures.getTokensTestData());
 });
 
 test("Check for to make sure retrieveTokensAxios throws error on bad data", async () => {

@@ -9,8 +9,8 @@ import {
 
 jest.mock("axios");
 
-const goldifySolofixtures = require("../../__fixtures__/GoldifySolofixtures");
-const playlistTracksfixtures = require("../../__fixtures__/playlistTracksfixtures");
+const goldifySoloFixtures = require("../../__fixtures__/GoldifySoloFixtures");
+const playlistTracksFixtures = require("../../__fixtures__/playlistTracksFixtures");
 
 test("Confirm playlistTracksUrl returns the correct Spotify API URL including params", () => {
   const playlistId = "abc123";
@@ -22,7 +22,7 @@ test("Confirm playlistTracksUrl returns the correct Spotify API URL including pa
 test("Gets Tracks by Playlist Id", async () => {
   const playlistId = "Abcd1234";
 
-  const playlistTracksResponseData = playlistTracksfixtures.playlistTracksById(
+  const playlistTracksResponseData = playlistTracksFixtures.playlistTracksById(
     playlistId
   );
   axios.get.mockResolvedValue({
@@ -30,7 +30,7 @@ test("Gets Tracks by Playlist Id", async () => {
   });
 
   const responseData = await getPlaylistTracksById(
-    goldifySolofixtures.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId
   );
   expect(responseData).toEqual(playlistTracksResponseData);
@@ -42,7 +42,7 @@ test("GetTracks throws error on bad data", async () => {
   axios.get.mockResolvedValue(null);
   console.log = jest.fn();
   await getPlaylistTracksById(
-    goldifySolofixtures.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId
   );
   expect(console.log).toHaveBeenCalledWith(
@@ -52,7 +52,7 @@ test("GetTracks throws error on bad data", async () => {
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
   await getPlaylistTracksById(
-    goldifySolofixtures.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId
   );
   expect(console.log).toHaveBeenCalledWith(
@@ -64,7 +64,7 @@ test("Replace Tracks by Playlist Id", async () => {
   const playlistId = "Abcd1234";
   const trackURIs = ["spotify:track:testTrack1", "spotify:track:testTrack2"];
 
-  const playlistTracksResponseData = playlistTracksfixtures.replacePlaylistTracksByIdAndURIs(
+  const playlistTracksResponseData = playlistTracksFixtures.replacePlaylistTracksByIdAndURIs(
     playlistId,
     trackURIs
   );
@@ -73,7 +73,7 @@ test("Replace Tracks by Playlist Id", async () => {
   });
 
   const responseData = await replacePlaylistTracks(
-    goldifySolofixtures.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId,
     trackURIs
   );
@@ -87,7 +87,7 @@ test("GetTracks throws error on bad data", async () => {
   axios.put.mockResolvedValue(null);
   console.log = jest.fn();
   await replacePlaylistTracks(
-    goldifySolofixtures.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId,
     trackURIs
   );
@@ -98,7 +98,7 @@ test("GetTracks throws error on bad data", async () => {
   axios.put.mockResolvedValue(undefined);
   console.log = jest.fn();
   await replacePlaylistTracks(
-    goldifySolofixtures.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId,
     trackURIs
   );
@@ -108,8 +108,8 @@ test("GetTracks throws error on bad data", async () => {
 });
 
 test("Get URIs from List", async () => {
-  const trackList = playlistTracksfixtures.tracksWithURIs();
-  const trackURIs = playlistTracksfixtures.trackURIs();
+  const trackList = playlistTracksFixtures.tracksWithURIs();
+  const trackURIs = playlistTracksFixtures.trackURIs();
   const result = getURIsFromList(trackList);
   expect(result).toEqual(trackURIs);
 });
