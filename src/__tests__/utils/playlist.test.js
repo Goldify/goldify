@@ -7,12 +7,15 @@ import {
   findExistingGoldifyPlaylistByName,
   getPlaylistUrl,
   getPlaylistById,
-} from "../../../js/utils/playlist";
+  uploadPlaylistImageUrl,
+  uploadPlaylistImage,
+} from "../../js/utils/playlist";
+import { goldifyBase64 } from "../../assets/goldifyBase64String";
 
 jest.mock("axios");
 
-const goldifyExecuteTestUtils = require("../../../__test_utils__/GoldifyExecuteTestUtils");
-const playlistTestUtils = require("../../../__test_utils__/playlistTestUtils");
+const goldifyExecuteTestUtils = require("../../__test_utils__/GoldifyExecuteTestUtils");
+const playlistTestUtils = require("../../__test_utils__/playlistTestUtils");
 
 test("Confirm createPlaylistUrl returns the correct Spotify API URL including params", () => {
   const userId = "abc123";
@@ -31,6 +34,13 @@ test("Confirm getPlaylistUrl returns the correct Spotify API URL including param
   const playlistId = "testPlaylistId123";
   expect(getPlaylistUrl(playlistId)).toEqual(
     "https://api.spotify.com/v1/playlists/testPlaylistId123"
+  );
+});
+
+test("Confirm uploadPlaylistImageUrl returns the correct Spotify API URL including params", () => {
+  const playlistId = "testPlaylistId123";
+  expect(uploadPlaylistImageUrl(playlistId)).toEqual(
+    "https://api.spotify.com/v1/playlists/testPlaylistId123/images"
   );
 });
 
@@ -200,5 +210,47 @@ test("findExistingGoldifyPlaylistByName throws error on bad data", async () => {
   );
   expect(console.log).toHaveBeenCalledWith(
     TypeError("Cannot read property 'data' of undefined")
+  );
+});
+
+test("Uploads a Goldify image", async () => {
+  const playlistId = "abcd1234";
+  const base64Image = goldifyBase64;
+
+  axios.put.mockResolvedValue({
+    status: 202,
+  });
+
+  const responseData = await uploadPlaylistImage(
+    goldifyExecuteTestUtils.getTokensTestData(),
+    playlistId,
+    base64Image
+  );
+  expect(responseData).toEqual({ status: 202 });
+});
+
+test("Upload Goldify Playlist throws error on bad data", async () => {
+  const playlistId = "abcd1234";
+  const base64Image = null;
+  axios.put.mockResolvedValue(null);
+  console.log = jest.fn();
+  await uploadPlaylistImage(
+    goldifyExecuteTestUtils.getTokensTestData(),
+    playlistId,
+    base64Image
+  );
+  expect(console.log).toHaveBeenCalledWith(
+    TypeError("Cannot read property 'status' of null")
+  );
+
+  axios.put.mockResolvedValue({ status: 400 });
+  console.log = jest.fn();
+  await uploadPlaylistImage(
+    goldifyExecuteTestUtils.getTokensTestData(),
+    playlistId,
+    base64Image
+  );
+  expect(console.log).toHaveBeenCalledWith(
+    Error("Spotify did not accept the image uploaded")
   );
 });

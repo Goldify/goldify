@@ -97,3 +97,35 @@ export const getPlaylistById = async (retrievedTokenData, playlistId) => {
     console.log(error);
   }
 };
+
+export const uploadPlaylistImageUrl = (playlistId) => {
+  return "https://api.spotify.com/v1/playlists/" + playlistId + "/images";
+};
+
+export const uploadPlaylistImage = async (
+  retrievedTokenData,
+  playlistId,
+  imageBase64
+) => {
+  const headers = {
+    headers: {
+      Authorization: "Bearer " + retrievedTokenData.access_token,
+      "Content-Type": "image/jpeg",
+    },
+  };
+  const data = imageBase64;
+
+  try {
+    const response = await axios.put(
+      uploadPlaylistImageUrl(playlistId),
+      data,
+      headers
+    );
+    if (response.status == 202) {
+      return response;
+    } // won't return anything substantial
+    throw Error("Spotify did not accept the image uploaded");
+  } catch (error) {
+    console.log(error);
+  }
+};

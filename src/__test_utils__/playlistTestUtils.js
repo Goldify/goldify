@@ -8,7 +8,7 @@ const testNonGoldifyPlaylistDescription =
 const testUserId = "TEST_USER_ID";
 const testSnapshotId = "abcd12345";
 
-exports.createGoldifyPlaylist = function(
+exports.createGoldifyPlaylist = function (
   userId,
   playlistName,
   playlistDescription
@@ -65,7 +65,7 @@ exports.createGoldifyPlaylist = function(
   };
 };
 
-exports.getPlaylistById = function(playlistId) {
+exports.getPlaylistById = function (playlistId) {
   return {
     collaborative: false,
     description: testPlaylistDescription,
@@ -118,7 +118,7 @@ exports.getPlaylistById = function(playlistId) {
   };
 };
 
-exports.userHasExistingGoldifyPlaylist = function(playlistName) {
+exports.userHasExistingGoldifyPlaylist = function (playlistName) {
   return {
     href: "https://api.spotify.com/v1/users/" + testUserId + "/playlists",
     items: [
@@ -236,7 +236,7 @@ exports.userHasExistingGoldifyPlaylist = function(playlistName) {
 };
 
 // Matches goldify playlist in userHasExistingGoldifyPlaylist
-exports.existingGoldifyPlaylist = function(playlistName) {
+exports.existingGoldifyPlaylist = function (playlistName) {
   return {
     collaborative: false,
     description: testPlaylistDescription,
@@ -289,7 +289,7 @@ exports.existingGoldifyPlaylist = function(playlistName) {
   };
 };
 
-exports.userDoesntHaveExistingGoldifyPlaylist = function() {
+exports.userDoesntHaveExistingGoldifyPlaylist = function () {
   return {
     href: "https://api.spotify.com/v1/users/" + testUserId + "/playlists",
     items: [
@@ -356,7 +356,7 @@ exports.userDoesntHaveExistingGoldifyPlaylist = function() {
   };
 };
 
-exports.userDoesntHavePlaylists = function() {
+exports.userDoesntHavePlaylists = function () {
   return {
     href: "https://api.spotify.com/v1/users/" + testUserId + "/playlists",
     items: [],

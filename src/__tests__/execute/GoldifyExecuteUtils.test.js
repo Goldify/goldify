@@ -1,6 +1,6 @@
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 import axios from "axios";
-import qs from "qs"
+import qs from "qs";
 import {
   clientId,
   redirectUri,
@@ -11,10 +11,10 @@ import {
   retrieveAuthenticationCode,
   retrieveTokensAxios,
   replaceWindowURL,
-  getLoadingPage
-} from '../../js/utils/GoldifyExecuteUtils';
+  getLoadingPage,
+} from "../../js/utils/GoldifyExecuteUtils";
 
-jest.mock('axios');
+jest.mock("axios");
 
 const goldifyExecuteTestUtils = require("../../__test_utils__/GoldifyExecuteTestUtils");
 
@@ -32,15 +32,21 @@ test("The Spotify API scopes string includes all scopes needed for Goldify", () 
   expect(spotifyApiScope).toContain("user-read-private");
   expect(spotifyApiScope).toContain("user-read-email");
   expect(spotifyApiScope).toContain("user-top-read");
+  expect(spotifyApiScope).toContain("playlist-modify-public");
+  expect(spotifyApiScope).toContain("ugc-image-upload");
 });
 
 test("The Spotify API Authorization URL has correct components in it", () => {
   let spotifyApiAuthURL = retrieveSpotifyApiAuthorizeURL();
-  expect(spotifyApiAuthURL).toContain("https://accounts.spotify.com/authorize?");
+  expect(spotifyApiAuthURL).toContain(
+    "https://accounts.spotify.com/authorize?"
+  );
   expect(spotifyApiAuthURL).toContain("response_type=code");
   expect(spotifyApiAuthURL).toContain("client_id=" + qs.stringify(clientId));
   expect(spotifyApiAuthURL).toContain("scope=");
-  expect(spotifyApiAuthURL).toContain("redirect_uri=" + qs.stringify(redirectUri));
+  expect(spotifyApiAuthURL).toContain(
+    "redirect_uri=" + qs.stringify(redirectUri)
+  );
   expect(spotifyApiAuthURL).toContain("state=");
 });
 
@@ -55,7 +61,7 @@ test("Landing page should render null authentication code", () => {
 
 test("Check for to make sure retrieveTokensAxios returns correct mock data", async () => {
   axios.post.mockResolvedValue({
-    data: goldifyExecuteTestUtils.getTokensTestData()
+    data: goldifyExecuteTestUtils.getTokensTestData(),
   });
 
   const responseData = await retrieveTokensAxios();
@@ -66,12 +72,16 @@ test("Check for to make sure retrieveTokensAxios throws error on bad data", asyn
   axios.post.mockResolvedValue(null);
   console.log = jest.fn();
   await retrieveTokensAxios();
-  expect(console.log).toHaveBeenCalledWith(TypeError("Cannot read property 'data' of null"));
-  
+  expect(console.log).toHaveBeenCalledWith(
+    TypeError("Cannot read property 'data' of null")
+  );
+
   axios.post.mockResolvedValue(undefined);
   console.log = jest.fn();
   await retrieveTokensAxios();
-  expect(console.log).toHaveBeenCalledWith(TypeError("Cannot read property 'data' of undefined"));
+  expect(console.log).toHaveBeenCalledWith(
+    TypeError("Cannot read property 'data' of undefined")
+  );
 });
 
 test("Confirm replaceWindowURL replaces the window with the given URL", async () => {

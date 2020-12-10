@@ -12,7 +12,7 @@ const testTrackName2 = "TEST_SONG_NAME_2";
 const testTrackId2 = "TEST_SONG_ID_2";
 const testTimeStamp = "2020-11-11T11:11:11Z";
 
-exports.testTrack = function(trackName, trackId) {
+exports.testTrack = function (trackName, trackId) {
   return {
     added_at: testTimeStamp,
     added_by: {
@@ -82,7 +82,7 @@ exports.testTrack = function(trackName, trackId) {
   };
 };
 
-exports.playlistTracksById = function(playlistId) {
+exports.playlistTracksById = function (playlistId) {
   return {
     href:
       "https://api.spotify.com/v1/users/" +
@@ -102,7 +102,7 @@ exports.playlistTracksById = function(playlistId) {
   };
 };
 
-exports.replacePlaylistTracksByIdAndURIs = function(playlistId, trackURIs) {
+exports.replacePlaylistTracksByIdAndURIs = function (playlistId, trackURIs) {
   return {
     href:
       "https://api.spotify.com/v1/users/" +
@@ -119,12 +119,12 @@ exports.replacePlaylistTracksByIdAndURIs = function(playlistId, trackURIs) {
   };
 };
 
-exports.tracksWithURIs = function() {
+exports.tracksWithURIs = function () {
   return [
     this.testTrack(testTrackName1, testTrackId1),
     this.testTrack(testTrackName2, testTrackId2),
   ];
 };
-exports.trackURIs = function() {
+exports.trackURIs = function () {
   return ["spotify:track:" + testTrackId1, "spotify:track:" + testTrackId2];
 };

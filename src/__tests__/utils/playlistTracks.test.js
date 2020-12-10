@@ -5,12 +5,12 @@ import {
   getPlaylistTracksById,
   replacePlaylistTracks,
   getURIsFromList,
-} from "../../../js/utils/playlistTracks";
+} from "../../js/utils/playlistTracks";
 
 jest.mock("axios");
 
-const goldifyExecuteTestUtils = require("../../../__test_utils__/GoldifyExecuteTestUtils");
-const playlistTracksTestUtils = require("../../../__test_utils__/playlistTracksTestUtils");
+const goldifyExecuteTestUtils = require("../../__test_utils__/GoldifyExecuteTestUtils");
+const playlistTracksTestUtils = require("../../__test_utils__/playlistTracksTestUtils");
 
 test("Confirm playlistTracksUrl returns the correct Spotify API URL including params", () => {
   const playlistId = "abc123";
