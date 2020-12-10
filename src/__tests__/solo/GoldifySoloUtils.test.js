@@ -12,11 +12,11 @@ import {
   retrieveTokensAxios,
   replaceWindowURL,
   getLoadingPage,
-} from "../../js/utils/GoldifyExecuteUtils";
+} from "../../js/utils/GoldifySoloUtils";
 
 jest.mock("axios");
 
-const goldifyExecuteTestUtils = require("../../__test_utils__/GoldifyExecuteTestUtils");
+const goldifySoloFixtures = require("../../__fixtures__/GoldifySoloFixtures");
 
 test("Function to generate random function is random", () => {
   let randomStr1 = generateRandomString(16);
@@ -61,11 +61,11 @@ test("Landing page should render null authentication code", () => {
 
 test("Check for to make sure retrieveTokensAxios returns correct mock data", async () => {
   axios.post.mockResolvedValue({
-    data: goldifyExecuteTestUtils.getTokensTestData(),
+    data: goldifySoloFixtures.getTokensTestData(),
   });
 
   const responseData = await retrieveTokensAxios();
-  expect(responseData).toEqual(goldifyExecuteTestUtils.getTokensTestData());
+  expect(responseData).toEqual(goldifySoloFixtures.getTokensTestData());
 });
 
 test("Check for to make sure retrieveTokensAxios throws error on bad data", async () => {

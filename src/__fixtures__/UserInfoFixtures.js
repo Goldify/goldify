@@ -13,15 +13,15 @@ exports.getUserTestData = function () {
     email: this.testUserEmail,
     images: [
       {
-        url: this.testUserImageURL
-      }
+        url: this.testUserImageURL,
+      },
     ],
     followers: {
-      total: this.testUserFollowersTotal
+      total: this.testUserFollowersTotal,
     },
     external_urls: {
-      spotify: this.testUserExternalUrlSpotify
+      spotify: this.testUserExternalUrlSpotify,
     },
-    country: this.testUserCountry
-  }
-}
+    country: this.testUserCountry,
+  };
+};

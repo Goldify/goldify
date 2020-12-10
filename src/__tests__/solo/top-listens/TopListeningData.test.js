@@ -1,27 +1,23 @@
 import React from "react";
-import '@testing-library/jest-dom';
+import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
-import TopListeningData from "../../../js/execute/top-listens/TopListeningData";
+import TopListeningData from "../../../js/solo/top-listens/TopListeningData";
 import Adapter from "enzyme-adapter-react-16";
-import {
-  replaceWindowURL
-} from '../../../js/utils/GoldifyExecuteUtils';
-import {
-  retrieveTopListeningDataAxios
-} from '../../../js/utils/TopListeningDataUtils';
+import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
+import { retrieveTopListeningDataAxios } from "../../../js/utils/TopListeningDataUtils";
 
-jest.mock('../../../js/utils/GoldifyExecuteUtils', () => ({
-  replaceWindowURL: jest.fn()
+jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
+  replaceWindowURL: jest.fn(),
 }));
 
-jest.mock('../../../js/utils/TopListeningDataUtils', () => ({
-  retrieveTopListeningDataAxios: jest.fn()
+jest.mock("../../../js/utils/TopListeningDataUtils", () => ({
+  retrieveTopListeningDataAxios: jest.fn(),
 }));
 
 configure({ adapter: new Adapter() });
 
-const goldifyExecuteTestUtils = require("../../../__test_utils__/GoldifyExecuteTestUtils");
-const topListeningDataTestUtils = require("../../../__test_utils__/TopListeningDataTestUtils");
+const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
+const topListeningDataFixtures = require("../../../__fixtures__/TopListeningDataFixtures");
 
 test("Test TopListeningData with and without retrievedTokenData", async () => {
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
@@ -30,28 +26,28 @@ test("Test TopListeningData with and without retrievedTokenData", async () => {
   expect(wrapper.instance().retrieveTopListeningData).not.toHaveBeenCalled();
 
   wrapper.setProps({
-    retrievedTokenData: goldifyExecuteTestUtils.getTokensTestData()
+    retrievedTokenData: goldifySoloFixtures.getTokensTestData(),
   });
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveTopListeningData).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().retrieveTopListeningData).toHaveBeenCalledWith(
-    goldifyExecuteTestUtils.getTokensTestData()
+    goldifySoloFixtures.getTokensTestData()
   );
 });
 
 test("Test functionality: retrieveTopListeningData", async () => {
-  retrieveTopListeningDataAxios.mockImplementation(() => Promise.resolve(
-    topListeningDataTestUtils.getTopListeningData()
-  ));
+  retrieveTopListeningDataAxios.mockImplementation(() =>
+    Promise.resolve(topListeningDataFixtures.getTopListeningData())
+  );
 
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
   wrapper.instance().setState = jest.fn();
-  await wrapper.instance().retrieveTopListeningData(
-    goldifyExecuteTestUtils.getTokensTestData()
-  );
+  await wrapper
+    .instance()
+    .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    topListeningData: topListeningDataTestUtils.getTopListeningData()
+    topListeningData: topListeningDataFixtures.getTopListeningData(),
   });
 });
 
@@ -59,9 +55,9 @@ test("Expect home page to load when running retrieveTopListeningData with bad da
   retrieveTopListeningDataAxios.mockImplementation(() => Promise.resolve());
 
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
-  await wrapper.instance().retrieveTopListeningData(
-    goldifyExecuteTestUtils.getTokensTestData()
-  );
+  await wrapper
+    .instance()
+    .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
   expect(replaceWindowURL).toHaveBeenCalledWith("/");
 });
@@ -81,21 +77,37 @@ test("Confirm an error occurs when attempting to grab the top listen data compon
 test("Check for top listen data in top listen data page after setting the state", () => {
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
   wrapper.instance().state = {
-    topListeningData: topListeningDataTestUtils.getTopListeningData()
+    topListeningData: topListeningDataFixtures.getTopListeningData(),
   };
-  let topListeningDataDivString = JSON.stringify(wrapper.instance().getTopListeningDataDiv());
-  expect(topListeningDataDivString).toContain(topListeningDataTestUtils.testAlbumName);
-  expect(topListeningDataDivString).toContain(topListeningDataTestUtils.testSongName);
-  expect(topListeningDataDivString).toContain(topListeningDataTestUtils.testPopularity);
-  expect(topListeningDataDivString).toContain(topListeningDataTestUtils.testAlbumArtImageURL);
-  expect(topListeningDataDivString).toContain(topListeningDataTestUtils.testArtistName1);
-  expect(topListeningDataDivString).toContain(topListeningDataTestUtils.testArtistName2);
+  let topListeningDataDivString = JSON.stringify(
+    wrapper.instance().getTopListeningDataDiv()
+  );
+  expect(topListeningDataDivString).toContain(
+    topListeningDataFixtures.testAlbumName
+  );
+  expect(topListeningDataDivString).toContain(
+    topListeningDataFixtures.testSongName
+  );
+  expect(topListeningDataDivString).toContain(
+    topListeningDataFixtures.testPopularity
+  );
+  expect(topListeningDataDivString).toContain(
+    topListeningDataFixtures.testAlbumArtImageURL
+  );
+  expect(topListeningDataDivString).toContain(
+    topListeningDataFixtures.testArtistName1
+  );
+  expect(topListeningDataDivString).toContain(
+    topListeningDataFixtures.testArtistName2
+  );
 });
 
 test("Check for which div is loaded on render for TopListeningData", () => {
   const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
-  wrapper.instance().getTopListeningDataDiv = jest.fn().mockReturnValue("Top Listens Table!");
+  wrapper.instance().getTopListeningDataDiv = jest
+    .fn()
+    .mockReturnValue("Top Listens Table!");
   expect(wrapper.instance().render()).toEqual(<div />);
-  wrapper.instance().state.topListeningData = topListeningDataTestUtils.getTopListeningData();
+  wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData();
   expect(wrapper.instance().render()).toEqual("Top Listens Table!");
 });

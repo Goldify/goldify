@@ -14,8 +14,8 @@ import { goldifyBase64 } from "../../assets/goldifyBase64String";
 
 jest.mock("axios");
 
-const goldifyExecuteTestUtils = require("../../__test_utils__/GoldifyExecuteTestUtils");
-const playlistTestUtils = require("../../__test_utils__/playlistTestUtils");
+const goldifySoloFixtures = require("../../__fixtures__/GoldifySoloFixtures");
+const playlistFixtures = require("../../__fixtures__/playlistFixtures");
 
 test("Confirm createPlaylistUrl returns the correct Spotify API URL including params", () => {
   const userId = "abc123";
@@ -49,7 +49,7 @@ test("Creates a Goldify Playlist", async () => {
   const playlistName = "Goldify";
   const playlistDescription = "Goldify Goldify";
 
-  const playlistResponseData = playlistTestUtils.createGoldifyPlaylist(
+  const playlistResponseData = playlistFixtures.createGoldifyPlaylist(
     userId,
     playlistName,
     playlistDescription
@@ -59,7 +59,7 @@ test("Creates a Goldify Playlist", async () => {
   });
 
   const responseData = await createGoldifyPlaylist(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     userId,
     playlistName,
     playlistDescription
@@ -75,7 +75,7 @@ test("CreatePlaylist throws error on bad data", async () => {
   axios.post.mockResolvedValue(null);
   console.log = jest.fn();
   await createGoldifyPlaylist(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     userId,
     playlistName,
     playlistDescription
@@ -87,7 +87,7 @@ test("CreatePlaylist throws error on bad data", async () => {
   axios.post.mockResolvedValue(undefined);
   console.log = jest.fn();
   await createGoldifyPlaylist(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     userId,
     playlistName,
     playlistDescription
@@ -100,13 +100,13 @@ test("CreatePlaylist throws error on bad data", async () => {
 test("Gets a Playlist by ID", async () => {
   const playlistId = "Abcd1234";
 
-  const playlistResponseData = playlistTestUtils.getPlaylistById(playlistId);
+  const playlistResponseData = playlistFixtures.getPlaylistById(playlistId);
   axios.get.mockResolvedValue({
     data: playlistResponseData,
   });
 
   const responseData = await getPlaylistById(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId
   );
   expect(responseData).toEqual(playlistResponseData);
@@ -116,20 +116,14 @@ test("GetPlaylistById throws error on bad data", async () => {
   const playlistId = "Abcd1234";
   axios.get.mockResolvedValue(null);
   console.log = jest.fn();
-  await getPlaylistById(
-    goldifyExecuteTestUtils.getTokensTestData(),
-    playlistId
-  );
+  await getPlaylistById(goldifySoloFixtures.getTokensTestData(), playlistId);
   expect(console.log).toHaveBeenCalledWith(
     TypeError("Cannot read property 'data' of null")
   );
 
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
-  await getPlaylistById(
-    goldifyExecuteTestUtils.getTokensTestData(),
-    playlistId
-  );
+  await getPlaylistById(goldifySoloFixtures.getTokensTestData(), playlistId);
   expect(console.log).toHaveBeenCalledWith(
     TypeError("Cannot read property 'data' of undefined")
   );
@@ -138,10 +132,10 @@ test("GetPlaylistById throws error on bad data", async () => {
 test("Returns Goldify playlist when user has existing playlist", async () => {
   const playlistName = "Goldify";
 
-  const userPlaylistsResponseData = playlistTestUtils.userHasExistingGoldifyPlaylist(
+  const userPlaylistsResponseData = playlistFixtures.userHasExistingGoldifyPlaylist(
     playlistName
   );
-  const existingPlaylistResponseData = playlistTestUtils.existingGoldifyPlaylist(
+  const existingPlaylistResponseData = playlistFixtures.existingGoldifyPlaylist(
     playlistName
   );
 
@@ -150,7 +144,7 @@ test("Returns Goldify playlist when user has existing playlist", async () => {
   });
 
   const responseData = await findExistingGoldifyPlaylistByName(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistName
   );
   expect(responseData).toEqual(existingPlaylistResponseData);
@@ -159,7 +153,7 @@ test("Returns Goldify playlist when user has existing playlist", async () => {
 test("Returns null when user doesn't have existing playlist", async () => {
   const playlistName = "Goldify";
 
-  const userPlaylistsResponseData = playlistTestUtils.userDoesntHaveExistingGoldifyPlaylist();
+  const userPlaylistsResponseData = playlistFixtures.userDoesntHaveExistingGoldifyPlaylist();
   const existingPlaylistResponseData = null;
 
   axios.get.mockResolvedValue({
@@ -167,7 +161,7 @@ test("Returns null when user doesn't have existing playlist", async () => {
   });
 
   const responseData = await findExistingGoldifyPlaylistByName(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistName
   );
   expect(responseData).toEqual(existingPlaylistResponseData);
@@ -176,7 +170,7 @@ test("Returns null when user doesn't have existing playlist", async () => {
 test("Returns null when user doesn't have any playlists", async () => {
   const playlistName = "Goldify";
 
-  const userPlaylistsResponseData = playlistTestUtils.userDoesntHavePlaylists();
+  const userPlaylistsResponseData = playlistFixtures.userDoesntHavePlaylists();
   const existingPlaylistResponseData = null;
 
   axios.get.mockResolvedValue({
@@ -184,7 +178,7 @@ test("Returns null when user doesn't have any playlists", async () => {
   });
 
   const responseData = await findExistingGoldifyPlaylistByName(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistName
   );
   expect(responseData).toEqual(existingPlaylistResponseData);
@@ -195,7 +189,7 @@ test("findExistingGoldifyPlaylistByName throws error on bad data", async () => {
   axios.get.mockResolvedValue(null);
   console.log = jest.fn();
   await findExistingGoldifyPlaylistByName(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistName
   );
   expect(console.log).toHaveBeenCalledWith(
@@ -205,7 +199,7 @@ test("findExistingGoldifyPlaylistByName throws error on bad data", async () => {
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
   await findExistingGoldifyPlaylistByName(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistName
   );
   expect(console.log).toHaveBeenCalledWith(
@@ -222,7 +216,7 @@ test("Uploads a Goldify image", async () => {
   });
 
   const responseData = await uploadPlaylistImage(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId,
     base64Image
   );
@@ -235,7 +229,7 @@ test("Upload Goldify Playlist throws error on bad data", async () => {
   axios.put.mockResolvedValue(null);
   console.log = jest.fn();
   await uploadPlaylistImage(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId,
     base64Image
   );
@@ -246,7 +240,7 @@ test("Upload Goldify Playlist throws error on bad data", async () => {
   axios.put.mockResolvedValue({ status: 400 });
   console.log = jest.fn();
   await uploadPlaylistImage(
-    goldifyExecuteTestUtils.getTokensTestData(),
+    goldifySoloFixtures.getTokensTestData(),
     playlistId,
     base64Image
   );

@@ -1,20 +1,15 @@
 import React, { Component } from "react";
 import "../../../css/UserInfo.css";
-import PropTypes from 'prop-types';
-import {
-  replaceWindowURL
-} from "../../utils/GoldifyExecuteUtils"
-import {
-  retrieveUserDataAxios
-} from '../../utils/UserInfoUtils';
+import PropTypes from "prop-types";
+import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
+import { retrieveUserDataAxios } from "../../utils/UserInfoUtils";
 
 class UserInfo extends Component {
-
   constructor(props) {
     // Initialize mutable state
     super(props);
     this.state = {
-      userData: null
+      userData: null,
     };
   }
 
@@ -25,16 +20,15 @@ class UserInfo extends Component {
   }
 
   async retrieveUserData(retrievedTokenData) {
-    await retrieveUserDataAxios(retrievedTokenData)
-      .then((data) => {
-        if (data === undefined || data.error) {
-          replaceWindowURL("/");
-        } else {
-          this.setState({
-            userData: data
-          });
-        }
-      });
+    await retrieveUserDataAxios(retrievedTokenData).then((data) => {
+      if (data === undefined || data.error) {
+        replaceWindowURL("/");
+      } else {
+        this.setState({
+          userData: data,
+        });
+      }
+    });
   }
 
   getUserInfoDiv() {
@@ -42,9 +36,7 @@ class UserInfo extends Component {
       <div className="card">
         <img src={this.state.userData.images[0].url} alt="Profile Image" />
         <h1>{this.state.userData.display_name}</h1>
-        <p className="title">
-          {this.state.userData.id}
-        </p>
+        <p className="title">{this.state.userData.id}</p>
         <p>
           <b>Email:</b> {this.state.userData.email}
         </p>
@@ -69,7 +61,7 @@ class UserInfo extends Component {
 
   render() {
     if (this.state.userData == null) {
-      return (<div />);
+      return <div />;
     } else {
       return this.getUserInfoDiv();
     }
@@ -77,7 +69,7 @@ class UserInfo extends Component {
 }
 
 UserInfo.propTypes = {
-  retrievedTokenData: PropTypes.object.isRequired
+  retrievedTokenData: PropTypes.object.isRequired,
 };
 
 export default UserInfo;

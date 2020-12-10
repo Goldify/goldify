@@ -1,9 +1,9 @@
 // keep a copy of the window object to restore
 // it at the end of the tests
-const oldWindowLocation = window.location
+const oldWindowLocation = window.location;
 
 // delete the existing `Location` object from `jsdom`
-delete window.location
+delete window.location;
 
 // create a new `window.location` object that's *almost*
 // like the real thing
@@ -22,5 +22,5 @@ window.location = Object.defineProperties(
     },
 
     // more mocked methods here as needed
-  },
-)
+  }
+);

@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import "../../css/GoldifyExecutePage.css";
+import "../../css/GoldifySoloPage.css";
 import UserInfo from "./user-info/UserInfo";
 import TopListeningData from "./top-listens/TopListeningData";
 import GoldifyPlaylist from "./goldify-playlist/GoldifyPlaylist";
@@ -8,16 +8,15 @@ import {
   retrieveAuthorization,
   retrieveTokensAxios,
   replaceWindowURL,
-  getLoadingPage
-} from "../utils/GoldifyExecuteUtils"
+  getLoadingPage,
+} from "../utils/GoldifySoloUtils";
 
-class GoldifyExecutePage extends Component {
-
+class GoldifySoloPage extends Component {
   constructor(props) {
     // Initialize mutable state
     super(props);
     this.state = {
-      retrievedTokenData: null
+      retrievedTokenData: null,
     };
   }
 
@@ -31,16 +30,15 @@ class GoldifyExecutePage extends Component {
   }
 
   async retrieveTokensOnPageLoad(code) {
-    await retrieveTokensAxios(code)
-      .then((data) => {
-        if (data === undefined || data.error) {
-          replaceWindowURL("/");
-        } else {
-          this.setState({
-            retrievedTokenData: data
-          });
-        }
-      });
+    await retrieveTokensAxios(code).then((data) => {
+      if (data === undefined || data.error) {
+        replaceWindowURL("/");
+      } else {
+        this.setState({
+          retrievedTokenData: data,
+        });
+      }
+    });
   }
 
   getGoldifyPage() {
@@ -49,7 +47,9 @@ class GoldifyExecutePage extends Component {
         <UserInfo retrievedTokenData={this.state.retrievedTokenData} />
         <div className="container">
           <GoldifyPlaylist retrievedTokenData={this.state.retrievedTokenData} />
-          <TopListeningData retrievedTokenData={this.state.retrievedTokenData} />
+          <TopListeningData
+            retrievedTokenData={this.state.retrievedTokenData}
+          />
         </div>
       </div>
     );
@@ -64,4 +64,4 @@ class GoldifyExecutePage extends Component {
   }
 }
 
-export default GoldifyExecutePage;
+export default GoldifySoloPage;

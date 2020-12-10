@@ -1,49 +1,46 @@
 import React, { Component } from "react";
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
 import "../../../css/TrackDataTable.css";
-import {
-    getPlaylistTracksById
-} from "../../utils/playlistTracks"
-import {
-  replaceWindowURL
-} from "../../utils/GoldifyExecuteUtils"
+import { getPlaylistTracksById } from "../../utils/playlistTracks";
+import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
 
 class GoldifyPlaylistData extends Component {
-    
   constructor(props) {
     // Initialize mutable state
     super(props);
     this.state = {
-      goldifyPlaylistData: null
+      goldifyPlaylistData: null,
     };
   }
 
   componentDidMount() {
     if (this.props.retrievedTokenData.access_token != undefined) {
-      this.retrieveGoldifyPlaylistData(this.props.retrievedTokenData, this.props.goldifyPlaylistId);
+      this.retrieveGoldifyPlaylistData(
+        this.props.retrievedTokenData,
+        this.props.goldifyPlaylistId
+      );
     }
   }
 
   async retrieveGoldifyPlaylistData(retrievedTokenData, goldifyPlaylistId) {
-    await getPlaylistTracksById(retrievedTokenData, goldifyPlaylistId)
-      .then((data) => {
+    await getPlaylistTracksById(retrievedTokenData, goldifyPlaylistId).then(
+      (data) => {
         if (data === undefined || data.error) {
           replaceWindowURL("/");
         } else {
           this.setState({
-            goldifyPlaylistData: data
+            goldifyPlaylistData: data,
           });
         }
-      });
+      }
+    );
   }
 
   getGoldifyPlaylistDiv() {
     return (
       <div className="track-data-table-container">
         <div className="track-data-table-header-container">
-          <h1 className="track-data-table-header">
-            Your Goldify Playlist
-          </h1>
+          <h1 className="track-data-table-header">Your Goldify Playlist</h1>
         </div>
         <table className="track-data-table">
           <thead className="track-data-thead">
@@ -56,22 +53,29 @@ class GoldifyPlaylistData extends Component {
             </tr>
           </thead>
           <tbody className="track-data-tbody">
-            {this.state.goldifyPlaylistData.items.map(( listValue, index ) => {
+            {this.state.goldifyPlaylistData.items.map((listValue, index) => {
               return (
                 <tr key={index} className="track-data-tr">
                   <td className="track-data-td">
-                    <img alt="Album Art" src={listValue.track.album.images[0].url} />
+                    <img
+                      alt="Album Art"
+                      src={listValue.track.album.images[0].url}
+                    />
                   </td>
                   <td className="track-data-td">{listValue.track.name}</td>
                   <td className="track-data-td">
-                    {
-                      listValue.track.album.artists
-                        .map(( artist, index ) => <span key={index}>{artist.name}</span>)
-                        .reduce((prev, curr) => [prev, ', ', curr])
-                    }
+                    {listValue.track.album.artists
+                      .map((artist, index) => (
+                        <span key={index}>{artist.name}</span>
+                      ))
+                      .reduce((prev, curr) => [prev, ", ", curr])}
                   </td>
-                  <td className="track-data-td">{listValue.track.album.name}</td>
-                  <td className="track-data-td">{listValue.track.popularity}</td>
+                  <td className="track-data-td">
+                    {listValue.track.album.name}
+                  </td>
+                  <td className="track-data-td">
+                    {listValue.track.popularity}
+                  </td>
                 </tr>
               );
             })}
@@ -83,17 +87,16 @@ class GoldifyPlaylistData extends Component {
 
   render() {
     if (this.state.goldifyPlaylistData == null) {
-      return (<div />);
+      return <div />;
     } else {
       return this.getGoldifyPlaylistDiv();
     }
   }
-
 }
 
 GoldifyPlaylistData.propTypes = {
   retrievedTokenData: PropTypes.object.isRequired,
-  goldifyPlaylistId: PropTypes.string.isRequired
+  goldifyPlaylistId: PropTypes.string.isRequired,
 };
 
 export default GoldifyPlaylistData;

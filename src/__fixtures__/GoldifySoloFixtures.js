@@ -6,6 +6,6 @@ exports.testAccessToken = "TEST_ACCESS_TOKEN";
 exports.getTokensTestData = function () {
   return {
     refresh_token: this.testRefreshToken,
-    access_token: this.testAccessToken
-  }
-}
+    access_token: this.testAccessToken,
+  };
+};
