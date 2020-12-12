@@ -1,4 +1,4 @@
-const testPlaylistId = "TEST_PLAYLIST_ID";
+export const testPlaylistId = "TEST_PLAYLIST_ID";
 const testPlaylistName = "TEST_PLAYLIST_NAME";
 const testPlaylistDescription = "TEST_PLAYLIST_DESCRIPTION";
 const testNonGoldifyPlaylistId = "TEST_NON_GOLDIFY_PLAYLIST_ID";
