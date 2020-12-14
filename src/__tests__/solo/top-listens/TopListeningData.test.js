@@ -19,8 +19,18 @@ configure({ adapter: new Adapter() });
 const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
 const topListeningDataFixtures = require("../../../__fixtures__/TopListeningDataFixtures");
 
+const getTopListeningDataWrapper = () => {
+  return shallow(
+    <TopListeningData
+      retrievedTokenData={{}}
+      goldifyUriList={[topListeningDataFixtures.testUri]}
+      addTrackHandler={jest.fn()}
+    />
+  );
+};
+
 test("Test TopListeningData with and without retrievedTokenData", async () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().retrieveTopListeningData = jest.fn();
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveTopListeningData).not.toHaveBeenCalled();
@@ -40,7 +50,7 @@ test("Test functionality: retrieveTopListeningData", async () => {
     Promise.resolve(topListeningDataFixtures.getTopListeningData())
   );
 
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
@@ -54,7 +64,7 @@ test("Test functionality: retrieveTopListeningData", async () => {
 test("Expect home page to load when running retrieveTopListeningData with bad data", async () => {
   retrieveTopListeningDataAxios.mockImplementation(() => Promise.resolve());
 
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   await wrapper
     .instance()
     .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
@@ -63,7 +73,7 @@ test("Expect home page to load when running retrieveTopListeningData with bad da
 });
 
 test("Confirm an error occurs when attempting to grab the top listen data component without setting the top listen data", () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   let errorThrown = false;
   try {
     wrapper.instance().getTopListeningDataDiv();
@@ -75,7 +85,7 @@ test("Confirm an error occurs when attempting to grab the top listen data compon
 });
 
 test("Check for top listen data in top listen data page after setting the state", () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().state = {
     topListeningData: topListeningDataFixtures.getTopListeningData(),
   };
@@ -103,11 +113,35 @@ test("Check for top listen data in top listen data page after setting the state"
 });
 
 test("Check for which div is loaded on render for TopListeningData", () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().getTopListeningDataDiv = jest
     .fn()
     .mockReturnValue("Top Listens Table!");
   expect(wrapper.instance().render()).toEqual(<div />);
   wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData();
   expect(wrapper.instance().render()).toEqual("Top Listens Table!");
+});
+
+test("Check for accurate includes for goldifyPlaylistContainsTrack", () => {
+  const wrapper = getTopListeningDataWrapper();
+  expect(
+    wrapper
+      .instance()
+      .goldifyPlaylistContainsTrack(topListeningDataFixtures.testUri)
+  ).toEqual(true);
+  expect(wrapper.instance().goldifyPlaylistContainsTrack("BAD_URI")).toEqual(
+    false
+  );
+});
+
+test("Expect add handler called on AddCircleIcon button", () => {
+  const wrapper = getTopListeningDataWrapper();
+  wrapper.instance().setState({
+    topListeningData: topListeningDataFixtures.getTopListeningData(),
+  });
+  wrapper.find(".top-listens-add-track").simulate("click");
+  expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledWith(
+    topListeningDataFixtures.getTopListeningData().items[1]
+  );
 });

@@ -4,6 +4,8 @@ exports.testArtistName2 = "TEST_ARTIST_NAME_2";
 exports.testSongName = "TEST_SONG_NAME";
 exports.testPopularity = 47;
 exports.testAlbumArtImageURL = "test-album-art.com";
+exports.testUri = "TEST_URI";
+exports.badUri = "BAD_URI";
 
 exports.getTopListeningData = function () {
   return {
@@ -27,6 +29,28 @@ exports.getTopListeningData = function () {
         },
         name: this.testSongName,
         popularity: this.testPopularity,
+        uri: this.testUri,
+      },
+      {
+        album: {
+          name: this.testAlbumName,
+          images: [
+            {
+              url: this.testAlbumArtImageURL,
+            },
+          ],
+          artists: [
+            {
+              name: this.testArtistName1,
+            },
+            {
+              name: this.testArtistName2,
+            },
+          ],
+        },
+        name: this.testSongName,
+        popularity: this.testPopularity,
+        uri: this.badUri,
       },
     ],
   };

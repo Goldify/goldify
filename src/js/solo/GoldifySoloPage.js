@@ -1,7 +1,6 @@
 import React, { Component } from "react";
 import "../../css/GoldifySoloPage.css";
 import UserInfo from "./user-info/UserInfo";
-import TopListeningData from "./top-listens/TopListeningData";
 import GoldifyPlaylist from "./goldify-playlist/GoldifyPlaylist";
 import {
   retrieveAuthenticationCode,
@@ -47,16 +46,13 @@ class GoldifySoloPage extends Component {
         <UserInfo retrievedTokenData={this.state.retrievedTokenData} />
         <div className="container">
           <GoldifyPlaylist retrievedTokenData={this.state.retrievedTokenData} />
-          <TopListeningData
-            retrievedTokenData={this.state.retrievedTokenData}
-          />
         </div>
       </div>
     );
   }
 
   render() {
-    if (this.state.retrievedTokenData == null) {
+    if (this.state.retrievedTokenData === null) {
       return getLoadingPage();
     } else {
       return this.getGoldifyPage();

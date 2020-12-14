@@ -3,6 +3,9 @@ import PropTypes from "prop-types";
 import "../../../css/TrackDataTable.css";
 import { retrieveTopListeningDataAxios } from "../../utils/TopListeningDataUtils";
 import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
+import { blue, green } from "@material-ui/core/colors";
+import AddCircleIcon from "@material-ui/icons/AddCircle";
+import BeenhereIcon from "@material-ui/icons/Beenhere";
 
 class TopListeningData extends Component {
   constructor(props) {
@@ -31,6 +34,10 @@ class TopListeningData extends Component {
     });
   }
 
+  goldifyPlaylistContainsTrack(trackUri) {
+    return this.props.goldifyUriList.includes(trackUri);
+  }
+
   getTopListeningDataDiv() {
     return (
       <div className="track-data-table-container">
@@ -40,6 +47,7 @@ class TopListeningData extends Component {
         <table className="track-data-table">
           <thead className="track-data-thead">
             <tr className="track-data-tr">
+              <th className="track-data-th"></th>
               <th className="track-data-th"></th>
               <th className="track-data-th">Title</th>
               <th className="track-data-th">Artist(s)</th>
@@ -51,6 +59,23 @@ class TopListeningData extends Component {
             {this.state.topListeningData.items.map((listValue, index) => {
               return (
                 <tr key={index} className="track-data-tr">
+                  <td className="track-data-td">
+                    {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
+                      <BeenhereIcon
+                        style={{ color: blue[500] }}
+                        fontSize="large"
+                      />
+                    ) : (
+                      <AddCircleIcon
+                        className="top-listens-add-track"
+                        style={{ color: green[500] }}
+                        fontSize="large"
+                        onClick={() => {
+                          this.props.addTrackHandler(listValue);
+                        }}
+                      />
+                    )}
+                  </td>
                   <td className="track-data-td">
                     <img alt="Album Art" src={listValue.album.images[0].url} />
                   </td>
@@ -84,6 +109,8 @@ class TopListeningData extends Component {
 
 TopListeningData.propTypes = {
   retrievedTokenData: PropTypes.object.isRequired,
+  goldifyUriList: PropTypes.array.isRequired,
+  addTrackHandler: PropTypes.func.isRequired,
 };
 
 export default TopListeningData;
