@@ -1,11 +1,8 @@
 import axios from "axios";
+import { basicHeaders } from "./axiosHelpers";
 
 export const retrieveUserDataAxios = async (retrievedTokenData) => {
-  const headers = {
-    headers: {
-      Authorization: "Bearer " + retrievedTokenData.access_token,
-    },
-  };
+  const headers = basicHeaders(retrievedTokenData);
 
   try {
     const response = await axios.get("https://api.spotify.com/v1/me", headers);

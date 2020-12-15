@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import "../../css/GoldifySoloPage.css";
 import UserInfo from "./user-info/UserInfo";
 import GoldifyPlaylist from "./goldify-playlist/GoldifyPlaylist";
@@ -9,6 +10,7 @@ import {
   replaceWindowURL,
   getLoadingPage,
 } from "../utils/GoldifySoloUtils";
+import { retrieveUserDataAxios } from "../utils/UserInfoUtils";
 
 class GoldifySoloPage extends Component {
   constructor(props) {
@@ -16,6 +18,7 @@ class GoldifySoloPage extends Component {
     super(props);
     this.state = {
       retrievedTokenData: null,
+      userData: null,
     };
   }
 
@@ -24,35 +27,53 @@ class GoldifySoloPage extends Component {
     if (code == undefined || code == null) {
       retrieveAuthorization();
     } else {
-      this.retrieveTokensOnPageLoad(code);
+      this.retrieveDataOnPageLoad(code);
     }
   }
 
-  async retrieveTokensOnPageLoad(code) {
-    await retrieveTokensAxios(code).then((data) => {
-      if (data === undefined || data.error) {
-        replaceWindowURL("/");
-      } else {
-        this.setState({
-          retrievedTokenData: data,
-        });
-      }
-    });
+  async retrieveDataOnPageLoad(code) {
+    await retrieveTokensAxios(code)
+      .then((data) => {
+        if (data === undefined || data.error) {
+          replaceWindowURL("/");
+        } else {
+          this.setState({
+            retrievedTokenData: data,
+          });
+          return data;
+        }
+      })
+      .then((tokenData) => {
+        if (!_.isEmpty(tokenData)) {
+          retrieveUserDataAxios(tokenData).then((userData) => {
+            if (userData === undefined || userData.error) {
+              replaceWindowURL("/");
+            } else {
+              this.setState({
+                userData: userData,
+              });
+            }
+          });
+        }
+      });
   }
 
   getGoldifyPage() {
     return (
       <div className="goldify-page-container">
-        <UserInfo retrievedTokenData={this.state.retrievedTokenData} />
+        <UserInfo userData={this.state.userData} />
         <div className="container">
-          <GoldifyPlaylist retrievedTokenData={this.state.retrievedTokenData} />
+          <GoldifyPlaylist
+            retrievedTokenData={this.state.retrievedTokenData}
+            userData={this.state.userData}
+          />
         </div>
       </div>
     );
   }
 
   render() {
-    if (this.state.retrievedTokenData === null) {
+    if (this.state.retrievedTokenData == null || this.state.userData == null) {
       return getLoadingPage();
     } else {
       return this.getGoldifyPage();

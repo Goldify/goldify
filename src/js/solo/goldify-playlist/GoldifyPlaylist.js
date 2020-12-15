@@ -1,23 +1,33 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import GoldifyPlaylistData from "./GoldifyPlaylistData";
+import GoldifyCreatePlaylist from "./GoldifyCreatePlaylist";
 import { findExistingGoldifyPlaylistByName } from "../../utils/playlist";
 import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
-
-const GOLDIFY_PLAYLIST_NAME = "Goldify";
+import { GOLDIFY_PLAYLIST_NAME } from "../../utils/constants";
+import _ from "lodash";
 
 class GoldifyPlaylist extends Component {
   constructor(props) {
     // Initialize mutable state
     super(props);
     this.state = {
-      goldifyPlaylist: null,
+      goldifyPlaylist: undefined,
       goldifyPlaylistId: "",
     };
+    this.updatePlaylist = this.updatePlaylist.bind(this);
+  }
+
+  updatePlaylist(playlist) {
+    // used to set playlist after creating a new playlist
+    this.setState({
+      goldifyPlaylist: playlist,
+      goldifyPlaylistId: playlist.id,
+    });
   }
 
   componentDidMount() {
-    if (this.props.retrievedTokenData.access_token != undefined) {
+    if (!_.isEmpty(this.props.retrievedTokenData)) {
       this.retrieveGoldifyPlaylist(this.props.retrievedTokenData);
     }
   }
@@ -29,9 +39,11 @@ class GoldifyPlaylist extends Component {
     ).then((data) => {
       if (data === null) {
         alert(
-          "Unable to find Goldify playlist. Please make sure you have a " +
-            'Spotify playlist with the name "Goldify" created under your Spotify account.'
+          `You don't have a ${GOLDIFY_PLAYLIST_NAME} playlist! Let's create one for you.`
         );
+        this.setState({
+          goldifyPlaylist: null,
+        });
       } else if (data === undefined || data.error) {
         replaceWindowURL("/");
       } else {
@@ -44,8 +56,16 @@ class GoldifyPlaylist extends Component {
   }
 
   render() {
-    if (this.state.goldifyPlaylist == null) {
+    if (this.state.goldifyPlaylist === undefined) {
       return <div />;
+    } else if (this.state.goldifyPlaylist === null) {
+      return (
+        <GoldifyCreatePlaylist
+          retrievedTokenData={this.props.retrievedTokenData}
+          userData={this.props.userData}
+          playlistUpdater={this.updatePlaylist} // used to update playlist state
+        />
+      );
     } else {
       return (
         <GoldifyPlaylistData
@@ -59,6 +79,7 @@ class GoldifyPlaylist extends Component {
 
 GoldifyPlaylist.propTypes = {
   retrievedTokenData: PropTypes.object.isRequired,
+  userData: PropTypes.object.isRequired,
 };
 
 export default GoldifyPlaylist;

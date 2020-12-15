@@ -19,8 +19,8 @@ class GoldifyApp extends Component {
                 </Link>
               </li>
               <li>
-                <Link id="get-started-link" to={"/goldify"}>
-                  Get Started
+                <Link id="solo-link" to={"/goldify"}>
+                  Solo
                 </Link>
               </li>
             </ul>

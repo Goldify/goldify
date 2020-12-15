@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import "../../../css/UserInfo.css";
 import PropTypes from "prop-types";
-import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
-import { retrieveUserDataAxios } from "../../utils/UserInfoUtils";
+import _ from "lodash";
 
 class UserInfo extends Component {
   constructor(props) {
@@ -14,20 +13,14 @@ class UserInfo extends Component {
   }
 
   componentDidMount() {
-    if (this.props.retrievedTokenData.access_token != undefined) {
-      this.retrieveUserData(this.props.retrievedTokenData);
+    if (!_.isEmpty(this.props.userData)) {
+      this.setUserData(this.props.userData);
     }
   }
 
-  async retrieveUserData(retrievedTokenData) {
-    await retrieveUserDataAxios(retrievedTokenData).then((data) => {
-      if (data === undefined || data.error) {
-        replaceWindowURL("/");
-      } else {
-        this.setState({
-          userData: data,
-        });
-      }
+  async setUserData(userData) {
+    this.setState({
+      userData: userData,
     });
   }
 
@@ -69,7 +62,7 @@ class UserInfo extends Component {
 }
 
 UserInfo.propTypes = {
-  retrievedTokenData: PropTypes.object.isRequired,
+  userData: PropTypes.object.isRequired,
 };
 
 export default UserInfo;

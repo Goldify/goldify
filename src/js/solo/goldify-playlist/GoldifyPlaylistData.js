@@ -10,6 +10,7 @@ import {
   replacePlaylistTracks,
   getPlaylistTracksById,
 } from "../../utils/playlistTracks";
+import { GOLDIFY_PLAYLIST_NAME } from "../../utils/constants";
 
 class GoldifyPlaylistData extends Component {
   savedGoldifyPlaylistData = {};
@@ -188,7 +189,9 @@ class GoldifyPlaylistData extends Component {
         </div>
         <div className="track-data-table-container">
           <div className="track-data-table-header-container">
-            <h1 className="track-data-table-header">Your Goldify Playlist</h1>
+            <h1 className="track-data-table-header">
+              {`Your ${GOLDIFY_PLAYLIST_NAME} Playlist`}
+            </h1>
           </div>
           <table className="track-data-table">
             <thead className="track-data-thead">
