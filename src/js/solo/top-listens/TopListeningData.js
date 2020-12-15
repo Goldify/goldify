@@ -7,13 +7,24 @@ import { blue, green } from "@material-ui/core/colors";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import BeenhereIcon from "@material-ui/icons/Beenhere";
 
+import Paper from "@material-ui/core/Paper";
+import Tabs from "@material-ui/core/Tabs";
+import Tab from "@material-ui/core/Tab";
+
 class TopListeningData extends Component {
   constructor(props) {
     // Initialize mutable state
     super(props);
     this.state = {
+      selectedTerm: 0,
       topListeningData: null,
+      shortTermListeningData: null,
+      mediumTermListeningData: null,
+      longTermListeningData: null,
     };
+    this.updateTopListeningDataTerm = this.updateTopListeningDataTerm.bind(
+      this
+    );
   }
 
   componentDidMount() {
@@ -28,7 +39,10 @@ class TopListeningData extends Component {
         replaceWindowURL("/");
       } else {
         this.setState({
-          topListeningData: data,
+          topListeningData: data.short_term,
+          shortTermListeningData: data.short_term,
+          mediumTermListeningData: data.medium_term,
+          longTermListeningData: data.long_term,
         });
       }
     });
@@ -38,11 +52,47 @@ class TopListeningData extends Component {
     return this.props.goldifyUriList.includes(trackUri);
   }
 
+  updateTopListeningDataTerm(event, newValue) {
+    if (newValue === undefined) {
+      throw Error("Value cannot be undefined: " + JSON.stringify(event));
+    }
+    let newListeningData;
+    switch (newValue) {
+      case 0:
+        newListeningData = this.state.shortTermListeningData;
+        break;
+      case 1:
+        newListeningData = this.state.mediumTermListeningData;
+        break;
+      case 2:
+        newListeningData = this.state.longTermListeningData;
+        break;
+    }
+    this.setState({
+      selectedTerm: newValue,
+      topListeningData: newListeningData,
+    });
+  }
+
   getTopListeningDataDiv() {
     return (
-      <div className="track-data-table-container">
+      <div className="track-data-table-container top-listens-table-container">
         <div className="track-data-table-header-container">
-          <h1 className="track-data-table-header">Your Top Recent Hits</h1>
+          <h1 className="track-data-table-header">Your Top Hits</h1>
+          <Paper square className="track-data-table-tab-panel">
+            <Tabs
+              value={this.state.selectedTerm}
+              onChange={this.updateTopListeningDataTerm}
+              variant="fullWidth"
+              indicatorColor="primary"
+              textColor="primary"
+              aria-label="icon label tabs example"
+            >
+              <Tab label="Short Term" />
+              <Tab label="Medium Term" />
+              <Tab label="Long Term" />
+            </Tabs>
+          </Paper>
         </div>
         <table className="track-data-table">
           <thead className="track-data-thead">
