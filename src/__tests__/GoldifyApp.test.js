@@ -21,7 +21,7 @@ test("Content changes on click of Get Started", () => {
   expect(homeBody).toBeInTheDocument();
 
   const leftClick = { button: 0 };
-  const getStartedButton = screen.getByText("Get Started").closest("a");
+  const getStartedButton = screen.getByText("Solo").closest("a");
   const homeButton = screen.getByText("Home").closest("a");
   expect(getStartedButton).toHaveAttribute("href", "/goldify");
   expect(homeButton).toHaveAttribute("href", "/");

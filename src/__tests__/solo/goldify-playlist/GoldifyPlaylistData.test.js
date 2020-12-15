@@ -5,6 +5,7 @@ import Adapter from "enzyme-adapter-react-16";
 import GoldifyPlaylistData from "../../../js/solo/goldify-playlist/GoldifyPlaylistData";
 import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
 import { getPlaylistTracksById } from "../../../js/utils/playlistTracks";
+import { GOLDIFY_PLAYLIST_NAME } from "../../../js/utils/constants";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
   replaceWindowURL: jest.fn(),
@@ -94,7 +95,9 @@ test("Check for goldify playlist data in goldify playlist data page after settin
   let goldifyPlaylistDataDivString = JSON.stringify(
     wrapper.instance().getGoldifyPlaylistDiv()
   );
-  expect(goldifyPlaylistDataDivString).toContain("Your Goldify Playlist");
+  expect(goldifyPlaylistDataDivString).toContain(
+    `Your ${GOLDIFY_PLAYLIST_NAME} Playlist`
+  );
 });
 
 test("Check for which div is loaded on render for GoldifyPlaylistData", () => {

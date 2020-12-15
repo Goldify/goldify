@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 import "../../../css/TrackDataTable.css";
 import { getPlaylistTracksById } from "../../utils/playlistTracks";
 import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
+import { GOLDIFY_PLAYLIST_NAME } from "../../utils/constants";
 
 class GoldifyPlaylistData extends Component {
   constructor(props) {
@@ -40,7 +41,9 @@ class GoldifyPlaylistData extends Component {
     return (
       <div className="track-data-table-container">
         <div className="track-data-table-header-container">
-          <h1 className="track-data-table-header">Your Goldify Playlist</h1>
+          <h1 className="track-data-table-header">
+            {`Your ${GOLDIFY_PLAYLIST_NAME} Playlist`}
+          </h1>
         </div>
         <table className="track-data-table">
           <thead className="track-data-thead">
