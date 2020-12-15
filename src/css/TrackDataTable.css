@@ -11,14 +11,24 @@
 }
 
 .track-data-table-container {
-  margin: 0 4%;
+  margin: auto;
+}
+
+.top-listens-table-container {
+  margin-top: 5%;
 }
 
 .track-data-table-header {
+  display: block;
   color: black;
   font-size: 20pt;
   font-family: Proxima Nova;
   float: left;
+}
+
+.track-data-table-tab-panel {
+  display: block;
+  float: right;
 }
 
 .track-data-table-header-container {
@@ -29,7 +39,6 @@
 .track-data-table {
   top: 0;
 	width: 800px;
-  margin: 5% 0;
 	border-collapse: collapse;
 	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
