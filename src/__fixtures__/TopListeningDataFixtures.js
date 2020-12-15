@@ -7,7 +7,7 @@ exports.testAlbumArtImageURL = "test-album-art.com";
 exports.testUri = "TEST_URI";
 exports.badUri = "BAD_URI";
 
-exports.getTopListeningData = function () {
+exports.getTermTopListeningData = function () {
   return {
     items: [
       {
@@ -53,5 +53,13 @@ exports.getTopListeningData = function () {
         uri: this.badUri,
       },
     ],
+  };
+};
+
+exports.getTopListeningData = function () {
+  return {
+    short_term: this.getTermTopListeningData(),
+    medium_term: this.getTermTopListeningData(),
+    long_term: this.getTermTopListeningData(),
   };
 };

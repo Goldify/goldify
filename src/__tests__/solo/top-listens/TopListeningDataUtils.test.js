@@ -37,7 +37,11 @@ test("Check for to make sure retrieveTopListeningDataAxios returns correct mock 
   const responseData = await retrieveTopListeningDataAxios(
     goldifySoloFixtures.getTokensTestData()
   );
-  expect(responseData).toEqual(topListeningDataFixtures.getTopListeningData());
+  expect(responseData).toEqual({
+    short_term: topListeningDataFixtures.getTopListeningData(),
+    medium_term: topListeningDataFixtures.getTopListeningData(),
+    long_term: topListeningDataFixtures.getTopListeningData(),
+  });
 });
 
 test("Confirm getTopListeningDataSpotifyApiURL returns the correct Spotify API URL including params", () => {
