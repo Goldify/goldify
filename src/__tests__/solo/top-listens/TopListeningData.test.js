@@ -19,8 +19,18 @@ configure({ adapter: new Adapter() });
 const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
 const topListeningDataFixtures = require("../../../__fixtures__/TopListeningDataFixtures");
 
+const getTopListeningDataWrapper = () => {
+  return shallow(
+    <TopListeningData
+      retrievedTokenData={{}}
+      goldifyUriList={[topListeningDataFixtures.testUri]}
+      addTrackHandler={jest.fn()}
+    />
+  );
+};
+
 test("Test TopListeningData with and without retrievedTokenData", async () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().retrieveTopListeningData = jest.fn();
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveTopListeningData).not.toHaveBeenCalled();
@@ -40,21 +50,27 @@ test("Test functionality: retrieveTopListeningData", async () => {
     Promise.resolve(topListeningDataFixtures.getTopListeningData())
   );
 
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
     .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    topListeningData: topListeningDataFixtures.getTopListeningData(),
+    topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
+    shortTermListeningData: topListeningDataFixtures.getTopListeningData()
+      .short_term,
+    mediumTermListeningData: topListeningDataFixtures.getTopListeningData()
+      .medium_term,
+    longTermListeningData: topListeningDataFixtures.getTopListeningData()
+      .long_term,
   });
 });
 
 test("Expect home page to load when running retrieveTopListeningData with bad data", async () => {
   retrieveTopListeningDataAxios.mockImplementation(() => Promise.resolve());
 
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   await wrapper
     .instance()
     .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
@@ -63,7 +79,7 @@ test("Expect home page to load when running retrieveTopListeningData with bad da
 });
 
 test("Confirm an error occurs when attempting to grab the top listen data component without setting the top listen data", () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   let errorThrown = false;
   try {
     wrapper.instance().getTopListeningDataDiv();
@@ -75,9 +91,9 @@ test("Confirm an error occurs when attempting to grab the top listen data compon
 });
 
 test("Check for top listen data in top listen data page after setting the state", () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().state = {
-    topListeningData: topListeningDataFixtures.getTopListeningData(),
+    topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
   };
   let topListeningDataDivString = JSON.stringify(
     wrapper.instance().getTopListeningDataDiv()
@@ -103,11 +119,81 @@ test("Check for top listen data in top listen data page after setting the state"
 });
 
 test("Check for which div is loaded on render for TopListeningData", () => {
-  const wrapper = shallow(<TopListeningData retrievedTokenData={{}} />);
+  const wrapper = getTopListeningDataWrapper();
   wrapper.instance().getTopListeningDataDiv = jest
     .fn()
     .mockReturnValue("Top Listens Table!");
   expect(wrapper.instance().render()).toEqual(<div />);
-  wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData();
+  wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData().short_term;
   expect(wrapper.instance().render()).toEqual("Top Listens Table!");
+});
+
+test("Check for accurate includes for goldifyPlaylistContainsTrack", () => {
+  const wrapper = getTopListeningDataWrapper();
+  expect(
+    wrapper
+      .instance()
+      .goldifyPlaylistContainsTrack(topListeningDataFixtures.testUri)
+  ).toEqual(true);
+  expect(wrapper.instance().goldifyPlaylistContainsTrack("BAD_URI")).toEqual(
+    false
+  );
+});
+
+test("Expect add handler called on AddCircleIcon button", () => {
+  const wrapper = getTopListeningDataWrapper();
+  wrapper.instance().setState({
+    topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
+  });
+  wrapper.find(".top-listens-add-track").simulate("click");
+  expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledWith(
+    topListeningDataFixtures.getTopListeningData().short_term.items[1]
+  );
+});
+
+test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
+  const wrapper = getTopListeningDataWrapper();
+  wrapper.instance().state = {
+    selectedTerm: 0,
+    topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
+    shortTermListeningData: topListeningDataFixtures.getTopListeningData()
+      .short_term,
+    mediumTermListeningData: topListeningDataFixtures.getTopListeningData()
+      .medium_term,
+    longTermListeningData: topListeningDataFixtures.getTopListeningData()
+      .long_term,
+  };
+  wrapper.instance().setState = jest.fn();
+
+  wrapper.instance().updateTopListeningDataTerm({}, 0);
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    selectedTerm: 0,
+    topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
+  });
+
+  wrapper.instance().updateTopListeningDataTerm({}, 1);
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(2);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    selectedTerm: 1,
+    topListeningData: topListeningDataFixtures.getTopListeningData()
+      .medium_term,
+  });
+
+  wrapper.instance().updateTopListeningDataTerm({}, 2);
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(3);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    selectedTerm: 1,
+    topListeningData: topListeningDataFixtures.getTopListeningData().long_term,
+  });
+
+  let errorThrown = false;
+  try {
+    wrapper.instance().updateTopListeningDataTerm({}, undefined);
+  } catch (err) {
+    expect(err).toEqual(Error("Value cannot be undefined: {}"));
+    errorThrown = true;
+  }
+  expect(errorThrown);
 });

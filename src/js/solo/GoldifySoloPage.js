@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import _ from "lodash";
 import "../../css/GoldifySoloPage.css";
 import UserInfo from "./user-info/UserInfo";
-import TopListeningData from "./top-listens/TopListeningData";
 import GoldifyPlaylist from "./goldify-playlist/GoldifyPlaylist";
 import {
   retrieveAuthenticationCode,
@@ -67,9 +66,6 @@ class GoldifySoloPage extends Component {
           <GoldifyPlaylist
             retrievedTokenData={this.state.retrievedTokenData}
             userData={this.state.userData}
-          />
-          <TopListeningData
-            retrievedTokenData={this.state.retrievedTokenData}
           />
         </div>
       </div>

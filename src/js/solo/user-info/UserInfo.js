@@ -45,7 +45,7 @@ class UserInfo extends Component {
             target="_blank"
             rel="noreferrer"
           >
-            <button>View Profile</button>
+            <button className="view-profile">View Profile</button>
           </a>
         </p>
       </div>
