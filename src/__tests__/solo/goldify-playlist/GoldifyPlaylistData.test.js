@@ -190,16 +190,6 @@ test("Confrim removeGoldifyPlaylistTrackUri removes track URI", () => {
 
 test("Confirm updateGoldifyPlaylist updates goldify playlist", () => {
   const wrapper = goldifyPlaylistDataWrapper();
-  wrapper.instance().goldifyPlaylistTrackUriList = undefined;
-  let errorThrown = false;
-  try {
-    wrapper.instance().updateGoldifyPlaylist();
-  } catch (err) {
-    expect(err).toEqual(Error("Playlist Track Uri List cannot be undefined."));
-    errorThrown = true;
-  }
-  expect(errorThrown).toEqual(true);
-
   wrapper.instance().goldifyPlaylistTrackUriList = [];
   wrapper.instance().state.goldifyPlaylistData = playlistTracksFixtures.playlistTracksById(
     TEST_PLAYLIST_ID

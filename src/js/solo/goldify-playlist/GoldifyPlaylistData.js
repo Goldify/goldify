@@ -89,19 +89,15 @@ class GoldifyPlaylistData extends Component {
   };
 
   updateGoldifyPlaylist() {
-    if (this.goldifyPlaylistTrackUriList !== undefined) {
-      replacePlaylistTracks(
-        this.props.retrievedTokenData,
-        this.props.goldifyPlaylistId,
-        this.goldifyPlaylistTrackUriList
-      );
-      this.setSavedGoldifyPlaylistData(this.state.goldifyPlaylistData);
-      this.setState({
-        playlistDirty: false,
-      });
-    } else {
-      throw Error("Playlist Track Uri List cannot be undefined.");
-    }
+    replacePlaylistTracks(
+      this.props.retrievedTokenData,
+      this.props.goldifyPlaylistId,
+      this.goldifyPlaylistTrackUriList
+    );
+    this.setSavedGoldifyPlaylistData(this.state.goldifyPlaylistData);
+    this.setState({
+      playlistDirty: false,
+    });
   }
 
   cancelUpdatesToGoldifyPlaylist() {
