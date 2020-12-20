@@ -8,8 +8,8 @@ export var redirectUri = process.env.REACT_APP_SPOTIFY_REDIRECT_URI; // Your red
 
 /**
  * Generates a random string containing numbers and letters
- * @param  {number} length The length of the string
- * @return {string} The generated string
+ * @param   {number} length The length of the string
+ * @returns {string} The generated string
  */
 export const generateRandomString = (length) => {
   var text = "";
@@ -22,11 +22,19 @@ export const generateRandomString = (length) => {
   return text;
 };
 
+/**
+ * Grabs the auth code after spotify has authenticated the user
+ * @returns {string} Auth code giving access to the user's spotify data
+ */
 export const retrieveAuthenticationCode = () => {
   const urlSearchParams = new URLSearchParams(window.location.search);
   return urlSearchParams.get("code");
 };
 
+/**
+ * Determines which api scopes are needed to take full use of this app
+ * @returns {string} A space-separated list of goldify's required api scopes
+ */
 export const retrieveSpotifyApiScopesNeeded = () => {
   return [
     "user-read-private",
@@ -39,6 +47,10 @@ export const retrieveSpotifyApiScopesNeeded = () => {
   ].join(" ");
 };
 
+/**
+ * Creates the url that allows the user to authorize the use of their data
+ * @returns {string} Spotify's auth url for this user
+ */
 export const retrieveSpotifyApiAuthorizeURL = () => {
   return (
     "" +
@@ -53,10 +65,18 @@ export const retrieveSpotifyApiAuthorizeURL = () => {
   );
 };
 
+/**
+ * Redirects to spotify's user authorization page
+ */
 export const retrieveAuthorization = () => {
   replaceWindowURL(retrieveSpotifyApiAuthorizeURL());
 };
 
+/**
+ * Calls spotify's api to get the user's auth tokens
+ * @param   {string} authCode the user's authorization code
+ * @returns {object} Object containing the user's access token
+ */
 export const retrieveTokensAxios = async (authCode) => {
   const headers = {
     headers: {
@@ -86,10 +106,18 @@ export const retrieveTokensAxios = async (authCode) => {
   }
 };
 
+/**
+ * Will redirect the user to the provided url
+ * @param   {string} url URL to direct the user to
+ */
 export const replaceWindowURL = (url) => {
   window.location.replace(url);
 };
 
+/**
+ * Displays a basic loading page while we wait for something to happen
+ * @returns {?} A div with some loading text
+ */
 export const getLoadingPage = () => {
   return (
     <div className="goldify-page-container">

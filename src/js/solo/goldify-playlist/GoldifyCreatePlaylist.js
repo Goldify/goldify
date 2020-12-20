@@ -14,6 +14,9 @@ class GoldifyCreatePlaylist extends Component {
     super(props);
   }
 
+  /**
+   * Creates a goldify playlist once retrievedTokenData and userData are set
+   */
   componentDidMount() {
     if (
       !_.isEmpty(this.props.retrievedTokenData) &&
@@ -26,6 +29,12 @@ class GoldifyCreatePlaylist extends Component {
     }
   }
 
+  /**
+   * Creates a goldify playlist for the user, since one was not found
+   * @param  {object} retrievedTokenData User data containing an access_token
+   * @param  {string} userId User's ID to create the playlist under
+   * Then updates the current playlist using this response
+   */
   async createNewGoldifyPlaylist(retrievedTokenData, userId) {
     await createGoldifyPlaylist(
       retrievedTokenData,
@@ -45,6 +54,10 @@ class GoldifyCreatePlaylist extends Component {
     });
   }
 
+  /**
+   * Shows text telling the user that their playlist is being created
+   * @returns {?} Basic div with an h3 header
+   */
   createPlaylistDiv() {
     return (
       <div>
@@ -53,6 +66,10 @@ class GoldifyCreatePlaylist extends Component {
     );
   }
 
+  /**
+   * Renders the loading div when a playlist is being created
+   * @returns {?} A div telling the user that a playlist is being created
+   */
   render() {
     return this.createPlaylistDiv();
   }

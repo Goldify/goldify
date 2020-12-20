@@ -7,6 +7,11 @@ export var longTermTimeRangeQueryParam = "long_term";
 export var limitQueryParam = "20";
 export var offsetQueryParam = "0";
 
+/**
+ * Generates a URL to get the user's top listening data
+ * @param   {string} timeRangeQueryParam The term of user listening data we're looking for
+ * @returns {string} URL to get a users listening data
+ */
 export const getTopListeningDataSpotifyApiURL = (timeRangeQueryParam) => {
   return (
     "" +
@@ -20,6 +25,11 @@ export const getTopListeningDataSpotifyApiURL = (timeRangeQueryParam) => {
   );
 };
 
+/**
+ * Gets the user's top listening data over all three listening time ranges
+ * @param   {object} retrievedTokenData Object containing the user's access token
+ * @returns {object} Contains the user's top listening data over all three time ranges
+ */
 export const retrieveTopListeningDataAxios = async (retrievedTokenData) => {
   const headers = basicHeaders(retrievedTokenData);
   try {

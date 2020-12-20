@@ -18,6 +18,10 @@ class GoldifyPlaylist extends Component {
     this.updatePlaylist = this.updatePlaylist.bind(this);
   }
 
+  /**
+   * Function used to update this component's state from within a child component
+   * @param   {object} playlist Playlist object returned from spotify's api
+   */
   updatePlaylist(playlist) {
     // used to set playlist after creating a new playlist
     this.setState({
@@ -26,12 +30,21 @@ class GoldifyPlaylist extends Component {
     });
   }
 
+  /**
+   * Checks to see if the user has an existing goldify playlist once
+   * token data is available
+   */
   componentDidMount() {
     if (!_.isEmpty(this.props.retrievedTokenData)) {
       this.retrieveGoldifyPlaylist(this.props.retrievedTokenData);
     }
   }
 
+  /**
+   * Call's spotify's api to check if the user has an existing Goldify playlist
+   * Then sets this component's state accordingly
+   * @param   {object} retrievedTokenData Object containing the user's access token
+   */
   async retrieveGoldifyPlaylist(retrievedTokenData) {
     await findExistingGoldifyPlaylistByName(
       retrievedTokenData,
@@ -54,7 +67,11 @@ class GoldifyPlaylist extends Component {
       }
     });
   }
-
+  /**
+   * Displays the user's Goldify Playlist if available
+   * Otherwise redirects to page to create one
+   * @returns {?} A div to either create or display the user's Goldify playlist
+   */
   render() {
     if (this.state.goldifyPlaylist === undefined) {
       return <div />;

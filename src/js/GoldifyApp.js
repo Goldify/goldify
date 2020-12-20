@@ -6,6 +6,11 @@ import logo from "../assets/goldify_logo.png";
 import "../css/GoldifyApp.css";
 
 class GoldifyApp extends Component {
+  /**
+   * Displays the nav bar with links to all pages, which will redirect
+   * the user to each Goldify page
+   * @returns {?} The Nav bar on each page, with links to redirect
+   */
   render() {
     return (
       <Router>
