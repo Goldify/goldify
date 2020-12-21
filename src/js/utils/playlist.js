@@ -4,8 +4,8 @@ import { basicHeaders } from "./axiosHelpers";
 export const limitQueryParam = 50;
 /**
  * URL to create a playlist
- * @param  {string} userId ID of the user
- * @return {string} The user's playlists url
+ * @param   {string} userId ID of the user
+ * @returns {string} The user's playlists url
  */
 export const createPlaylistUrl = (userId) => {
   return "https://api.spotify.com/v1/users/" + userId + "/playlists";
@@ -13,11 +13,11 @@ export const createPlaylistUrl = (userId) => {
 
 /**
  * Calls Spotify's API to create a new Goldify playlist
- * @param  {object} retrievedTokenData object containing tokens necessary for header
- * @param  {string} userId ID of the user
- * @param  {string} playlistName name of the Playlist to create
- * @param  {string} playlistDescription description of the desired playlist
- * @return {object} The response data
+ * @param   {object} retrievedTokenData object containing tokens necessary for header
+ * @param   {string} userId ID of the user
+ * @param   {string} playlistName name of the Playlist to create
+ * @param   {string} playlistDescription description of the desired playlist
+ * @returns {object} The response data
  */
 export const createGoldifyPlaylist = async (
   retrievedTokenData,
@@ -38,7 +38,7 @@ export const createGoldifyPlaylist = async (
 
 /**
  * URL to get a list of the user's playlists
- * @return {string} The logged-in user's playlists url
+ * @returns {string} The logged-in user's playlists url
  */
 export const getUserPlaylistsUrl = () => {
   return (
@@ -48,9 +48,9 @@ export const getUserPlaylistsUrl = () => {
 
 /**
  * Calls Spotify's API to see if the user already has a Goldify playlist
- * @param  {object} retrievedTokenData object containing tokens necessary for header
- * @param  {string} playlistName name of the Playlist to create
- * @return {object} The Goldify playlist, if it exists, null otherwise
+ * @param   {object} retrievedTokenData object containing tokens necessary for header
+ * @param   {string} playlistName name of the Playlist to create
+ * @returns {object} The Goldify playlist, if it exists, null otherwise
  */
 export const findExistingGoldifyPlaylistByName = async (
   retrievedTokenData,
@@ -74,8 +74,8 @@ export const findExistingGoldifyPlaylistByName = async (
 
 /**
  * URL to get a playlist by ID
- * @param  {string} playlistId ID of the playlist
- * @return {string} The playlist url
+ * @param   {string} playlistId ID of the playlist
+ * @returns {string} The playlist url
  */
 export const getPlaylistUrl = (playlistId) => {
   return "https://api.spotify.com/v1/playlists/" + playlistId;
@@ -83,9 +83,9 @@ export const getPlaylistUrl = (playlistId) => {
 
 /**
  * Calls Spotify's API to create a new Goldify playlist
- * @param  {object} retrievedTokenData object containing tokens necessary for header
- * @param  {string} playlistId ID of the playlist
- * @return {object} The response data
+ * @param   {object} retrievedTokenData object containing tokens necessary for header
+ * @param   {string} playlistId ID of the playlist
+ * @returns {object} The response data
  */
 export const getPlaylistById = async (retrievedTokenData, playlistId) => {
   // Will be useful in future to integrate with backend work
@@ -98,10 +98,22 @@ export const getPlaylistById = async (retrievedTokenData, playlistId) => {
   }
 };
 
+/**
+ * URL to upload a playlist cover image
+ * @param   {string} playlistId ID of the playlist
+ * @returns {string} The playlist url
+ */
 export const uploadPlaylistImageUrl = (playlistId) => {
   return "https://api.spotify.com/v1/playlists/" + playlistId + "/images";
 };
 
+/**
+ * Calls Spotify's API to add a cover image to a playlist
+ * @param   {object} retrievedTokenData object containing tokens necessary for header
+ * @param   {string} playlistId ID of the playlist
+ * @param   {string} imageBase64 base64 encoded string for the jpeg to be uploaded
+ * @returns {object} The response data
+ */
 export const uploadPlaylistImage = async (
   retrievedTokenData,
   playlistId,

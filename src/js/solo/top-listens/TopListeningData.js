@@ -1,4 +1,5 @@
 import React, { Component } from "react";
+import _ from "lodash";
 import PropTypes from "prop-types";
 import "../../../css/TrackDataTable.css";
 import { retrieveTopListeningDataAxios } from "../../utils/TopListeningDataUtils";
@@ -6,6 +7,12 @@ import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
 import { blue, green } from "@material-ui/core/colors";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import BeenhereIcon from "@material-ui/icons/Beenhere";
+import {
+  shortTermTracksRecommended,
+  mediumTermTracksRecommended,
+  longTermTracksRecommended,
+  GOLDIFY_PLAYLIST_NAME,
+} from "../../utils/constants";
 
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -27,12 +34,20 @@ class TopListeningData extends Component {
     );
   }
 
+  /**
+   * Retrieves the user's top listening data once retrievedTokenData is available
+   */
   componentDidMount() {
     if (this.props.retrievedTokenData.access_token != undefined) {
       this.retrieveTopListeningData(this.props.retrievedTokenData);
     }
   }
 
+  /**
+   * Will retrieve the user's top listening data and which data is visible
+   * @param  {object} retrievedTokenData User data containing an access_token
+   * Defaults to displaying shortTermListeningData
+   */
   async retrieveTopListeningData(retrievedTokenData) {
     await retrieveTopListeningDataAxios(retrievedTokenData).then((data) => {
       if (data === undefined || data.error) {
@@ -48,10 +63,21 @@ class TopListeningData extends Component {
     });
   }
 
+  /**
+   * Checks to see if the selected track is already a part of your goldify playlist
+   * @param  {string} trackUri Uri of the selected track
+   * @returns {boolean} whether or not the track is in the current playlist
+   */
   goldifyPlaylistContainsTrack(trackUri) {
     return this.props.goldifyUriList.includes(trackUri);
   }
 
+  /**
+   * Changes which TopListeningData is visible and sets states accordingly
+   * @param  {object} event The OnChange event that triggered this call
+   * @param  {number} newValue The value of the tab selected
+   * @throws {Error} If the event was not defined
+   */
   updateTopListeningDataTerm(event, newValue) {
     if (newValue === undefined) {
       throw Error("Value cannot be undefined: " + JSON.stringify(event));
@@ -74,6 +100,40 @@ class TopListeningData extends Component {
     });
   }
 
+  /**
+   * Auto-fills a playlist with a few tracks from the user's top listening data
+   * This will use the addTrackHandler passed in to add the tracks to
+   * the user's goldify playlist
+   */
+  autoFillGoldifyPlaylist() {
+    alert(
+      `Your ${GOLDIFY_PLAYLIST_NAME} playlist is empty! Let's add some tracks to get you started.`
+    );
+    for (var stTrack = 0; stTrack < shortTermTracksRecommended; stTrack++) {
+      const currentTrack = this.state.shortTermListeningData?.items[stTrack];
+      if (!_.isEmpty(currentTrack)) {
+        this.props.addTrackHandler(currentTrack);
+      }
+    }
+    for (var mtTrack = 0; mtTrack < mediumTermTracksRecommended; mtTrack++) {
+      const currentTrack = this.state.mediumTermListeningData?.items[mtTrack];
+      if (!_.isEmpty(currentTrack)) {
+        this.props.addTrackHandler(currentTrack);
+      }
+    }
+    for (var ltTrack = 0; ltTrack < longTermTracksRecommended; ltTrack++) {
+      const currentTrack = this.state.longTermListeningData?.items[ltTrack];
+      if (!_.isEmpty(currentTrack)) {
+        this.props.addTrackHandler(currentTrack);
+      }
+    }
+  }
+
+  /**
+   * Displays the top listening data set in the props
+   * Will also call the props.addTrackHandler to add songs to the user's goldify playlist
+   * @returns {HTMLElement} A div containing the retrieved/visible topListeningData
+   */
   getTopListeningDataDiv() {
     return (
       <div className="track-data-table-container top-listens-table-container">
@@ -148,10 +208,22 @@ class TopListeningData extends Component {
     );
   }
 
+  /**
+   * Renders which div is available depending on state.topListeningData
+   * Will also auto-fill recommendations to an empty goldify playlist
+   * @returns {HTMLElement} Empty div or div containing top listening data
+   */
   render() {
     if (this.state.topListeningData == null) {
       return <div />;
     } else {
+      if (
+        _.isArray(this.props.goldifyUriList) &&
+        _.isEmpty(this.props.goldifyUriList) &&
+        this.props.playlistDirty == false
+      ) {
+        this.autoFillGoldifyPlaylist();
+      }
       return this.getTopListeningDataDiv();
     }
   }
@@ -161,6 +233,7 @@ TopListeningData.propTypes = {
   retrievedTokenData: PropTypes.object.isRequired,
   goldifyUriList: PropTypes.array.isRequired,
   addTrackHandler: PropTypes.func.isRequired,
+  playlistDirty: PropTypes.bool.isRequired,
 };
 
 export default TopListeningData;

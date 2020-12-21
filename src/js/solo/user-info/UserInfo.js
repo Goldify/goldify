@@ -11,19 +11,29 @@ class UserInfo extends Component {
       userData: null,
     };
   }
-
+  /**
+   * Sets this components userData state once available
+   */
   componentDidMount() {
     if (!_.isEmpty(this.props.userData)) {
       this.setUserData(this.props.userData);
     }
   }
 
+  /**
+   * Basic function that sets the userData state of this component
+   * @param   {object} userData Object containing the user's profile data
+   */
   async setUserData(userData) {
     this.setState({
       userData: userData,
     });
   }
 
+  /**
+   * Displays the user's profile data formatted in a single component
+   * @returns {HTMLElement} Div containing the user's profile information
+   */
   getUserInfoDiv() {
     return (
       <div className="card">
@@ -52,6 +62,10 @@ class UserInfo extends Component {
     );
   }
 
+  /**
+   * Displays the user's profile data once available
+   * @returns {HTMLElement} An empty div or a div displaying the user's information
+   */
   render() {
     if (this.state.userData == null) {
       return <div />;

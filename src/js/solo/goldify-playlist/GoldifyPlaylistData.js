@@ -36,6 +36,9 @@ class GoldifyPlaylistData extends Component {
     this.removeGoldifyTrack = this.removeGoldifyTrack.bind(this);
   }
 
+  /**
+   * Retrieves the tracks of the user's playlist once the user's token data is available
+   */
   componentDidMount() {
     if (this.props.retrievedTokenData.access_token != undefined) {
       this.retrieveGoldifyPlaylistData(
@@ -45,6 +48,11 @@ class GoldifyPlaylistData extends Component {
     }
   }
 
+  /**
+   * Gets the tracks in the user's goldify playlist
+   * @param   {object} retrievedTokenData Object containing the user's access token
+   * @param   {string} goldifyPlaylistId ID of the user's goldify playlist
+   */
   async retrieveGoldifyPlaylistData(retrievedTokenData, goldifyPlaylistId) {
     await getPlaylistTracksById(retrievedTokenData, goldifyPlaylistId).then(
       (data) => {
@@ -244,6 +252,7 @@ class GoldifyPlaylistData extends Component {
           retrievedTokenData={this.props.retrievedTokenData}
           goldifyUriList={this.goldifyPlaylistTrackUriList}
           addTrackHandler={this.addTrackFromTopListensData}
+          playlistDirty={this.state.playlistDirty}
         />
       </div>
     );
