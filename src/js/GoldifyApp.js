@@ -24,10 +24,19 @@ class GoldifyApp extends Component {
     };
   }
 
+  /**
+   * Returns the tab index based on which page has been selected
+   * @returns {Integer} The selected tab index
+   */
   getSelectedTab(currentUrl) {
     return currentUrl.indexOf(SOLO_PAGE_PATH) > -1 ? 1 : 0;
   }
 
+  /**
+   * Displays the nav bar with links to all pages, which will redirect
+   * the user to each Goldify page
+   * @returns {HTMLElement} The Nav bar on each page, with links to redirect
+   */
   render() {
     return (
       <Router>

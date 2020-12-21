@@ -1,6 +1,11 @@
 import axios from "axios";
 import { basicHeaders } from "./axiosHelpers";
 
+/**
+ * Gets a user's own profile data
+ * @param   {object} retrievedTokenData Object containing the user's access token
+ * @returns {object} The user's profile data
+ */
 export const retrieveUserDataAxios = async (retrievedTokenData) => {
   const headers = basicHeaders(retrievedTokenData);
 

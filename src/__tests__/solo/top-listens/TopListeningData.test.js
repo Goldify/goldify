@@ -5,6 +5,11 @@ import TopListeningData from "../../../js/solo/top-listens/TopListeningData";
 import Adapter from "enzyme-adapter-react-16";
 import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
 import { retrieveTopListeningDataAxios } from "../../../js/utils/TopListeningDataUtils";
+import {
+  shortTermTracksRecommended,
+  mediumTermTracksRecommended,
+  longTermTracksRecommended,
+} from "../../../js/utils/constants";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
   replaceWindowURL: jest.fn(),
@@ -25,6 +30,18 @@ const getTopListeningDataWrapper = () => {
       retrievedTokenData={{}}
       goldifyUriList={[topListeningDataFixtures.testUri]}
       addTrackHandler={jest.fn()}
+      playlistDirty={false}
+    />
+  );
+};
+
+const getTopListeningDataWrapperEmptyPlaylist = () => {
+  return shallow(
+    <TopListeningData
+      retrievedTokenData={{}}
+      goldifyUriList={[]}
+      addTrackHandler={jest.fn()}
+      playlistDirty={false}
     />
   );
 };
@@ -123,6 +140,48 @@ test("Check for which div is loaded on render for TopListeningData", () => {
   expect(wrapper.instance().render()).toEqual(<div />);
   wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData().short_term;
   expect(wrapper.instance().render()).toEqual("Top Listens Table!");
+});
+
+test("Check that empty playlists are automatically given recommendations", () => {
+  const wrapper = getTopListeningDataWrapperEmptyPlaylist();
+  wrapper.instance().getTopListeningDataDiv = jest
+    .fn()
+    .mockReturnValue("Top Listens Table!");
+  jest.spyOn(window, "alert").mockImplementation(() => {});
+  wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData().short_term;
+  wrapper.instance().state.shortTermListeningData = topListeningDataFixtures.getTopListeningData().short_term;
+  wrapper.instance().state.mediumTermListeningData = topListeningDataFixtures.getTopListeningData().medium_term;
+  wrapper.instance().state.longTermListeningData = topListeningDataFixtures.getTopListeningData().long_term;
+  expect(wrapper.instance().render()).toEqual("Top Listens Table!");
+  expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledTimes(
+    shortTermTracksRecommended +
+      mediumTermTracksRecommended +
+      longTermTracksRecommended
+  );
+});
+
+test("Check that empty playlists are not given tracks if top listening data wasn't retrieved", () => {
+  const wrapper = getTopListeningDataWrapperEmptyPlaylist();
+  wrapper.instance().getTopListeningDataDiv = jest
+    .fn()
+    .mockReturnValue("Top Listens Table!");
+  jest.spyOn(window, "alert").mockImplementation(() => {});
+  wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData().short_term;
+  expect(wrapper.instance().render()).toEqual("Top Listens Table!");
+  expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledTimes(0);
+});
+
+test("Check that non-empty playlists are NOT automatically given recommendations", () => {
+  const wrapper = getTopListeningDataWrapper();
+  wrapper.instance().getTopListeningDataDiv = jest
+    .fn()
+    .mockReturnValue("Top Listens Table!");
+  wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData().short_term;
+  wrapper.instance().state.shortTermListeningData = topListeningDataFixtures.getTopListeningData().short_term;
+  wrapper.instance().state.mediumTermListeningData = topListeningDataFixtures.getTopListeningData().medium_term;
+  wrapper.instance().state.longTermListeningData = topListeningDataFixtures.getTopListeningData().long_term;
+  expect(wrapper.instance().render()).toEqual("Top Listens Table!");
+  expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledTimes(0);
 });
 
 test("Check for accurate includes for goldifyPlaylistContainsTrack", () => {
