@@ -56,7 +56,7 @@ class GoldifyCreatePlaylist extends Component {
 
   /**
    * Shows text telling the user that their playlist is being created
-   * @returns {?} Basic div with an h3 header
+   * @returns {HTMLElement} Basic div with an h3 header
    */
   createPlaylistDiv() {
     return (
@@ -68,7 +68,7 @@ class GoldifyCreatePlaylist extends Component {
 
   /**
    * Renders the loading div when a playlist is being created
-   * @returns {?} A div telling the user that a playlist is being created
+   * @returns {HTMLElement} A div telling the user that a playlist is being created
    */
   render() {
     return this.createPlaylistDiv();

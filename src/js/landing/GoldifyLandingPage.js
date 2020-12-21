@@ -4,7 +4,7 @@ import "../../css/GoldifyLandingPage.css";
 class GoldifyLandingPage extends Component {
   /**
    * Renders the initial div when a user arrives at the site
-   * @returns {?} A div instructing the user on how to get started
+   * @returns {HTMLElement} A div instructing the user on how to get started
    */
   render() {
     return (

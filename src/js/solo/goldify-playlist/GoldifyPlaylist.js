@@ -70,7 +70,7 @@ class GoldifyPlaylist extends Component {
   /**
    * Displays the user's Goldify Playlist if available
    * Otherwise redirects to page to create one
-   * @returns {?} A div to either create or display the user's Goldify playlist
+   * @returns {HTMLElement} A div to either create or display the user's Goldify playlist
    */
   render() {
     if (this.state.goldifyPlaylist === undefined) {

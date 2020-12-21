@@ -32,7 +32,7 @@ class UserInfo extends Component {
 
   /**
    * Displays the user's profile data formatted in a single component
-   * @returns {?} Div containing the user's profile information
+   * @returns {HTMLElement} Div containing the user's profile information
    */
   getUserInfoDiv() {
     return (
@@ -64,7 +64,7 @@ class UserInfo extends Component {
 
   /**
    * Displays the user's profile data once available
-   * @returns {?} An empty div or a div displaying the user's information
+   * @returns {HTMLElement} An empty div or a div displaying the user's information
    */
   render() {
     if (this.state.userData == null) {

@@ -132,7 +132,7 @@ class TopListeningData extends Component {
   /**
    * Displays the top listening data set in the props
    * Will also call the props.addTrackHandler to add songs to the user's goldify playlist
-   * @returns {?} A div containing the retrieved/visible topListeningData
+   * @returns {HTMLElement} A div containing the retrieved/visible topListeningData
    */
   getTopListeningDataDiv() {
     return (
@@ -211,7 +211,7 @@ class TopListeningData extends Component {
   /**
    * Renders which div is available depending on state.topListeningData
    * Will also auto-fill recommendations to an empty goldify playlist
-   * @returns {?} Empty div or div containing top listening data
+   * @returns {HTMLElement} Empty div or div containing top listening data
    */
   render() {
     if (this.state.topListeningData == null) {

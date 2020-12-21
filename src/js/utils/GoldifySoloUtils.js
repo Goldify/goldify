@@ -116,7 +116,7 @@ export const replaceWindowURL = (url) => {
 
 /**
  * Displays a basic loading page while we wait for something to happen
- * @returns {?} A div with some loading text
+ * @returns {HTMLElement} A div with some loading text
  */
 export const getLoadingPage = () => {
   return (

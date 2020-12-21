@@ -67,7 +67,7 @@ class GoldifySoloPage extends Component {
 
   /**
    * Displays the base goldifySolo page
-   * @returns {?} Div containing the User Info component and the Goldify Playlist component
+   * @returns {HTMLElement} Div containing the User Info component and the Goldify Playlist component
    */
   getGoldifyPage() {
     return (
@@ -85,7 +85,7 @@ class GoldifySoloPage extends Component {
 
   /**
    * Renders the loading page until base data is retrieved, then renders the goldify page
-   * @returns {?} Div of either the loading page or the goldify page
+   * @returns {HTMLElement} Div of either the loading page or the goldify page
    */
   render() {
     if (this.state.retrievedTokenData == null || this.state.userData == null) {
