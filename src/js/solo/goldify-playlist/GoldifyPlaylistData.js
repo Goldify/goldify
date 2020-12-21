@@ -153,20 +153,9 @@ class GoldifyPlaylistData extends Component {
   getGoldifyPlaylistDiv() {
     return (
       <div>
-        <div>
+        <div className="goldify-update-buttons">
           {this.state.playlistDirty ? (
             <div>
-              <Button
-                className="goldify-playlist-cancel-button"
-                variant="contained"
-                color="primary"
-                style={{ background: amber[600] }}
-                onClick={() => {
-                  this.cancelUpdatesToGoldifyPlaylist();
-                }}
-              >
-                Cancel
-              </Button>
               <Button
                 className="goldify-playlist-save-button"
                 variant="contained"
@@ -177,6 +166,17 @@ class GoldifyPlaylistData extends Component {
                 }}
               >
                 Save Goldify Playlist
+              </Button>
+              <Button
+                className="goldify-playlist-cancel-button"
+                variant="contained"
+                color="primary"
+                style={{ background: amber[600] }}
+                onClick={() => {
+                  this.cancelUpdatesToGoldifyPlaylist();
+                }}
+              >
+                Cancel
               </Button>
             </div>
           ) : (
@@ -192,12 +192,11 @@ class GoldifyPlaylistData extends Component {
           <table className="track-data-table">
             <thead className="track-data-thead">
               <tr className="track-data-tr">
-                <th className="track-data-th"></th>
-                <th className="track-data-th"></th>
+                <th className="track-data-th track-data-action-icon"></th>
+                <th className="track-data-th track-data-album-cover"></th>
                 <th className="track-data-th">Title</th>
                 <th className="track-data-th">Artist(s)</th>
                 <th className="track-data-th">Album</th>
-                <th className="track-data-th">Popularity</th>
               </tr>
             </thead>
             <tbody className="track-data-tbody">
@@ -230,9 +229,6 @@ class GoldifyPlaylistData extends Component {
                     </td>
                     <td className="track-data-td">
                       {listValue.track.album.name}
-                    </td>
-                    <td className="track-data-td">
-                      {listValue.track.popularity}
                     </td>
                   </tr>
                 );

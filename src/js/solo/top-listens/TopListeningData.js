@@ -102,14 +102,13 @@ class TopListeningData extends Component {
               <th className="track-data-th">Title</th>
               <th className="track-data-th">Artist(s)</th>
               <th className="track-data-th">Album</th>
-              <th className="track-data-th">Popularity</th>
             </tr>
           </thead>
           <tbody className="track-data-tbody">
             {this.state.topListeningData.items.map((listValue, index) => {
               return (
                 <tr key={index} className="track-data-tr">
-                  <td className="track-data-td">
+                  <td className="track-data-td track-data-action-icon">
                     {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
                       <BeenhereIcon
                         style={{ color: blue[500] }}
@@ -126,7 +125,7 @@ class TopListeningData extends Component {
                       />
                     )}
                   </td>
-                  <td className="track-data-td">
+                  <td className="track-data-td track-data-album-cover">
                     <img alt="Album Art" src={listValue.album.images[0].url} />
                   </td>
                   <td className="track-data-td">{listValue.name}</td>
@@ -138,7 +137,6 @@ class TopListeningData extends Component {
                       .reduce((prev, curr) => [prev, ", ", curr])}
                   </td>
                   <td className="track-data-td">{listValue.album.name}</td>
-                  <td className="track-data-td">{listValue.popularity}</td>
                 </tr>
               );
             })}

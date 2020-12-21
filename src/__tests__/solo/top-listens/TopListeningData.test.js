@@ -105,9 +105,6 @@ test("Check for top listen data in top listen data page after setting the state"
     topListeningDataFixtures.testSongName
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDataFixtures.testPopularity
-  );
-  expect(topListeningDataDivString).toContain(
     topListeningDataFixtures.testAlbumArtImageURL
   );
   expect(topListeningDataDivString).toContain(

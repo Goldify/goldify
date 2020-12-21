@@ -1,26 +1,71 @@
 .card {
-  position: sticky;
-  height: min-content;
-  top: 15px;
-  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-  max-width: 250px;
-  left: 5%;
-  text-align: center;
+  display: flex;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4);
+  margin-bottom: 1%;
+  text-align: left;
+  width: fit-content;
+  border-radius: 20px;
+  background-color: #191414;
+  border: 4px solid #1DB954;
 }
 
-.card img {
-  width: 100%;
+.user-image {
+  margin-left: 10px;
+  width: 100px;
+  height: 100%;
+  vertical-align: bottom;
+  display: inline-block;
+  text-align: left;
+  left: 0;
+}
+
+.user-image-avatar {
+  width: 100% !important;
+  margin: 5% 0 !important;
+  height: 100% !important;
+}
+
+.user-image img {
+  height: 100px;
+  width: 100px;
+  border-radius: 20px 0 0 20px;
+  float: left;
+}
+
+.user-names {
+  width: calc(70% - 50px);
+  margin: auto;
+  margin-left: 10px;
+  font-weight: bold;
+  display: inline-block;
+  color: #1DB954;
+  text-align: left;
+}
+
+.user-names h1 {
+  margin: auto;
+}
+
+.user-view-profile {
+  margin: auto;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 .view-profile {
-  border: none;
-  outline: 0;
-  display: inline-block;
-  padding: 8px;
   color: white;
-  background-color: #000;
-  text-align: center;
   cursor: pointer;
-  width: 100%;
-  font-size: 18px;
+  width: 50%;
+}
+
+.spotify-logo {
+  width: calc(70% - 50px);
+  margin: auto;
+  margin-right: 10px;
+  vertical-align: middle;
+  text-align: right;
+}
+
+.spotify-logo img {
+  height: 70px;
 }

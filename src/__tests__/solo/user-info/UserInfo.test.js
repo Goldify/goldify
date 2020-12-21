@@ -34,7 +34,9 @@ test("Confirm an error occurs when attempting to grab the user data component wi
   try {
     wrapper.instance().getUserInfoDiv();
   } catch (err) {
-    expect(err).toEqual(TypeError("Cannot read property 'images' of null"));
+    expect(err).toEqual(
+      TypeError("Cannot read property 'external_urls' of null")
+    );
     errorThrown = true;
   }
   expect(errorThrown).toBe(true);
@@ -46,14 +48,10 @@ test("Check for user data in user data page after setting the state", () => {
   );
   let userInfoDivString = JSON.stringify(wrapper.instance().getUserInfoDiv());
   expect(userInfoDivString).toContain(userInfoFixtures.testUserImageURL);
-  expect(userInfoDivString).toContain(userInfoFixtures.testUserFollowersTotal);
   expect(userInfoDivString).toContain(
     userInfoFixtures.testUserExternalUrlSpotify
   );
-  expect(userInfoDivString).toContain(userInfoFixtures.testUserCountry);
-  expect(userInfoDivString).toContain(userInfoFixtures.testUserId);
   expect(userInfoDivString).toContain(userInfoFixtures.testUserDisplayName);
-  expect(userInfoDivString).toContain(userInfoFixtures.testUserEmail);
 });
 
 test("Check for which div is loaded on render for UserInfo", () => {
