@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import "../../../css/UserInfo.css";
 import PropTypes from "prop-types";
 import _ from "lodash";
+import spotifyLogo from "../../../assets/spotify_logo.png";
+import Avatar from "@material-ui/core/Avatar";
 
 class UserInfo extends Component {
   constructor(props) {
@@ -37,27 +39,27 @@ class UserInfo extends Component {
   getUserInfoDiv() {
     return (
       <div className="card">
-        <img src={this.state.userData.images[0].url} alt="Profile Image" />
-        <h1>{this.state.userData.display_name}</h1>
-        <p className="title">{this.state.userData.id}</p>
-        <p>
-          <b>Email:</b> {this.state.userData.email}
-        </p>
-        <p>
-          <b>Total Followers:</b> {this.state.userData.followers.total}
-        </p>
-        <p>
-          <b>Country:</b> {this.state.userData.country}
-        </p>
-        <p>
-          <a
-            href={this.state.userData.external_urls.spotify}
-            target="_blank"
-            rel="noreferrer"
-          >
-            <button className="view-profile">View Profile</button>
-          </a>
-        </p>
+        <div className="user-image">
+          <div>
+            <a
+              href={this.state.userData.external_urls.spotify}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <Avatar
+                alt="Profile Image"
+                src={this.state.userData.images[0].url}
+                className="user-image-avatar"
+              />
+            </a>
+          </div>
+        </div>
+        <div className="user-names">
+          <h1>{this.state.userData.display_name}</h1>
+        </div>
+        <div className="spotify-logo">
+          <img src={spotifyLogo} alt="Spotify Logo" />
+        </div>
       </div>
     );
   }

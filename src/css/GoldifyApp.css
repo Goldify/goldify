@@ -1,82 +1,73 @@
-.GoldifyApp {
+.goldify-app {
   text-align: center;
-}
-
-.GoldifyApp-logo {
-  height: 60px;
-  float: left;
-  margin: 17px;
-}
-.GoldifyApp-header {
-  background-color: #282c34;
-  display: flex;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.GoldifyApp-link {
-  color: #61dafb;
-}
-
-nav {
-  background-color:#0b162a;
   width: 100%;
 }
 
-nav a {
-  font-size: 0.9em;
+.goldify-logo {
+  width: 100px;
+  max-width: 100px;
+  height: 100%;
+  display: inline-block;
+  text-align: left;
+}
+
+.goldify-logo img {
+  margin: 10px;
+  height: 80%;
+  max-height: 80px !important;
+}
+
+.goldify-title {
+  width: calc(50% - 50px);
+  height: 100%;
+  display: inline-block;
   color: #FCC201;
-  text-decoration: none;
-  margin: 10px 0 0 40px;
-  display: block;
+  vertical-align: top;
+  text-align: left;
 }
 
-nav ul {
+.goldify-title h1 {
+  font-size: 2.5em;
+}
+
+.goldify-tabs-bar {
+  flex-wrap: wrap;
+  width: calc(50% - 50px);
+  height: 100%;
+  display: inline-flex;
+  vertical-align: top;
+}
+
+.goldify-tabs-paper {
+  margin: auto;
+  background-color: #0b162a !important;
+  width: 100%;
+  box-shadow: none !important;
+}
+
+.goldify-tabs {
   float: right;
-  list-style: none;
-  padding: 25px;
-  margin: 0;
 }
 
-nav li {
-  float: left;
+.goldify-tab {
+  color: #FCC201 !important;
+  vertical-align: middle;
+  text-align: right !important;
 }
 
-.headline {
+.goldify-header {
   height: 100px;
+  max-height: 100px;
   color: #fff;
   text-align: center;
   background-color:#0b162a;
 }
 
-.headline:after {
+.goldify-header:after {
   content: '';
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
   background: rgba(#111, 0.5);
-}
-
-.inner {
-  position: absolute;
-  top: 45px;
-  left: 50%;
-  color: #FCC201;
-  z-index: 10;
-  transform: translateX(-50%) translateY(-50%);
-  animation: fade-in 0.75s 0.25s ease-in forwards;
-}
-
-.inner h1 {
-  margin: 0;
-  font-size: 4em;
-  line-height: 1.2em;
-}
-
-.inner p {
-  margin: 0;
-  font-size: 1.4em;
-  font-style: italic;
-  font-family: serif;
 }

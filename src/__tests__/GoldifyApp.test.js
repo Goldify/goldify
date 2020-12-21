@@ -1,11 +1,11 @@
 import React from "react";
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import "@testing-library/jest-dom";
-import userEvent from "@testing-library/user-event";
 import GoldifyApp from "../js/GoldifyApp";
-import { configure } from "enzyme";
+import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import reportWebVitals from "../js/utils/reportWebVitals";
+import { HOME_PAGE_PATH, SOLO_PAGE_PATH } from "../js/utils/constants";
 
 configure({ adapter: new Adapter() });
 
@@ -15,22 +15,10 @@ test("Goldify Header exists on main app", () => {
   expect(linkElement).toBeInTheDocument();
 });
 
-test("Content changes on click of Get Started", () => {
-  render(<GoldifyApp />);
-  const homeBody = screen.getByText(/Welcome to Goldify!/i);
-  expect(homeBody).toBeInTheDocument();
-
-  const leftClick = { button: 0 };
-  const getStartedButton = screen.getByText("Solo").closest("a");
-  const homeButton = screen.getByText("Home").closest("a");
-  expect(getStartedButton).toHaveAttribute("href", "/goldify");
-  expect(homeButton).toHaveAttribute("href", "/");
-
-  userEvent.click(getStartedButton, leftClick);
-
-  const viewProfile = screen.getByText(/Loading.../i);
-  expect(homeBody).not.toBeInTheDocument();
-  expect(viewProfile).toBeInTheDocument();
+test("Confirm the Selected Tab is correct", () => {
+  const wrapper = shallow(<GoldifyApp />);
+  expect(wrapper.instance().getSelectedTab(HOME_PAGE_PATH)).toEqual(0);
+  expect(wrapper.instance().getSelectedTab(SOLO_PAGE_PATH)).toEqual(1);
 });
 
 test("Run Web Vitals", () => {
@@ -45,5 +33,7 @@ test("Load index js script file without error", () => {
   const root = document.createElement("div");
   root.id = "root";
   document.body.appendChild(root);
-  require("../index.js");
+  act(() => {
+    require("../index.js");
+  });
 });

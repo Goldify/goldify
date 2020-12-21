@@ -1,28 +1,21 @@
-@font-face {
-  font-family: 'Proxima Nova';
-  src: url('ProximaNova.ttf') format('truetype');
-  font-weight: normal;
-  font-style: normal;
-}
-
 .container {
   margin: auto;
   top: 0;
 }
 
 .track-data-table-container {
+  overflow-x: auto;
   margin: auto;
 }
 
 .top-listens-table-container {
-  margin-top: 5%;
+  margin-top: 30px;
 }
 
 .track-data-table-header {
   display: block;
   color: black;
   font-size: 20pt;
-  font-family: Proxima Nova;
   float: left;
 }
 
@@ -32,13 +25,14 @@
 }
 
 .track-data-table-header-container {
-	width: 800px;
+  left: 0;
+  position: sticky;
+  z-index: 9999;
   margin: auto;
 }
 
 .track-data-table {
-  top: 0;
-	width: 800px;
+  width: 100%;
 	border-collapse: collapse;
 	overflow: hidden;
 	box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -48,6 +42,20 @@
 	padding: 15px;
 	background-color: rgba(255,255,255,0.2);
   color: #000;
+}
+
+.track-data-album-cover {
+  width: 100px;
+  left: 0;
+  position: sticky;
+  z-index: 9999;
+}
+
+.track-data-action-icon {
+	width: 10px;
+  left: 0;
+  position: sticky;
+  z-index: 9999;
 }
 
 .track-data-td img {
@@ -68,26 +76,23 @@
   position: relative;
 }
 
-.track-data-td:hover:before {
-  content: "";
-  position: absolute;
-  left: 0;
-  right: 0;
-  top: -9999px;
-  bottom: -9999px;
-  background-color: rgb(255,255,255);
-  z-index: -1;
-}
-
 .top-listens-add-track, .goldify-playlist-remove-button {
   cursor: pointer;
 }
 
 .goldify-playlist-cancel-button {
-  float: right;
+  margin: 1% !important;
 }
 
 .goldify-playlist-save-button {
-  margin-right: 30px !important;
-  float: right;
+  margin: 1% !important;
+}
+
+.goldify-update-buttons {
+  top: 0;
+  position: sticky;
+  z-index: 10000;
+  display: block;
+  height: 36px;
+  margin: auto;
 }
