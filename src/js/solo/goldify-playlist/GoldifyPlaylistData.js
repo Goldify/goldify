@@ -66,7 +66,6 @@ class GoldifyPlaylistData extends Component {
   }
 
   setInitialGoldifyPlaylistData(playlistTrackData) {
-    this.setSavedGoldifyPlaylistData(playlistTrackData);
     var uriList = [];
     for (var i = 0; i < playlistTrackData.items.length; ++i) {
       var track = playlistTrackData.items[i].track;
@@ -77,6 +76,7 @@ class GoldifyPlaylistData extends Component {
       goldifyPlaylistData: playlistTrackData,
       playlistDirty: false,
     });
+    this.setSavedGoldifyPlaylistData(playlistTrackData);
   }
 
   setSavedGoldifyPlaylistData = (data) => {
@@ -102,10 +102,10 @@ class GoldifyPlaylistData extends Component {
       this.props.goldifyPlaylistId,
       this.goldifyPlaylistTrackUriList
     );
-    this.setSavedGoldifyPlaylistData(this.state.goldifyPlaylistData);
     this.setState({
       playlistDirty: false,
     });
+    this.setSavedGoldifyPlaylistData(this.state.goldifyPlaylistData);
   }
 
   cancelUpdatesToGoldifyPlaylist() {
@@ -119,6 +119,7 @@ class GoldifyPlaylistData extends Component {
       goldifyPlaylistData: this.savedGoldifyPlaylistData,
       playlistDirty: false,
     });
+    this.setSavedGoldifyPlaylistData(this.savedGoldifyPlaylistData);
   }
 
   addTrackFromTopListensData(trackData) {
