@@ -1,4 +1,5 @@
 import React from "react";
+import ReactDOM from "react-dom";
 import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
@@ -6,6 +7,7 @@ import GoldifyPlaylistData from "../../../js/solo/goldify-playlist/GoldifyPlayli
 import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
 import { getPlaylistTracksById } from "../../../js/utils/playlistTracks";
 import { GOLDIFY_PLAYLIST_NAME } from "../../../js/utils/constants";
+import { SortableList } from "../../../js/utils/GoldifyPlaylistDataElements";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
   replaceWindowURL: jest.fn(),
@@ -36,6 +38,13 @@ const goldifyPlaylistDataWrapper = () => {
   );
 };
 
+const getPlaylistTracksData = () => {
+  return playlistTracksFixtures.playlistTracksById(TEST_PLAYLIST_ID).items;
+};
+
+const removeTrackHandler = jest.fn();
+const onSortEndHandler = jest.fn();
+
 test("Test GoldifyPlaylistData with and without retrievedTokenData", async () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().retrieveGoldifyPlaylistData = jest.fn();
@@ -57,7 +66,7 @@ test("Test GoldifyPlaylistData with and without retrievedTokenData", async () =>
 
 test("Test functionality: retrieveGoldifyPlaylistData", async () => {
   getPlaylistTracksById.mockImplementation(() =>
-    Promise.resolve(playlistTracksFixtures.playlistTracksById(TEST_PLAYLIST_ID))
+    Promise.resolve({ items: getPlaylistTracksData() })
   );
 
   const wrapper = goldifyPlaylistDataWrapper();
@@ -72,7 +81,7 @@ test("Test functionality: retrieveGoldifyPlaylistData", async () => {
     wrapper.instance().setInitialGoldifyPlaylistData
   ).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setInitialGoldifyPlaylistData).toHaveBeenCalledWith(
-    playlistTracksFixtures.playlistTracksById(TEST_PLAYLIST_ID)
+    getPlaylistTracksData()
   );
 });
 
@@ -93,9 +102,7 @@ test("Expect home page to load when running retrieveGoldifyPlaylistData with bad
 test("Check for goldify playlist data in goldify playlist data page after setting the state", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().state = {
-    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
-      TEST_PLAYLIST_ID
-    ),
+    goldifyPlaylistData: getPlaylistTracksData(),
     playlistDirty: true,
   };
   let goldifyPlaylistDataDivString = JSON.stringify(
@@ -106,9 +113,7 @@ test("Check for goldify playlist data in goldify playlist data page after settin
   );
 
   wrapper.instance().state = {
-    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
-      TEST_PLAYLIST_ID
-    ),
+    goldifyPlaylistData: getPlaylistTracksData(),
     playlistDirty: false,
   };
   goldifyPlaylistDataDivString = JSON.stringify(
@@ -125,9 +130,7 @@ test("Check for which div is loaded on render for GoldifyPlaylistData", () => {
     .fn()
     .mockReturnValue("Goldify Playlist Table!");
   expect(wrapper.instance().render()).toEqual(<div />);
-  wrapper.instance().state.goldifyPlaylistData = playlistTracksFixtures.playlistTracksById(
-    TEST_PLAYLIST_ID
-  );
+  wrapper.instance().state.goldifyPlaylistData = getPlaylistTracksData();
   expect(wrapper.instance().render()).toEqual("Goldify Playlist Table!");
 });
 
@@ -135,23 +138,17 @@ test("Test functionality: setInitialGoldifyPlaylistData", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setSavedGoldifyPlaylistData = jest.fn();
   wrapper.instance().setState = jest.fn();
-  wrapper
-    .instance()
-    .setInitialGoldifyPlaylistData(
-      playlistTracksFixtures.playlistTracksById(TEST_PLAYLIST_ID)
-    );
+  wrapper.instance().setInitialGoldifyPlaylistData(getPlaylistTracksData());
   expect(wrapper.instance().setSavedGoldifyPlaylistData).toHaveBeenCalledTimes(
     1
   );
   expect(wrapper.instance().setSavedGoldifyPlaylistData).toHaveBeenCalledWith(
-    playlistTracksFixtures.playlistTracksById(TEST_PLAYLIST_ID)
+    getPlaylistTracksData()
   );
   expect(wrapper.instance().goldifyPlaylistTrackUriList).toEqual(TEST_URI_LIST);
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
-      TEST_PLAYLIST_ID
-    ),
+    goldifyPlaylistData: getPlaylistTracksData(),
     playlistDirty: false,
   });
 });
@@ -191,9 +188,7 @@ test("Confrim removeGoldifyPlaylistTrackUri removes track URI", () => {
 test("Confirm updateGoldifyPlaylist updates goldify playlist", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().goldifyPlaylistTrackUriList = [];
-  wrapper.instance().state.goldifyPlaylistData = playlistTracksFixtures.playlistTracksById(
-    TEST_PLAYLIST_ID
-  );
+  wrapper.instance().state.goldifyPlaylistData = getPlaylistTracksData();
   wrapper.instance().setSavedGoldifyPlaylistData = jest.fn();
   wrapper.instance().setState = jest.fn();
   wrapper.instance().updateGoldifyPlaylist();
@@ -201,7 +196,7 @@ test("Confirm updateGoldifyPlaylist updates goldify playlist", () => {
     1
   );
   expect(wrapper.instance().setSavedGoldifyPlaylistData).toHaveBeenCalledWith(
-    playlistTracksFixtures.playlistTracksById(TEST_PLAYLIST_ID)
+    getPlaylistTracksData()
   );
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
@@ -212,17 +207,13 @@ test("Confirm updateGoldifyPlaylist updates goldify playlist", () => {
 test("Confirm cancelUpdatesToGoldifyPlaylist cancels any updates", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setState = jest.fn();
-  wrapper.instance().savedGoldifyPlaylistData = playlistTracksFixtures.playlistTracksById(
-    TEST_PLAYLIST_ID
-  );
+  wrapper.instance().savedGoldifyPlaylistData = getPlaylistTracksData();
   wrapper.instance().goldifyPlaylistTrackUriList = [];
   wrapper.instance().cancelUpdatesToGoldifyPlaylist();
   expect(wrapper.instance().goldifyPlaylistTrackUriList).toEqual(TEST_URI_LIST);
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
-      TEST_PLAYLIST_ID
-    ),
+    goldifyPlaylistData: getPlaylistTracksData(),
     playlistDirty: false,
   });
 });
@@ -232,7 +223,7 @@ test("Confirm addTrackFromTopListensData adds track", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setState = jest.fn();
   wrapper.instance().addGoldifyPlaylistTrackUri = jest.fn();
-  wrapper.instance().state.goldifyPlaylistData = { items: [] };
+  wrapper.instance().state.goldifyPlaylistData = [];
 
   wrapper.instance().addTrackFromTopListensData(testTrack);
   expect(wrapper.instance().addGoldifyPlaylistTrackUri).toHaveBeenCalledTimes(
@@ -243,29 +234,22 @@ test("Confirm addTrackFromTopListensData adds track", () => {
   );
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    goldifyPlaylistData: {
-      items: [{ track: testTrack }],
-    },
+    goldifyPlaylistData: [{ track: testTrack }],
     playlistDirty: true,
   });
 
   wrapper.instance().goldifyPlaylistTrackUriList = [testTrack.uri];
-  let errorThrown = false;
-  try {
-    wrapper.instance().addTrackFromTopListensData(testTrack);
-  } catch (err) {
-    errorThrown = true;
-  }
-  expect(errorThrown).toEqual(true);
+  wrapper.instance().addTrackFromTopListensData(testTrack);
+  expect(wrapper.instance().goldifyPlaylistTrackUriList).toEqual([
+    testTrack.uri,
+  ]);
 });
 
 test("Confirm removeGoldifyTrack removes the track", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setState = jest.fn();
   wrapper.instance().removeGoldifyPlaylistTrackUri = jest.fn();
-  wrapper.instance().state.goldifyPlaylistData = playlistTracksFixtures.playlistTracksById(
-    TEST_PLAYLIST_ID
-  );
+  wrapper.instance().state.goldifyPlaylistData = getPlaylistTracksData();
   wrapper
     .instance()
     .removeGoldifyTrack(
@@ -296,9 +280,7 @@ test("Confirm removeGoldifyTrack removes the track", () => {
 test("Expect cancelUpdatesToGoldifyPlaylist to be called on click of Cancel button", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setState({
-    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
-      TEST_PLAYLIST_ID
-    ),
+    goldifyPlaylistData: getPlaylistTracksData(),
     playlistDirty: true,
   });
   wrapper.instance().cancelUpdatesToGoldifyPlaylist = jest.fn();
@@ -314,9 +296,7 @@ test("Expect cancelUpdatesToGoldifyPlaylist to be called on click of Cancel butt
 test("Expect updateGoldifyPlaylist to be called on click of Save button", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setState({
-    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
-      TEST_PLAYLIST_ID
-    ),
+    goldifyPlaylistData: getPlaylistTracksData(),
     playlistDirty: true,
   });
   wrapper.instance().updateGoldifyPlaylist = jest.fn();
@@ -325,18 +305,30 @@ test("Expect updateGoldifyPlaylist to be called on click of Save button", () => 
   expect(wrapper.instance().updateGoldifyPlaylist).toHaveBeenCalledWith();
 });
 
-test("Expect removeGoldifyTrack to be called on click of Remove button", () => {
+test("Expect onSortEnd to call setState", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setState({
-    goldifyPlaylistData: playlistTracksFixtures.playlistTracksById(
-      TEST_PLAYLIST_ID
-    ),
-    playlistDirty: true,
+    goldifyPlaylistData: getPlaylistTracksData(),
   });
-  wrapper.instance().removeGoldifyTrack = jest.fn();
-  wrapper.find(".goldify-playlist-remove-button").at(0).simulate("click");
-  expect(wrapper.instance().removeGoldifyTrack).toHaveBeenCalledTimes(1);
-  expect(wrapper.instance().removeGoldifyTrack).toHaveBeenCalledWith(
-    playlistTracksFixtures.testTrack("TEST_SONG_NAME_1", "TEST_SONG_ID_1").track
+  wrapper.instance().setState = jest.fn();
+  wrapper.instance().onSortEnd(0, 1, getPlaylistTracksData());
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+});
+
+test("Use ReactDOM Render to render the SortableList", () => {
+  const table = document.createElement("table");
+  ReactDOM.render(
+    <SortableList
+      goldifyPlaylistData={getPlaylistTracksData()}
+      removeTrackContainerHandler={removeTrackHandler}
+      onSortEnd={onSortEndHandler}
+      useDragHandle
+    />,
+    table
   );
+  const button = table.querySelector(".goldify-playlist-remove-button");
+  expect(removeTrackHandler).toHaveBeenCalledTimes(0);
+  button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
+  expect(removeTrackHandler).toHaveBeenCalledTimes(1);
+  expect(onSortEndHandler).toHaveBeenCalledTimes(0);
 });
