@@ -154,54 +154,57 @@ class TopListeningData extends Component {
             </Tabs>
           </Paper>
         </div>
-        <table className="track-data-table">
-          <thead className="track-data-thead">
-            <tr className="track-data-tr">
-              <th className="track-data-th"></th>
-              <th className="track-data-th"></th>
-              <th className="track-data-th">Title</th>
-              <th className="track-data-th">Artist(s)</th>
-              <th className="track-data-th">Album</th>
-            </tr>
-          </thead>
-          <tbody className="track-data-tbody">
-            {this.state.topListeningData.items.map((listValue, index) => {
-              return (
-                <tr key={index} className="track-data-tr">
-                  <td className="track-data-td track-data-action-icon">
-                    {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
-                      <BeenhereIcon
-                        style={{ color: blue[500] }}
-                        fontSize="large"
+        <div className="track-data-table-inner-container">
+          <table className="track-data-table">
+            <thead className="track-data-thead">
+              <tr className="track-data-tr">
+                <th className="track-data-th"></th>
+                <th className="track-data-th">Album</th>
+                <th className="track-data-th">Title</th>
+                <th className="track-data-th">Artist(s)</th>
+              </tr>
+            </thead>
+            <tbody className="track-data-tbody">
+              {this.state.topListeningData.items.map((listValue, index) => {
+                return (
+                  <tr key={index} className="track-data-tr">
+                    <td className="track-data-td track-data-action-icon">
+                      {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
+                        <BeenhereIcon
+                          style={{ color: blue[500] }}
+                          fontSize="large"
+                        />
+                      ) : (
+                        <AddCircleIcon
+                          className="top-listens-add-track"
+                          style={{ color: green[500] }}
+                          fontSize="large"
+                          onClick={() => {
+                            this.props.addTrackHandler(listValue);
+                          }}
+                        />
+                      )}
+                    </td>
+                    <td className="track-data-td track-data-album-cover">
+                      <img
+                        alt={listValue.album.name}
+                        src={listValue.album.images[0].url}
                       />
-                    ) : (
-                      <AddCircleIcon
-                        className="top-listens-add-track"
-                        style={{ color: green[500] }}
-                        fontSize="large"
-                        onClick={() => {
-                          this.props.addTrackHandler(listValue);
-                        }}
-                      />
-                    )}
-                  </td>
-                  <td className="track-data-td track-data-album-cover">
-                    <img alt="Album Art" src={listValue.album.images[0].url} />
-                  </td>
-                  <td className="track-data-td">{listValue.name}</td>
-                  <td className="track-data-td">
-                    {listValue.album.artists
-                      .map((artist, index) => (
-                        <span key={index}>{artist.name}</span>
-                      ))
-                      .reduce((prev, curr) => [prev, ", ", curr])}
-                  </td>
-                  <td className="track-data-td">{listValue.album.name}</td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
+                    </td>
+                    <td className="track-data-td">{listValue.name}</td>
+                    <td className="track-data-td">
+                      {listValue.album.artists
+                        .map((artist, index) => (
+                          <span key={index}>{artist.name}</span>
+                        ))
+                        .reduce((prev, curr) => [prev, ", ", curr])}
+                    </td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        </div>
       </div>
     );
   }
