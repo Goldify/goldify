@@ -3,14 +3,15 @@ import PropTypes from "prop-types";
 import "../../../css/TrackDataTable.css";
 import TopListeningData from "../top-listens/TopListeningData";
 import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
-import { red, amber } from "@material-ui/core/colors";
-import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
+import { amber } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
 import {
   replacePlaylistTracks,
   getPlaylistTracksById,
 } from "../../utils/playlistTracks";
 import { GOLDIFY_PLAYLIST_NAME } from "../../utils/constants";
+import arrayMove from "array-move";
+import { SortableList } from "../../utils/GoldifyPlaylistDataElements";
 
 class GoldifyPlaylistData extends Component {
   savedGoldifyPlaylistData = {};
@@ -34,6 +35,7 @@ class GoldifyPlaylistData extends Component {
       this
     );
     this.removeGoldifyTrack = this.removeGoldifyTrack.bind(this);
+    this.onSortEnd = this.onSortEnd.bind(this);
   }
 
   /**
@@ -59,19 +61,23 @@ class GoldifyPlaylistData extends Component {
         if (data === undefined || data.error) {
           replaceWindowURL("/");
         } else {
-          this.setInitialGoldifyPlaylistData(data);
+          this.setInitialGoldifyPlaylistData(data.items);
         }
       }
     );
   }
 
-  setInitialGoldifyPlaylistData(playlistTrackData) {
+  setURIListFromPlaylistData(playlistData) {
     var uriList = [];
-    for (var i = 0; i < playlistTrackData.items.length; ++i) {
-      var track = playlistTrackData.items[i].track;
+    for (var i = 0; i < playlistData.length; ++i) {
+      var track = playlistData[i].track;
       uriList.push(track.uri);
     }
     this.goldifyPlaylistTrackUriList = uriList;
+  }
+
+  setInitialGoldifyPlaylistData(playlistTrackData) {
+    this.setURIListFromPlaylistData(playlistTrackData);
     this.setState({
       goldifyPlaylistData: playlistTrackData,
       playlistDirty: false,
@@ -97,6 +103,7 @@ class GoldifyPlaylistData extends Component {
   };
 
   updateGoldifyPlaylist() {
+    this.setURIListFromPlaylistData(this.state.goldifyPlaylistData);
     replacePlaylistTracks(
       this.props.retrievedTokenData,
       this.props.goldifyPlaylistId,
@@ -109,12 +116,7 @@ class GoldifyPlaylistData extends Component {
   }
 
   cancelUpdatesToGoldifyPlaylist() {
-    var uriList = [];
-    for (var i = 0; i < this.savedGoldifyPlaylistData.items.length; ++i) {
-      var currentTrack = this.savedGoldifyPlaylistData.items[i].track;
-      uriList.push(currentTrack.uri);
-    }
-    this.goldifyPlaylistTrackUriList = uriList;
+    this.setURIListFromPlaylistData(this.savedGoldifyPlaylistData);
     this.setState({
       goldifyPlaylistData: this.savedGoldifyPlaylistData,
       playlistDirty: false,
@@ -126,30 +128,28 @@ class GoldifyPlaylistData extends Component {
     if (!this.goldifyPlaylistTrackUriList.includes(trackData.uri)) {
       this.addGoldifyPlaylistTrackUri(trackData.uri);
       let currentPlaylistData = this.state.goldifyPlaylistData;
-      currentPlaylistData.items.push({
+      currentPlaylistData.push({
         track: trackData,
       });
       this.setState({
         goldifyPlaylistData: currentPlaylistData,
         playlistDirty: true,
       });
-    } else {
-      throw Error("Track already exists in playlist: " + trackData.id);
     }
   }
 
   removeGoldifyTrack(track) {
     let currentPlaylistData = this.state.goldifyPlaylistData;
     let index = -1;
-    for (var i = 0; i < currentPlaylistData.items.length; ++i) {
-      var currentTrack = currentPlaylistData.items[i].track;
+    for (var i = 0; i < currentPlaylistData.length; ++i) {
+      var currentTrack = currentPlaylistData[i].track;
       if (currentTrack.id === track.id) {
         index = i;
       }
     }
     if (index !== -1) {
       this.removeGoldifyPlaylistTrackUri(track.uri);
-      currentPlaylistData.items.splice(index, 1);
+      currentPlaylistData.splice(index, 1);
       this.setState({
         goldifyPlaylistData: currentPlaylistData,
         playlistDirty: true,
@@ -157,6 +157,17 @@ class GoldifyPlaylistData extends Component {
     } else {
       throw Error("Track not found: " + track.id);
     }
+  }
+
+  onSortEnd({ oldIndex, newIndex }) {
+    this.setState({
+      goldifyPlaylistData: arrayMove(
+        this.state.goldifyPlaylistData,
+        oldIndex,
+        newIndex
+      ),
+      playlistDirty: true,
+    });
   }
 
   getGoldifyPlaylistDiv() {
@@ -198,52 +209,27 @@ class GoldifyPlaylistData extends Component {
               {`Your ${GOLDIFY_PLAYLIST_NAME} Playlist`}
             </h1>
           </div>
-          <table className="track-data-table">
-            <thead className="track-data-thead">
-              <tr className="track-data-tr">
-                <th className="track-data-th track-data-action-icon"></th>
-                <th className="track-data-th track-data-album-cover"></th>
-                <th className="track-data-th">Title</th>
-                <th className="track-data-th">Artist(s)</th>
-                <th className="track-data-th">Album</th>
-              </tr>
-            </thead>
-            <tbody className="track-data-tbody">
-              {this.state.goldifyPlaylistData.items.map((listValue, index) => {
-                return (
-                  <tr key={index} className="track-data-tr">
-                    <td className="track-data-td">
-                      <RemoveCircleIcon
-                        className="goldify-playlist-remove-button"
-                        style={{ color: red[500] }}
-                        fontSize="large"
-                        onClick={() => {
-                          this.removeGoldifyTrack(listValue.track);
-                        }}
-                      />
-                    </td>
-                    <td className="track-data-td">
-                      <img
-                        alt="Album Art"
-                        src={listValue.track.album.images[0].url}
-                      />
-                    </td>
-                    <td className="track-data-td">{listValue.track.name}</td>
-                    <td className="track-data-td">
-                      {listValue.track.album.artists
-                        .map((artist, index) => (
-                          <span key={index}>{artist.name}</span>
-                        ))
-                        .reduce((prev, curr) => [prev, ", ", curr])}
-                    </td>
-                    <td className="track-data-td">
-                      {listValue.track.album.name}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+          <div className="track-data-table-inner-container">
+            <table className="track-data-table">
+              <thead className="track-data-thead">
+                <tr className="track-data-tr">
+                  <th className="track-data-th"></th>
+                  <th className="track-data-th track-data-action-icon"></th>
+                  <th className="track-data-th track-data-album-cover">
+                    Album
+                  </th>
+                  <th className="track-data-th">Title</th>
+                  <th className="track-data-th">Artist(s)</th>
+                </tr>
+              </thead>
+              <SortableList
+                goldifyPlaylistData={this.state.goldifyPlaylistData}
+                removeTrackContainerHandler={this.removeGoldifyTrack}
+                onSortEnd={this.onSortEnd}
+                useDragHandle
+              />
+            </table>
+          </div>
         </div>
         <TopListeningData
           retrievedTokenData={this.props.retrievedTokenData}
