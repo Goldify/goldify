@@ -5,9 +5,9 @@ import GoldifyApp from "./js/GoldifyApp";
 import reportWebVitals from "./js/utils/reportWebVitals";
 
 ReactDOM.render(
-  <React.StrictMode>
+  <React.Fragment>
     <GoldifyApp />
-  </React.StrictMode>,
+  </React.Fragment>,
   document.getElementById("root")
 );
 
