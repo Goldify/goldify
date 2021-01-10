@@ -8,7 +8,7 @@ import "../css/GoldifyApp.css";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
-import { HOME_PAGE_PATH, SOLO_PAGE_PATH } from "../js/utils/constants";
+import { HOME_PAGE_PATH, SOLO_PAGE_PATH } from "./utils/constants";
 
 const GoldifyTabs = withStyles({
   indicator: {
