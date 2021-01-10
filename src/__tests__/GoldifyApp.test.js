@@ -34,6 +34,6 @@ test("Load index js script file without error", () => {
   root.id = "root";
   document.body.appendChild(root);
   act(() => {
-    require("../index.js");
+    require("../index.jsx");
   });
 });
