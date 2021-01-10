@@ -1,4 +1,4 @@
-[Goldify Logo](public/goldify_logo.png)
+![Goldify Logo](public/goldify_logo.png)
 
 # Goldify
 
