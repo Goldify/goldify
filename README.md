@@ -1,3 +1,5 @@
+[Goldify Logo](public/goldify_logo.png)
+
 # Goldify
 
 A react-based application that you can use to build custom playlists based on your Spotify listening history.
