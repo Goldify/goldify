@@ -5,6 +5,7 @@ import TopListeningData from "../top-listens/TopListeningData";
 import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
 import { amber } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
+import { getSpotifyRedirectURL } from "../../utils/GoldifySoloUtils";
 import {
   replacePlaylistTracks,
   getPlaylistTracksById,
@@ -205,9 +206,18 @@ class GoldifyPlaylistData extends Component {
         </div>
         <div className="track-data-table-container">
           <div className="track-data-table-header-container">
-            <h1 className="track-data-table-header">
-              {`Your ${GOLDIFY_PLAYLIST_NAME} Playlist`}
-            </h1>
+            <a
+              href={getSpotifyRedirectURL(
+                "playlist",
+                this.props.goldifyPlaylistId
+              )}
+              target="_blank"
+              rel="noreferrer"
+            >
+              <h1 className="track-data-table-header">
+                {`Your ${GOLDIFY_PLAYLIST_NAME} Playlist`}
+              </h1>
+            </a>
           </div>
           <div className="track-data-table-inner-container">
             <table className="track-data-table">

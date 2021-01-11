@@ -3,7 +3,10 @@ import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
 import TopListeningData from "../../../js/solo/top-listens/TopListeningData";
 import Adapter from "enzyme-adapter-react-16";
-import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
+import {
+  replaceWindowURL,
+  getSpotifyRedirectURL,
+} from "../../../js/utils/GoldifySoloUtils";
 import { retrieveTopListeningDataAxios } from "../../../js/utils/TopListeningDataUtils";
 import {
   shortTermTracksRecommended,
@@ -13,6 +16,7 @@ import {
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
   replaceWindowURL: jest.fn(),
+  getSpotifyRedirectURL: jest.fn(),
 }));
 
 jest.mock("../../../js/utils/TopListeningDataUtils", () => ({
@@ -123,7 +127,7 @@ test("Check for top listen data in top listen data page after setting the state"
     topListeningDataFixtures.testAlbumName
   );
   expect(topListeningDataDivString).toContain(
-    topListeningDataFixtures.testSongName
+    topListeningDataFixtures.testTrackName
   );
   expect(topListeningDataDivString).toContain(
     topListeningDataFixtures.testAlbumArtImageURL
@@ -133,6 +137,23 @@ test("Check for top listen data in top listen data page after setting the state"
   );
   expect(topListeningDataDivString).toContain(
     topListeningDataFixtures.testArtistName2
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalled();
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "album",
+    topListeningDataFixtures.testAlbumId
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "track",
+    topListeningDataFixtures.testTrackId
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "artist",
+    topListeningDataFixtures.testArtistId1
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "artist",
+    topListeningDataFixtures.testArtistId2
   );
 });
 

@@ -1,6 +1,7 @@
 import React from "react";
 import axios from "axios";
 import qs from "qs";
+import { spotifyWebPlayerDomain } from "../utils/constants";
 
 export var clientId = process.env.REACT_APP_SPOTIFY_CLIENT_ID; // Your client id
 export var clientSecret = process.env.REACT_APP_SPOTIFY_CLIENT_SECRET; // Your secret
@@ -124,4 +125,8 @@ export const getLoadingPage = () => {
       <h3>Loading...</h3>
     </div>
   );
+};
+
+export const getSpotifyRedirectURL = (contentType, contentId) => {
+  return spotifyWebPlayerDomain + "/" + contentType + "/" + contentId;
 };
