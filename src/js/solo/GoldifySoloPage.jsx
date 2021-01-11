@@ -10,7 +10,10 @@ import {
   replaceWindowURL,
   getLoadingPage,
 } from "../utils/GoldifySoloUtils";
+import { GOLDIFY_PLAYLIST_NAME } from "../utils/constants";
 import { retrieveUserDataAxios } from "../utils/UserInfoUtils";
+import Snackbar from "@material-ui/core/Snackbar";
+import Alert from "@material-ui/lab/Alert";
 
 class GoldifySoloPage extends Component {
   constructor(props) {
@@ -19,7 +22,10 @@ class GoldifySoloPage extends Component {
     this.state = {
       retrievedTokenData: null,
       userData: null,
+      notificationOpen: false,
     };
+    this.autoFillCompleted = this.autoFillCompleted.bind(this);
+    this.handleCloseNotification = this.handleCloseNotification.bind(this);
   }
 
   /**
@@ -65,6 +71,20 @@ class GoldifySoloPage extends Component {
       });
   }
 
+  autoFillCompleted() {
+    this.setState({
+      notificationOpen: true,
+    });
+  }
+
+  handleCloseNotification(event, reason) {
+    if (reason !== "clickaway") {
+      this.setState({
+        notificationOpen: false,
+      });
+    }
+  }
+
   /**
    * Displays the base goldifySolo page
    * @returns {HTMLElement} Div containing the User Info component and the Goldify Playlist component
@@ -73,10 +93,27 @@ class GoldifySoloPage extends Component {
     return (
       <div className="goldify-page-container">
         <UserInfo userData={this.state.userData} />
+        <Snackbar
+          open={this.state.notificationOpen}
+          autoHideDuration={6000}
+          onClose={this.handleCloseNotification}
+          className="notification-snack-bar"
+        >
+          <Alert
+            onClose={this.handleCloseNotification}
+            severity="info"
+            elevation={6}
+            variant="filled"
+          >
+            We&apos;ve added a few of your top hits to your new&nbsp;
+            {GOLDIFY_PLAYLIST_NAME} playlist!
+          </Alert>
+        </Snackbar>
         <div className="container">
           <GoldifyPlaylist
             retrievedTokenData={this.state.retrievedTokenData}
             userData={this.state.userData}
+            autoFillCompletedHandler={this.autoFillCompleted}
           />
         </div>
       </div>

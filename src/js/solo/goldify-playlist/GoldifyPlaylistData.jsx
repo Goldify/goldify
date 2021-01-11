@@ -236,6 +236,8 @@ class GoldifyPlaylistData extends Component {
           goldifyUriList={this.goldifyPlaylistTrackUriList}
           addTrackHandler={this.addTrackFromTopListensData}
           playlistDirty={this.state.playlistDirty}
+          newlyCreatedPlaylist={this.props.newlyCreatedPlaylist}
+          onAutoFillCompleteHandler={this.props.autoFillCompletedHandler}
         />
       </div>
     );
@@ -253,6 +255,8 @@ class GoldifyPlaylistData extends Component {
 GoldifyPlaylistData.propTypes = {
   retrievedTokenData: PropTypes.object.isRequired,
   goldifyPlaylistId: PropTypes.string.isRequired,
+  newlyCreatedPlaylist: PropTypes.bool.isRequired,
+  autoFillCompletedHandler: PropTypes.func.isRequired,
 };
 
 export default GoldifyPlaylistData;
