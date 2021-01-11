@@ -12,6 +12,7 @@ class UserInfo extends Component {
     this.state = {
       userData: null,
     };
+    this.openUserSpotifyProfile = this.openUserSpotifyProfile.bind(this);
   }
   /**
    * Sets this components userData state once available
@@ -32,26 +33,24 @@ class UserInfo extends Component {
     });
   }
 
+  openUserSpotifyProfile() {
+    window.open(this.state.userData.external_urls.spotify, "_blank");
+  }
+
   /**
    * Displays the user's profile data formatted in a single component
    * @returns {HTMLElement} Div containing the user's profile information
    */
   getUserInfoDiv() {
     return (
-      <div className="card">
+      <div className="card" onClick={this.openUserSpotifyProfile}>
         <div className="user-image">
           <div>
-            <a
-              href={this.state.userData.external_urls.spotify}
-              target="_blank"
-              rel="noreferrer"
-            >
-              <Avatar
-                alt="Profile Image"
-                src={this.state.userData.images[0].url}
-                className="user-image-avatar"
-              />
-            </a>
+            <Avatar
+              alt="Profile Image"
+              src={this.state.userData.images[0].url}
+              className="user-image-avatar"
+            />
           </div>
         </div>
         <div className="user-names">

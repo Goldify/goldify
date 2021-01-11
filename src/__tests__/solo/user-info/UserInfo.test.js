@@ -34,9 +34,7 @@ test("Confirm an error occurs when attempting to grab the user data component wi
   try {
     wrapper.instance().getUserInfoDiv();
   } catch (err) {
-    expect(err).toEqual(
-      TypeError("Cannot read property 'external_urls' of null")
-    );
+    expect(err).toEqual(TypeError("Cannot read property 'images' of null"));
     errorThrown = true;
   }
   expect(errorThrown).toBe(true);
@@ -48,9 +46,6 @@ test("Check for user data in user data page after setting the state", () => {
   );
   let userInfoDivString = JSON.stringify(wrapper.instance().getUserInfoDiv());
   expect(userInfoDivString).toContain(userInfoFixtures.testUserImageURL);
-  expect(userInfoDivString).toContain(
-    userInfoFixtures.testUserExternalUrlSpotify
-  );
   expect(userInfoDivString).toContain(userInfoFixtures.testUserDisplayName);
 });
 
@@ -62,4 +57,16 @@ test("Check for which div is loaded on render for UserInfo", () => {
   expect(wrapper.instance().render()).toEqual(<div />);
   wrapper.instance().state.userData = userInfoFixtures.getUserTestData();
   expect(wrapper.instance().render()).toEqual("User Info Div!");
+});
+
+test("Confirm openUserSpotifyProfile opens a new tab with the User's Profile", () => {
+  const wrapper = shallow(<UserInfo userData={{}} />);
+  window.open = jest.fn();
+  wrapper.instance().state.userData = userInfoFixtures.getUserTestData();
+  wrapper.instance().openUserSpotifyProfile();
+  expect(window.open).toHaveBeenCalledTimes(1);
+  expect(window.open).toHaveBeenCalledWith(
+    userInfoFixtures.testUserExternalUrlSpotify,
+    "_blank"
+  );
 });

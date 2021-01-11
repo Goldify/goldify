@@ -3,7 +3,10 @@ import _ from "lodash";
 import PropTypes from "prop-types";
 import "../../../css/TrackDataTable.css";
 import { retrieveTopListeningDataAxios } from "../../utils/TopListeningDataUtils";
-import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
+import {
+  replaceWindowURL,
+  getSpotifyRedirectURL,
+} from "../../utils/GoldifySoloUtils";
 import { blue, green } from "@material-ui/core/colors";
 import AddCircleIcon from "@material-ui/icons/AddCircle";
 import BeenhereIcon from "@material-ui/icons/Beenhere";
@@ -186,16 +189,40 @@ class TopListeningData extends Component {
                       )}
                     </td>
                     <td className="track-data-td track-data-album-cover">
-                      <img
-                        alt={listValue.album.name}
-                        src={listValue.album.images[0].url}
-                      />
+                      <a
+                        href={getSpotifyRedirectURL(
+                          "album",
+                          listValue.album.id
+                        )}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        <img
+                          alt={listValue.album.name}
+                          src={listValue.album.images[0].url}
+                        />
+                      </a>
                     </td>
-                    <td className="track-data-td">{listValue.name}</td>
+                    <td className="track-data-td">
+                      <a
+                        href={getSpotifyRedirectURL("track", listValue.id)}
+                        target="_blank"
+                        rel="noreferrer"
+                      >
+                        {listValue.name}
+                      </a>
+                    </td>
                     <td className="track-data-td">
                       {listValue.album.artists
                         .map((artist, index) => (
-                          <span key={index}>{artist.name}</span>
+                          <a
+                            key={index}
+                            href={getSpotifyRedirectURL("artist", artist.id)}
+                            target="_blank"
+                            rel="noreferrer"
+                          >
+                            {artist.name}
+                          </a>
                         ))
                         .reduce((prev, curr) => [prev, ", ", curr])}
                     </td>

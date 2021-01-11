@@ -1,6 +1,12 @@
-.goldify-app {
+.goldify-app, .goldify-footer {
   text-align: center;
   width: 100%;
+}
+
+.goldify-footer-img {
+  height: 20px;
+  vertical-align: bottom;
+  margin: 0 5px;
 }
 
 .goldify-logo {
