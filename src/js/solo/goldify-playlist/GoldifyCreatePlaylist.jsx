@@ -1,8 +1,12 @@
 import React, { Component } from "react";
 import PropTypes from "prop-types";
 import _ from "lodash";
-import { createGoldifyPlaylist } from "../../utils/playlist";
+import {
+  createGoldifyPlaylist,
+  uploadPlaylistImage,
+} from "../../utils/playlist";
 import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
+import { goldifyBase64 } from "../../../assets/goldifyBase64String";
 import {
   GOLDIFY_PLAYLIST_NAME,
   GOLDIFY_PLAYLIST_DESCRIPTION,
@@ -41,17 +45,24 @@ class GoldifyCreatePlaylist extends Component {
       userId,
       GOLDIFY_PLAYLIST_NAME,
       GOLDIFY_PLAYLIST_DESCRIPTION
-    ).then((data) => {
-      if (_.isEmpty(data) || data.error) {
-        alert(`Unable to create your ${GOLDIFY_PLAYLIST_NAME} playlist.`);
-        replaceWindowURL("/");
-      } else {
-        alert(
-          `Congrats! Your ${GOLDIFY_PLAYLIST_NAME} playlist has been created.`
-        );
-        this.props.playlistUpdater(data);
-      }
-    });
+    )
+      .then((data) => {
+        if (_.isEmpty(data) || data.error) {
+          alert(`Unable to create your ${GOLDIFY_PLAYLIST_NAME} playlist.`);
+          replaceWindowURL("/");
+        } else {
+          alert(
+            `Congrats! Your ${GOLDIFY_PLAYLIST_NAME} playlist has been created.`
+          );
+          this.props.playlistUpdater(data);
+          return data.id;
+        }
+      })
+      .then((playlistId) => {
+        if (!_.isEmpty(playlistId)) {
+          uploadPlaylistImage(retrievedTokenData, playlistId, goldifyBase64);
+        }
+      });
   }
 
   /**
