@@ -1,6 +1,7 @@
 import React from "react";
 import { red } from "@material-ui/core/colors";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
+import { getSpotifyRedirectURL } from "../utils/GoldifySoloUtils";
 import {
   sortableContainer,
   sortableElement,
@@ -28,12 +29,37 @@ export const SortableItem = sortableElement(
         />
       </td>
       <td className="track-data-td">
-        <img alt="Album Art" src={listValue.track.album.images[0].url} />
+        <a
+          href={getSpotifyRedirectURL("album", listValue.track.album.id)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img alt="Album Art" src={listValue.track.album.images[0].url} />
+        </a>
       </td>
-      <td className="track-data-td">{listValue.track.name}</td>
+      <td className="track-data-td">
+        <a
+          href={getSpotifyRedirectURL("track", listValue.track.id)}
+          target="_blank"
+          rel="noreferrer"
+        >
+          {listValue.track.name}
+        </a>
+      </td>
       <td className="track-data-td">
         {listValue.track.album.artists
-          .map((artist, index) => <span key={index}>{artist.name}</span>)
+          .map((artist, index) => {
+            return (
+              <a
+                key={index}
+                href={getSpotifyRedirectURL("artist", artist.id)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {artist.name}
+              </a>
+            );
+          })
           .reduce((prev, curr) => [prev, ", ", curr])}
       </td>
     </tr>

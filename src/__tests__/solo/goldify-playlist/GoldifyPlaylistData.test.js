@@ -4,13 +4,17 @@ import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import GoldifyPlaylistData from "../../../js/solo/goldify-playlist/GoldifyPlaylistData";
-import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
+import {
+  replaceWindowURL,
+  getSpotifyRedirectURL,
+} from "../../../js/utils/GoldifySoloUtils";
 import { getPlaylistTracksById } from "../../../js/utils/playlistTracks";
 import { GOLDIFY_PLAYLIST_NAME } from "../../../js/utils/constants";
 import { SortableList } from "../../../js/utils/GoldifyPlaylistDataElements";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
   replaceWindowURL: jest.fn(),
+  getSpotifyRedirectURL: jest.fn(),
 }));
 
 jest.mock("../../../js/utils/playlistTracks", () => ({
@@ -121,6 +125,10 @@ test("Check for goldify playlist data in goldify playlist data page after settin
   );
   expect(goldifyPlaylistDataDivString).toContain(
     `Your ${GOLDIFY_PLAYLIST_NAME} Playlist`
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "playlist",
+    TEST_PLAYLIST_ID
   );
 });
 
@@ -331,4 +339,25 @@ test("Use ReactDOM Render to render the SortableList", () => {
   button.dispatchEvent(new MouseEvent("click", { bubbles: true }));
   expect(removeTrackHandler).toHaveBeenCalledTimes(1);
   expect(onSortEndHandler).toHaveBeenCalledTimes(0);
+  expect(getSpotifyRedirectURL).toHaveBeenCalled();
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "album",
+    playlistTracksFixtures.testAlbumId
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "track",
+    playlistTracksFixtures.testTrackId1
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "track",
+    playlistTracksFixtures.testTrackId2
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "artist",
+    playlistTracksFixtures.testArtistId1
+  );
+  expect(getSpotifyRedirectURL).toHaveBeenCalledWith(
+    "artist",
+    playlistTracksFixtures.testArtistId2
+  );
 });

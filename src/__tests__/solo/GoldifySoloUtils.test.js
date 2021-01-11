@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
 import axios from "axios";
 import qs from "qs";
+import { spotifyWebPlayerDomain } from "../../js/utils/constants";
 import {
   clientId,
   redirectUri,
@@ -12,6 +13,7 @@ import {
   retrieveTokensAxios,
   replaceWindowURL,
   getLoadingPage,
+  getSpotifyRedirectURL,
 } from "../../js/utils/GoldifySoloUtils";
 
 jest.mock("axios");
@@ -93,4 +95,20 @@ test("Confirm replaceWindowURL replaces the window with the given URL", async ()
 test("Check for Loading... in loading page", () => {
   let loadingPageString = JSON.stringify(getLoadingPage());
   expect(loadingPageString).toContain("Loading...");
+});
+
+test("Confirm getSpotifyRedirectURL returns proper Spotify URL", () => {
+  const TEST_ID = "TEST_ID";
+  expect(getSpotifyRedirectURL("album", TEST_ID)).toEqual(
+    spotifyWebPlayerDomain + "/album/" + TEST_ID
+  );
+  expect(getSpotifyRedirectURL("track", TEST_ID)).toEqual(
+    spotifyWebPlayerDomain + "/track/" + TEST_ID
+  );
+  expect(getSpotifyRedirectURL("artist", TEST_ID)).toEqual(
+    spotifyWebPlayerDomain + "/artist/" + TEST_ID
+  );
+  expect(getSpotifyRedirectURL("test", TEST_ID)).toEqual(
+    spotifyWebPlayerDomain + "/test/" + TEST_ID
+  );
 });
