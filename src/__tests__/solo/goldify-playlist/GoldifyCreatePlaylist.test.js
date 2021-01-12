@@ -4,7 +4,10 @@ import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import GoldifyCreatePlaylist from "../../../js/solo/goldify-playlist/GoldifyCreatePlaylist";
 import { replaceWindowURL } from "../../../js/utils/GoldifySoloUtils";
-import { createGoldifyPlaylist } from "../../../js/utils/playlist";
+import {
+  createGoldifyPlaylist,
+  uploadPlaylistImage,
+} from "../../../js/utils/playlist";
 import {
   GOLDIFY_PLAYLIST_NAME,
   GOLDIFY_PLAYLIST_DESCRIPTION,
@@ -16,6 +19,7 @@ jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
 
 jest.mock("../../../js/utils/playlist", () => ({
   createGoldifyPlaylist: jest.fn(),
+  uploadPlaylistImage: jest.fn(),
 }));
 
 configure({ adapter: new Adapter() });
@@ -63,6 +67,7 @@ test("Test functionality: createNewGoldifyPlaylist", async () => {
   createGoldifyPlaylist.mockImplementation(() =>
     Promise.resolve(createdPlaylist)
   );
+  uploadPlaylistImage.mockImplementation(() => Promise.resolve(null));
   jest.spyOn(window, "alert").mockImplementation(() => {});
 
   const wrapper = shallow(
@@ -79,6 +84,8 @@ test("Test functionality: createNewGoldifyPlaylist", async () => {
       userInfoFixtures.getUserTestData().id
     );
   expect(alert).toHaveBeenCalledTimes(1);
+  // Upload image after playlist is created
+  expect(uploadPlaylistImage).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().props.playlistUpdater).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().props.playlistUpdater).toHaveBeenCalledWith(
     createdPlaylist
@@ -103,6 +110,8 @@ test("Expect alert, home page when running createGoldifyPlaylist with bad data",
       userInfoFixtures.getUserTestData().id
     );
   expect(alert).toHaveBeenCalledTimes(1);
+  // Don't attempt to upload image if playlist isn't created
+  expect(uploadPlaylistImage).not.toHaveBeenCalled();
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
   expect(replaceWindowURL).toHaveBeenCalledWith("/");
 });
