@@ -14,7 +14,6 @@ import {
   shortTermTracksRecommended,
   mediumTermTracksRecommended,
   longTermTracksRecommended,
-  GOLDIFY_PLAYLIST_NAME,
 } from "../../utils/constants";
 
 import Paper from "@material-ui/core/Paper";
@@ -22,6 +21,8 @@ import Tabs from "@material-ui/core/Tabs";
 import Tab from "@material-ui/core/Tab";
 
 class TopListeningData extends Component {
+  newlyCreatedPlaylist = this.props.newlyCreatedPlaylist;
+
   constructor(props) {
     // Initialize mutable state
     super(props);
@@ -109,9 +110,6 @@ class TopListeningData extends Component {
    * the user's goldify playlist
    */
   autoFillGoldifyPlaylist() {
-    alert(
-      `Your ${GOLDIFY_PLAYLIST_NAME} playlist is empty! Let's add some tracks to get you started.`
-    );
     for (var stTrack = 0; stTrack < shortTermTracksRecommended; stTrack++) {
       const currentTrack = this.state.shortTermListeningData?.items[stTrack];
       if (!_.isEmpty(currentTrack)) {
@@ -130,6 +128,7 @@ class TopListeningData extends Component {
         this.props.addTrackHandler(currentTrack);
       }
     }
+    this.props.onAutoFillCompleteHandler();
   }
 
   /**
@@ -248,8 +247,9 @@ class TopListeningData extends Component {
       if (
         _.isArray(this.props.goldifyUriList) &&
         _.isEmpty(this.props.goldifyUriList) &&
-        this.props.playlistDirty == false
+        this.newlyCreatedPlaylist
       ) {
+        this.newlyCreatedPlaylist = false;
         this.autoFillGoldifyPlaylist();
       }
       return this.getTopListeningDataDiv();
@@ -262,6 +262,8 @@ TopListeningData.propTypes = {
   goldifyUriList: PropTypes.array.isRequired,
   addTrackHandler: PropTypes.func.isRequired,
   playlistDirty: PropTypes.bool.isRequired,
+  newlyCreatedPlaylist: PropTypes.bool.isRequired,
+  onAutoFillCompleteHandler: PropTypes.func.isRequired,
 };
 
 export default TopListeningData;

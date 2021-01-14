@@ -38,6 +38,8 @@ const goldifyPlaylistDataWrapper = () => {
     <GoldifyPlaylistData
       retrievedTokenData={{}}
       goldifyPlaylistId={TEST_PLAYLIST_ID}
+      newlyCreatedPlaylist={false}
+      autoFillCompletedHandler={jest.fn()}
     />
   );
 };

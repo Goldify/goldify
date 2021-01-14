@@ -14,6 +14,7 @@ class GoldifyPlaylist extends Component {
     this.state = {
       goldifyPlaylist: undefined,
       goldifyPlaylistId: "",
+      newlyCreatedPlaylist: false,
     };
     this.updatePlaylist = this.updatePlaylist.bind(this);
   }
@@ -27,6 +28,7 @@ class GoldifyPlaylist extends Component {
     this.setState({
       goldifyPlaylist: playlist,
       goldifyPlaylistId: playlist.id,
+      newlyCreatedPlaylist: true,
     });
   }
 
@@ -88,6 +90,8 @@ class GoldifyPlaylist extends Component {
         <GoldifyPlaylistData
           retrievedTokenData={this.props.retrievedTokenData}
           goldifyPlaylistId={this.state.goldifyPlaylistId}
+          newlyCreatedPlaylist={this.state.newlyCreatedPlaylist}
+          autoFillCompletedHandler={this.props.autoFillCompletedHandler}
         />
       );
     }
@@ -97,6 +101,7 @@ class GoldifyPlaylist extends Component {
 GoldifyPlaylist.propTypes = {
   retrievedTokenData: PropTypes.object.isRequired,
   userData: PropTypes.object.isRequired,
+  autoFillCompletedHandler: PropTypes.func.isRequired,
 };
 
 export default GoldifyPlaylist;

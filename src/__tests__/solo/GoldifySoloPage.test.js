@@ -28,8 +28,12 @@ configure({ adapter: new Adapter() });
 const goldifySoloFixtures = require("../../__fixtures__/GoldifySoloFixtures");
 const userInfoFixtures = require("../../__fixtures__/UserInfoFixtures");
 
+const goldifySoloPageWrapper = () => {
+  return shallow(<GoldifySoloPage />);
+};
+
 test("Confirm authorization code in componentDidMount is sent to retrieveTokensOnPageLoad", () => {
-  const wrapper = shallow(<GoldifySoloPage />);
+  const wrapper = goldifySoloPageWrapper();
   wrapper.instance().retrieveDataOnPageLoad = jest.fn();
 
   retrieveAuthenticationCode.mockReturnValue(
@@ -51,7 +55,7 @@ test("Test GoldifySoloPage functionality: retrieveDataOnPageLoad", async () => {
     Promise.resolve(userInfoFixtures.getUserTestData())
   );
 
-  const wrapper = shallow(<GoldifySoloPage />);
+  const wrapper = goldifySoloPageWrapper();
   wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
@@ -68,7 +72,7 @@ test("Test GoldifySoloPage functionality: retrieveDataOnPageLoad", async () => {
 test("Expect home page to load when running retrieveTokensAxios with bad data", async () => {
   retrieveTokensAxios.mockImplementation(() => Promise.resolve());
 
-  const wrapper = shallow(<GoldifySoloPage />);
+  const wrapper = goldifySoloPageWrapper();
   await wrapper
     .instance()
     .retrieveDataOnPageLoad(goldifySoloFixtures.testAuthenticationCode);
@@ -82,7 +86,7 @@ test("Expect home page to load when running retrieveUserDataAxios with bad data"
   );
   retrieveUserDataAxios.mockImplementation(() => Promise.resolve());
 
-  const wrapper = shallow(<GoldifySoloPage />);
+  const wrapper = goldifySoloPageWrapper();
   await wrapper
     .instance()
     .retrieveDataOnPageLoad(goldifySoloFixtures.testAuthenticationCode);
@@ -91,7 +95,7 @@ test("Expect home page to load when running retrieveUserDataAxios with bad data"
 });
 
 test("Check for which page is loaded on render for GoldifySoloPage", () => {
-  const wrapper = shallow(<GoldifySoloPage />);
+  const wrapper = goldifySoloPageWrapper();
   getLoadingPage.mockReturnValue("Loading Page!");
   wrapper.instance().getGoldifyPage = jest
     .fn()
@@ -103,9 +107,32 @@ test("Check for which page is loaded on render for GoldifySoloPage", () => {
 });
 
 test("Check for goldify page container class", () => {
-  const wrapper = shallow(<GoldifySoloPage />);
+  const wrapper = goldifySoloPageWrapper();
   wrapper.instance().state.retrievedTokenData = goldifySoloFixtures.getTokensTestData();
   wrapper.instance().state.userData = userInfoFixtures.getUserTestData();
   let goldifyPageString = JSON.stringify(wrapper.instance().getGoldifyPage());
   expect(goldifyPageString).toContain('"className":"goldify-page-container"');
+});
+
+test("Confirm autoFillCompleted sets notificationOpen to true", () => {
+  const wrapper = goldifySoloPageWrapper();
+  wrapper.instance().setState = jest.fn();
+  wrapper.instance().autoFillCompleted();
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    notificationOpen: true,
+  });
+});
+
+test("Confirm handleCloseNotification sets notificationOpen to false", () => {
+  const wrapper = goldifySoloPageWrapper();
+  wrapper.instance().setState = jest.fn();
+  wrapper.instance().handleCloseNotification(null, "clickaway");
+  expect(wrapper.instance().setState).not.toHaveBeenCalled();
+
+  wrapper.instance().handleCloseNotification(null, "not_clickaway");
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    notificationOpen: false,
+  });
 });

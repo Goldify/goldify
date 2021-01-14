@@ -23,10 +23,21 @@ const TEST_PLAYLIST_ID = "TEST_PLAYLIST_ID";
 const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
 const playlistFixtures = require("../../../__fixtures__/playlistFixtures");
 
-test("Test GoldifyPlaylist with and without retrievedTokenData", async () => {
-  const wrapper = shallow(
-    <GoldifyPlaylist retrievedTokenData={{}} userData={{}} />
+const testAutoFillCompletedHandler = jest.fn();
+
+const goldifyPlaylistWrapper = () => {
+  return shallow(
+    <GoldifyPlaylist
+      retrievedTokenData={{}}
+      userData={{}}
+      newlyCreatedPlaylist={false}
+      autoFillCompletedHandler={testAutoFillCompletedHandler}
+    />
   );
+};
+
+test("Test GoldifyPlaylist with and without retrievedTokenData", async () => {
+  const wrapper = goldifyPlaylistWrapper();
   wrapper.instance().retrieveGoldifyPlaylist = jest.fn();
   wrapper.instance().componentDidMount();
   expect(wrapper.instance().retrieveGoldifyPlaylist).not.toHaveBeenCalled();
@@ -46,9 +57,7 @@ test("Test functionality: retrieveGoldifyPlaylist", async () => {
     Promise.resolve(playlistFixtures.existingGoldifyPlaylist())
   );
 
-  const wrapper = shallow(
-    <GoldifyPlaylist retrievedTokenData={{}} userData={{}} />
-  );
+  const wrapper = goldifyPlaylistWrapper();
   wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
@@ -66,9 +75,7 @@ test("Expect alert when running retrieveGoldifyPlaylist with no Goldify Playlist
   );
   jest.spyOn(window, "alert").mockImplementation(() => {});
 
-  const wrapper = shallow(
-    <GoldifyPlaylist retrievedTokenData={{}} userData={{}} />
-  );
+  const wrapper = goldifyPlaylistWrapper();
   await wrapper
     .instance()
     .retrieveGoldifyPlaylist(goldifySoloFixtures.getTokensTestData());
@@ -80,9 +87,7 @@ test("Expect home page to load when running retrieveGoldifyPlaylist with bad dat
     Promise.resolve(undefined)
   );
 
-  const wrapper = shallow(
-    <GoldifyPlaylist retrievedTokenData={{}} userData={{}} />
-  );
+  const wrapper = goldifyPlaylistWrapper();
   await wrapper
     .instance()
     .retrieveGoldifyPlaylist(goldifySoloFixtures.getTokensTestData());
@@ -91,19 +96,24 @@ test("Expect home page to load when running retrieveGoldifyPlaylist with bad dat
 });
 
 test("Check for which div is loaded on render for GoldifyPlaylist", () => {
-  const wrapper = shallow(
-    <GoldifyPlaylist retrievedTokenData={{}} userData={{}} />
-  );
+  const wrapper = goldifyPlaylistWrapper();
   expect(wrapper.instance().render()).toEqual(<div />);
   wrapper.instance().state.goldifyPlaylist = playlistFixtures.existingGoldifyPlaylist();
   expect(wrapper.instance().render()).toEqual(
-    <GoldifyPlaylistData retrievedTokenData={{}} goldifyPlaylistId={""} />
+    <GoldifyPlaylistData
+      retrievedTokenData={{}}
+      goldifyPlaylistId={""}
+      newlyCreatedPlaylist={false}
+      autoFillCompletedHandler={testAutoFillCompletedHandler}
+    />
   );
   wrapper.instance().updatePlaylist(playlistFixtures.createGoldifyPlaylist());
   expect(wrapper.instance().render()).toEqual(
     <GoldifyPlaylistData
       retrievedTokenData={{}}
       goldifyPlaylistId={playlistFixtures.testPlaylistId}
+      newlyCreatedPlaylist={true}
+      autoFillCompletedHandler={testAutoFillCompletedHandler}
     />
   );
   wrapper.instance().updatePlaylist = jest.fn;

@@ -35,6 +35,8 @@ const getTopListeningDataWrapper = () => {
       goldifyUriList={[topListeningDataFixtures.testUri]}
       addTrackHandler={jest.fn()}
       playlistDirty={false}
+      newlyCreatedPlaylist={false}
+      onAutoFillCompleteHandler={jest.fn()}
     />
   );
 };
@@ -46,6 +48,8 @@ const getTopListeningDataWrapperEmptyPlaylist = () => {
       goldifyUriList={[]}
       addTrackHandler={jest.fn()}
       playlistDirty={false}
+      newlyCreatedPlaylist={false}
+      onAutoFillCompleteHandler={jest.fn()}
     />
   );
 };
@@ -168,17 +172,33 @@ test("Check that empty playlists are automatically given recommendations", () =>
   wrapper.instance().getTopListeningDataDiv = jest
     .fn()
     .mockReturnValue("Top Listens Table!");
-  jest.spyOn(window, "alert").mockImplementation(() => {});
   wrapper.instance().state.topListeningData = topListeningDataFixtures.getTopListeningData().short_term;
   wrapper.instance().state.shortTermListeningData = topListeningDataFixtures.getTopListeningData().short_term;
   wrapper.instance().state.mediumTermListeningData = topListeningDataFixtures.getTopListeningData().medium_term;
   wrapper.instance().state.longTermListeningData = topListeningDataFixtures.getTopListeningData().long_term;
+  wrapper.instance().newlyCreatedPlaylist = true;
   expect(wrapper.instance().render()).toEqual("Top Listens Table!");
   expect(wrapper.instance().props.addTrackHandler).toHaveBeenCalledTimes(
     shortTermTracksRecommended +
       mediumTermTracksRecommended +
       longTermTracksRecommended
   );
+  expect(wrapper.instance().newlyCreatedPlaylist).toEqual(false);
+});
+
+test("Feed autoFillGoldifyPlaylist empty data and expect no callouts", () => {
+  const wrapper = getTopListeningDataWrapperEmptyPlaylist();
+  wrapper.instance().state.shortTermListeningData = {
+    items: [],
+  };
+  wrapper.instance().state.mediumTermListeningData = {
+    items: [],
+  };
+  wrapper.instance().state.longTermListeningData = {
+    items: [],
+  };
+  wrapper.instance().autoFillGoldifyPlaylist();
+  expect(wrapper.instance().props.addTrackHandler).not.toHaveBeenCalled();
 });
 
 test("Check that empty playlists are not given tracks if top listening data wasn't retrieved", () => {
