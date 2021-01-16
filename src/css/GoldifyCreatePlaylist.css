@@ -1,0 +1,49 @@
+.create-playlist-wrapper {
+  background-color: #0B162A;
+  padding: 10px;
+  margin: 5% auto;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  border: 4px solid #FCC201;
+}
+
+.create-playlist-header {
+  color: #FCC201;
+  margin-bottom: 0;
+}
+
+.create-playlist-body {
+  color: #FCC201;
+  margin: 0 5% 5% 5%;
+}
+
+.create-playlist-button {
+  margin: 1% !important;
+}
+
+.create-playlist-logo-container {
+  margin: auto;
+  width: fit-content;
+  color: #FCC201;
+  font-weight: bold;
+}
+
+.create-playlist-logo-container img {
+  vertical-align: middle;
+}
+
+.create-playlist-goldify-logo {
+  height: 100px;
+  margin: 15px;
+}
+
+.create-playlist-spotify-logo {
+  height: 70px;
+  margin: 20px;
+}
+
+@media only screen and (min-width: 600px) {
+  .create-playlist-wrapper {
+    width: 50%;
+  }
+}
