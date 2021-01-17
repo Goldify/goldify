@@ -1,3 +1,84 @@
-.landingHeader {
-    color: black;
+.landing-wrapper, .landing-top-wrapper {
+  margin: 2% auto;
+  color: #212121;
+}
+
+.landing-bottom-wrapper {
+  margin: 5% auto;
+  color: #212121;
+}
+
+.landing-header {
+  margin-bottom: 0;
+}
+
+.landing-body {
+  margin: 0 5% 5% 5%;
+}
+
+.landing-split-body {
+  width: 100%;
+  text-align: center;
+}
+
+.landing-logo-container {
+  margin: auto;
+  width: fit-content;
+  color: #FCC201;
+  font-weight: bolder;
+}
+
+.landing-logo-container img {
+  vertical-align: middle;
+}
+
+.landing-goldify-logo {
+  height: 100px;
+  margin: 15px;
+}
+
+.landing-spotify-logo {
+  height: 70px;
+  margin: 20px;
+}
+
+.landing-golden-vinyl {
+  padding: 5px;
+  margin: 5% auto;
+  box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4);
+  border-radius: 20px;
+  border: 2px solid white;
+}
+
+.landing-golden-vinyl img {
+  width: 100%;
+  border-radius: 20px;
+}
+
+.landing-feature-icons {
+  margin: 5% auto;
+  width: 100%;
+  text-align: center;
+}
+
+.landing-feature-icon {
+  width: 33%;
+  display: inline-block;
+}
+
+@media only screen and (min-width: 600px) {
+  .landing-top-wrapper {
+    width: 50%;
+  }
+
+  .landing-split-body {
+    display: inline-block;
+    width: 44%;
+    margin: 3%;
+    vertical-align: top;
+  }
+
+  .landing-bottom-wrapper {
+    width: 80%;
+  }
 }
