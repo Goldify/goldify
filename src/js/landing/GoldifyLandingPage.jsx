@@ -40,8 +40,8 @@ class GoldifyLandingPage extends Component {
             with an easy-to-use interface which presents you with all your top
             hits to build your personal playlist from. Within minutes, you will
             have a Spotify playlist that is molded exactly to your musical
-            taste. We&apos;re excited for you to be here, and can&apos;t wait
-            for you to enjoy your golden tracks!
+            taste. We&apos;re excited for you to be here and can&apos;t wait for
+            you to enjoy your golden tracks!
           </p>
           <div className="landing-feature-icons">
             <div className="landing-feature-icon">
@@ -88,10 +88,10 @@ class GoldifyLandingPage extends Component {
             <p>
               Of course! If you have visited this page before and created your
               masterpiece of a playlist, just simply click the &quot;Solo&quot;
-              tab above and you&apos;ll be presented with your up to day Top
-              hits and your up to date Goldify playlist! Plus, you&apos;ll get
-              to see all the updates to the application by the Goldify team.
-              Pretty neat!
+              tab above and you&apos;ll be presented with your up-to-date Top
+              Hits as well as your up-to-date Goldify playlist! Plus,
+              you&apos;ll get to see all the updates to the application by the
+              Goldify team. Pretty neat!
             </p>
           </div>
           <div className="landing-split-body">
