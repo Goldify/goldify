@@ -11,8 +11,12 @@ configure({ adapter: new Adapter() });
 
 test("Goldify Header exists on main app", () => {
   render(<GoldifyApp />);
-  const linkElement = screen.getByText(/Home/i);
-  expect(linkElement).toBeInTheDocument();
+  const welcomeElement = screen.getByText(/Welcome to Goldify!/i);
+  expect(welcomeElement).toBeInTheDocument();
+  const mobileFriendlyElement = screen.getByText(/Mobile Friendly/i);
+  expect(mobileFriendlyElement).toBeInTheDocument();
+  const questionElement = screen.getByText(/Question Time!/i);
+  expect(questionElement).toBeInTheDocument();
 });
 
 test("Confirm the Selected Tab is correct", () => {
