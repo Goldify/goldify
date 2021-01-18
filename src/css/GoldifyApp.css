@@ -46,7 +46,7 @@
 
 .goldify-tabs-paper {
   margin: auto;
-  background-color: #0b162a !important;
+  background-color: #212121 !important;
   width: 100%;
   box-shadow: none !important;
 }
@@ -66,7 +66,7 @@
   max-height: 100px;
   color: #fff;
   text-align: center;
-  background-color:#0b162a;
+  background-color:#212121;
 }
 
 .goldify-header:after {
