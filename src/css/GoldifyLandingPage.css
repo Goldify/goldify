@@ -44,7 +44,7 @@
 
 .landing-golden-vinyl {
   padding: 5px;
-  margin: 5% auto;
+  margin: 0 auto 5% auto;
   box-shadow: 0 10px 20px 0 rgba(0, 0, 0, 0.4);
   border-radius: 20px;
   border: 2px solid white;
@@ -56,7 +56,7 @@
 }
 
 .landing-feature-icons {
-  margin: 5% auto;
+  margin: 20px auto 0 auto;
   width: 100%;
   text-align: center;
 }
@@ -64,6 +64,7 @@
 .landing-feature-icon {
   width: 33%;
   display: inline-block;
+  vertical-align: top;
 }
 
 @media only screen and (min-width: 600px) {

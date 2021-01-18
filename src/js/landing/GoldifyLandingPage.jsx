@@ -35,11 +35,11 @@ class GoldifyLandingPage extends Component {
             </a>
           </div>
           <p className="landing-body">
-            Goldify is an application built to help you easily build your golden
-            Spotify playlist. Built using Spotify&apos;s APIs, we provide you
-            with an easy-to-use interface which presents you with all your top
-            hits to build your personal playlist from. Within minutes, you will
-            have a Spotify playlist that is molded exactly to your musical
+            Goldify is an application built to help you easily design your
+            golden Spotify playlist. Built using Spotify&apos;s APIs, we provide
+            you with an easy-to-use interface which presents you with all your
+            top hits to build your personal playlist from. Within minutes, you
+            will have a Spotify playlist that is molded exactly to your musical
             taste. We&apos;re excited for you to be here and can&apos;t wait for
             you to enjoy your golden tracks!
           </p>
