@@ -76,10 +76,14 @@ test("Expect alert when running retrieveGoldifyPlaylist with no Goldify Playlist
   jest.spyOn(window, "alert").mockImplementation(() => {});
 
   const wrapper = goldifyPlaylistWrapper();
+  wrapper.instance().setState = jest.fn();
   await wrapper
     .instance()
     .retrieveGoldifyPlaylist(goldifySoloFixtures.getTokensTestData());
-  expect(alert).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    goldifyPlaylist: null,
+  });
 });
 
 test("Expect home page to load when running retrieveGoldifyPlaylist with bad data", async () => {

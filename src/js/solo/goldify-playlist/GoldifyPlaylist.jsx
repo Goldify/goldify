@@ -53,9 +53,6 @@ class GoldifyPlaylist extends Component {
       GOLDIFY_PLAYLIST_NAME
     ).then((data) => {
       if (data === null) {
-        alert(
-          `You don't have a ${GOLDIFY_PLAYLIST_NAME} playlist! Let's create one for you.`
-        );
         this.setState({
           goldifyPlaylist: null,
         });
