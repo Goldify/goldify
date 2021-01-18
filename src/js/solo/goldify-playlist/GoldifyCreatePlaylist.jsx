@@ -35,11 +35,6 @@ class GoldifyCreatePlaylist extends Component {
   }
 
   /**
-   * Creates a goldify playlist once retrievedTokenData and userData are set
-   */
-  componentDidMount() {}
-
-  /**
    * Creates a goldify playlist for the user, since one was not found
    * @param  {object} retrievedTokenData User data containing an access_token
    * @param  {string} userId User's ID to create the playlist under
