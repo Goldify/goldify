@@ -1,9 +1,10 @@
 import React, { Component } from "react";
 import "../../css/GoldifyLandingPage.css";
 import spotifyLogo from "../../assets/spotify_logo.png";
+import githubLogo from "../../assets/github_icon_white.jpg";
 import goldifyLogo from "../../assets/goldify_logo.png";
 import goldenVinyl from "../../assets/golden_vinyl.jpg";
-import { spotifyHomePageUrl } from "../utils/constants";
+import { spotifyHomePageUrl, goldifyGitHubUrl } from "../utils/constants";
 import MobileFriendlyIcon from "@material-ui/icons/MobileFriendly";
 import VerifiedUserIcon from "@material-ui/icons/VerifiedUser";
 import FastForwardIcon from "@material-ui/icons/FastForward";
@@ -43,6 +44,18 @@ class GoldifyLandingPage extends Component {
             taste. We&apos;re excited for you to be here and can&apos;t wait for
             you to enjoy your golden tracks!
           </p>
+          <div className="follow-github-container">
+            <a href={goldifyGitHubUrl} target="_blank" rel="noreferrer">
+              <div className="follow-github-inner">
+                <img
+                  src={githubLogo}
+                  className="follow-github-icon"
+                  alt="Github Logo Icon"
+                />
+                <div className="follow-github-message">Follow on GitHub</div>
+              </div>
+            </a>
+          </div>
           <div className="landing-feature-icons">
             <div className="landing-feature-icon">
               <MobileFriendlyIcon style={{ fontSize: 40, color: grey[900] }} />
