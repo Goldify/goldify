@@ -1,6 +1,8 @@
-.goldify-app, .goldify-footer {
+.goldify-app {
   text-align: center;
   width: 100%;
+  min-height: 100%;
+  height: 100%;
 }
 
 .goldify-footer-img {
@@ -76,4 +78,24 @@
   width: 100%;
   height: 100%;
   background: rgba(#111, 0.5);
+}
+
+.goldify-footer {
+  display: flex;
+  text-align: center;
+  width: 100%;
+  height: 40px;
+  color: white;
+  background-color: #212121;
+  z-index: 30000;
+}
+
+.goldify-footer-container {
+  margin: auto;
+}
+
+@media only screen and (min-width: 600px) {
+  .goldify-footer {
+    margin-top: -40px;
+  }
 }

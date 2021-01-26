@@ -1,4 +1,5 @@
 .landing-wrapper, .landing-top-wrapper {
+  min-height: calc(100% - 140px);
   margin: 2% auto;
   color: #212121;
 }

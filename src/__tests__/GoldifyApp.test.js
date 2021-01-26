@@ -17,6 +17,8 @@ test("Goldify Header exists on main app", () => {
   expect(mobileFriendlyElement).toBeInTheDocument();
   const questionElement = screen.getByText(/Question Time!/i);
   expect(questionElement).toBeInTheDocument();
+  const footerElement = screen.getByText(/Goldify is powered by/i);
+  expect(footerElement).toBeInTheDocument();
 });
 
 test("Confirm the Selected Tab is correct", () => {

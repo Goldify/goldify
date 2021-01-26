@@ -4,7 +4,7 @@ import { withStyles } from "@material-ui/core/styles";
 import GoldifyLandingPage from "./landing/GoldifyLandingPage";
 import GoldifySoloPage from "./solo/GoldifySoloPage";
 import logo from "../assets/goldify_logo.png";
-import spotifyFullLogoBlack from "../assets/spotify_full_logo_black.png";
+import spotifyFullLogoWhite from "../assets/spotify_full_logo_white.png";
 import { spotifyHomePageUrl } from "./utils/constants";
 import Paper from "@material-ui/core/Paper";
 import Tabs from "@material-ui/core/Tabs";
@@ -80,16 +80,16 @@ class GoldifyApp extends Component {
             <Route exact path={HOME_PAGE_PATH} component={GoldifyLandingPage} />
             <Route path={SOLO_PAGE_PATH} component={GoldifySoloPage} />
           </Switch>
-          <footer>
-            <p>
+          <footer className="goldify-footer">
+            <div className="goldify-footer-container">
               Goldify is powered by
               <a href={spotifyHomePageUrl} target="_blank" rel="noreferrer">
                 <img
-                  src={spotifyFullLogoBlack}
+                  src={spotifyFullLogoWhite}
                   className="goldify-footer-img"
                 />
               </a>
-            </p>
+            </div>
           </footer>
         </div>
       </Router>
