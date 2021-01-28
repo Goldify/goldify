@@ -1,5 +1,5 @@
 .container {
-  margin: auto;
+  margin: auto auto 5% auto;
   display: flow-root;
   top: 0;
 }
@@ -45,14 +45,15 @@
 .track-data-table {
   width: 100%;
   height: 100%;
-	border-collapse: collapse;
-	overflow: auto;
-	box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  border-collapse: collapse;
+  overflow: auto;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
 }
 
-.track-data-th, .track-data-td {
-	padding: 15px;
-	background-color: rgba(255,255,255,0.2);
+.track-data-th,
+.track-data-td {
+  padding: 15px;
+  background-color: rgba(255, 255, 255, 0.2);
   color: #000;
 }
 
@@ -64,7 +65,7 @@
 }
 
 .track-data-action-icon {
-	width: 10px;
+  width: 10px;
   left: 0;
   position: sticky;
   z-index: 9999;
@@ -75,8 +76,8 @@
 }
 
 .track-data-th {
-	text-align: center;
-	background-color: #FCC201;
+  text-align: center;
+  background-color: #fcc201;
   color: #fff !important;
 }
 
@@ -86,7 +87,7 @@
 }
 
 .track-data-tr:hover {
-  background-color: rgb(225,225,225);
+  background-color: rgb(225, 225, 225);
 }
 
 .track-data-td {
@@ -96,7 +97,8 @@
   vertical-align: middle;
 }
 
-.top-listens-add-track, .goldify-playlist-remove-button {
+.top-listens-add-track,
+.goldify-playlist-remove-button {
   cursor: pointer;
 }
 
@@ -124,14 +126,34 @@
   display: block;
   width: 18px;
   height: 11px;
-  opacity: .25;
+  opacity: 0.25;
   margin: auto;
   cursor: row-resize;
   background: -webkit-linear-gradient(
-    top,#000,#000 20%,#fff 0,#fff 40%,#000 0,#000 60%,#fff 0,#fff 80%,#000 0,#000
+    top,
+    #000,
+    #000 20%,
+    #fff 0,
+    #fff 40%,
+    #000 0,
+    #000 60%,
+    #fff 0,
+    #fff 80%,
+    #000 0,
+    #000
   );
   background: linear-gradient(
-    180deg,#000,#000 20%,#fff 0,#fff 40%,#000 0,#000 60%,#fff 0,#fff 80%,#000 0,#000
+    180deg,
+    #000,
+    #000 20%,
+    #fff 0,
+    #fff 40%,
+    #000 0,
+    #000 60%,
+    #fff 0,
+    #fff 80%,
+    #000 0,
+    #000
   );
 }
 
