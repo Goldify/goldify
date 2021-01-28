@@ -1,12 +1,15 @@
-.landing-wrapper, .landing-top-wrapper {
-  min-height: calc(100% - 140px);
+.landing-wrapper,
+.landing-top-wrapper {
   margin: 2% auto;
   color: #212121;
+  position: relative;
+  min-height: 100%;
 }
 
 .landing-bottom-wrapper {
   margin: 5% auto;
   color: #212121;
+  padding-bottom: 40px;
 }
 
 .landing-header {
@@ -25,7 +28,7 @@
 .landing-logo-container {
   margin: auto;
   width: fit-content;
-  color: #FCC201;
+  color: #fcc201;
   font-weight: bolder;
 }
 
