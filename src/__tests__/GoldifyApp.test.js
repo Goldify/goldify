@@ -1,5 +1,5 @@
 import React from "react";
-import { act, render, screen } from "@testing-library/react";
+import { act } from "@testing-library/react";
 import "@testing-library/jest-dom";
 import GoldifyApp from "../js/GoldifyApp";
 import { configure, shallow } from "enzyme";
@@ -8,16 +8,6 @@ import reportWebVitals from "../js/utils/reportWebVitals";
 import { HOME_PAGE_PATH, SOLO_PAGE_PATH } from "../js/utils/constants";
 
 configure({ adapter: new Adapter() });
-
-test("Goldify Header exists on main app", () => {
-  render(<GoldifyApp />);
-  const welcomeElement = screen.getByText(/Welcome to Goldify!/i);
-  expect(welcomeElement).toBeInTheDocument();
-  const mobileFriendlyElement = screen.getByText(/Mobile Friendly/i);
-  expect(mobileFriendlyElement).toBeInTheDocument();
-  const questionElement = screen.getByText(/Question Time!/i);
-  expect(questionElement).toBeInTheDocument();
-});
 
 test("Confirm the Selected Tab is correct", () => {
   const wrapper = shallow(<GoldifyApp />);
