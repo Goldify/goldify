@@ -9,14 +9,8 @@ import { HOME_PAGE_PATH, SOLO_PAGE_PATH } from "../js/utils/constants";
 
 configure({ adapter: new Adapter() });
 
-test("Goldify Header exists on main app", () => {
+test("Goldify App has proper footer", () => {
   render(<GoldifyApp />);
-  const welcomeElement = screen.getByText(/Welcome to Goldify!/i);
-  expect(welcomeElement).toBeInTheDocument();
-  const mobileFriendlyElement = screen.getByText(/Mobile Friendly/i);
-  expect(mobileFriendlyElement).toBeInTheDocument();
-  const questionElement = screen.getByText(/Question Time!/i);
-  expect(questionElement).toBeInTheDocument();
   const footerElement = screen.getByText(/Goldify is powered by/i);
   expect(footerElement).toBeInTheDocument();
 });
