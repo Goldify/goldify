@@ -17,8 +17,8 @@ test("Goldify App has proper footer", () => {
 
 test("Confirm the Selected Tab is correct", () => {
   const wrapper = shallow(<GoldifyApp />);
-  expect(wrapper.instance().getSelectedTab(HOME_PAGE_PATH)).toEqual(0);
-  expect(wrapper.instance().getSelectedTab(SOLO_PAGE_PATH)).toEqual(1);
+  expect(wrapper.instance().getSelectedTab(HOME_PAGE_PATH)).toEqual(false);
+  expect(wrapper.instance().getSelectedTab(SOLO_PAGE_PATH)).toEqual(0);
 });
 
 test("Run Web Vitals", () => {
