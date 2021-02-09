@@ -219,26 +219,28 @@ class GoldifyPlaylistData extends Component {
               </h1>
             </a>
           </div>
-          <div className="track-data-table-inner-container">
-            <table className="track-data-table">
-              <thead className="track-data-thead">
-                <tr className="track-data-tr">
-                  <th className="track-data-th"></th>
-                  <th className="track-data-th track-data-action-icon"></th>
-                  <th className="track-data-th track-data-album-cover">
-                    Album
-                  </th>
-                  <th className="track-data-th">Title</th>
-                  <th className="track-data-th">Artist(s)</th>
-                </tr>
-              </thead>
-              <SortableList
-                goldifyPlaylistData={this.state.goldifyPlaylistData}
-                removeTrackContainerHandler={this.removeGoldifyTrack}
-                onSortEnd={this.onSortEnd}
-                useDragHandle
-              />
-            </table>
+          <div className="track-data-table-outer-container">
+            <div className="track-data-table-inner-container">
+              <table className="track-data-table">
+                <thead className="track-data-thead">
+                  <tr className="track-data-tr">
+                    <th className="track-data-th"></th>
+                    <th className="track-data-th track-data-action-icon"></th>
+                    <th className="track-data-th track-data-album-cover">
+                      Album
+                    </th>
+                    <th className="track-data-th">Title</th>
+                    <th className="track-data-th">Artist(s)</th>
+                  </tr>
+                </thead>
+                <SortableList
+                  goldifyPlaylistData={this.state.goldifyPlaylistData}
+                  removeTrackContainerHandler={this.removeGoldifyTrack}
+                  onSortEnd={this.onSortEnd}
+                  useDragHandle
+                />
+              </table>
+            </div>
           </div>
         </div>
         <TopListeningData
