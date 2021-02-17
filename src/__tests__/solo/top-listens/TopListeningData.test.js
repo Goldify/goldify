@@ -263,14 +263,14 @@ test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
   };
   wrapper.instance().setState = jest.fn();
 
-  wrapper.instance().updateTopListeningDataTerm({}, 0);
+  wrapper.instance().updateTopListeningDataTerm({ target: { value: 0 } });
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
     selectedTerm: 0,
     topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
   });
 
-  wrapper.instance().updateTopListeningDataTerm({}, 1);
+  wrapper.instance().updateTopListeningDataTerm({ target: { value: 1 } });
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(2);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
     selectedTerm: 1,
@@ -278,7 +278,7 @@ test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
       .medium_term,
   });
 
-  wrapper.instance().updateTopListeningDataTerm({}, 2);
+  wrapper.instance().updateTopListeningDataTerm({ target: { value: 2 } });
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(3);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
     selectedTerm: 1,
@@ -287,9 +287,9 @@ test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
 
   let errorThrown = false;
   try {
-    wrapper.instance().updateTopListeningDataTerm({}, undefined);
+    wrapper.instance().updateTopListeningDataTerm(undefined);
   } catch (err) {
-    expect(err).toEqual(Error("Value cannot be undefined: {}"));
+    expect(err).toEqual(Error("Event cannot be undefined"));
     errorThrown = true;
   }
   expect(errorThrown);
