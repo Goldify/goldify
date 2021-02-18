@@ -11,10 +11,18 @@
   max-width: 100%;
 }
 
-.track-data-table-inner-container {
+.track-data-table-outer-container {
   overflow-y: auto;
   height: 360px;
-  width: 100%;
+  width: calc(100% - 20px);
+  border-radius: 12px;
+  margin: 10px;
+  scroll-margin: 10px;
+  box-shadow: 0 5px 10px 0 rgba(0, 0, 0, 0.4);
+}
+
+.track-data-table-inner-container {
+  overflow-x: scroll;
 }
 
 .track-data-table-inner-container thead th {
@@ -165,7 +173,7 @@
     float: none !important;
   }
 
-  .track-data-table-inner-container {
+  .track-data-table-outer-container {
     height: 630px;
   }
 
