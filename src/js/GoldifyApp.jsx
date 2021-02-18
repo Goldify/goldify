@@ -31,7 +31,7 @@ class GoldifyApp extends Component {
    * @returns {Integer} The selected tab index
    */
   getSelectedTab(currentUrl) {
-    return currentUrl.indexOf(SOLO_PAGE_PATH) > -1 ? 1 : 0;
+    return currentUrl.indexOf(SOLO_PAGE_PATH) > -1 ? 0 : false;
   }
 
   /**
@@ -62,11 +62,6 @@ class GoldifyApp extends Component {
                   aria-label="icon label tabs example"
                   className="goldify-tabs"
                 >
-                  <Tab
-                    className="goldify-tab"
-                    label="Home"
-                    href={HOME_PAGE_PATH}
-                  />
                   <Tab
                     className="goldify-tab"
                     label="Solo"
