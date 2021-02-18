@@ -161,80 +161,82 @@ class TopListeningData extends Component {
             </Select>
           </FormControl>
         </div>
-        <div className="track-data-table-inner-container">
-          <table className="track-data-table">
-            <thead className="track-data-thead">
-              <tr className="track-data-tr">
-                <th className="track-data-th"></th>
-                <th className="track-data-th">Album</th>
-                <th className="track-data-th">Title</th>
-                <th className="track-data-th">Artist(s)</th>
-              </tr>
-            </thead>
-            <tbody className="track-data-tbody">
-              {this.state.topListeningData.items.map((listValue, index) => {
-                return (
-                  <tr key={index} className="track-data-tr">
-                    <td className="track-data-td track-data-action-icon">
-                      {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
-                        <BeenhereIcon
-                          style={{ color: blue[500] }}
-                          fontSize="large"
-                        />
-                      ) : (
-                        <AddCircleIcon
-                          className="top-listens-add-track"
-                          style={{ color: green[500] }}
-                          fontSize="large"
-                          onClick={() => {
-                            this.props.addTrackHandler(listValue);
-                          }}
-                        />
-                      )}
-                    </td>
-                    <td className="track-data-td track-data-album-cover">
-                      <a
-                        href={getSpotifyRedirectURL(
-                          "album",
-                          listValue.album.id
+        <div className="track-data-table-outer-container">
+          <div className="track-data-table-inner-container">
+            <table className="track-data-table">
+              <thead className="track-data-thead">
+                <tr className="track-data-tr">
+                  <th className="track-data-th"></th>
+                  <th className="track-data-th">Album</th>
+                  <th className="track-data-th">Title</th>
+                  <th className="track-data-th">Artist(s)</th>
+                </tr>
+              </thead>
+              <tbody className="track-data-tbody">
+                {this.state.topListeningData.items.map((listValue, index) => {
+                  return (
+                    <tr key={index} className="track-data-tr">
+                      <td className="track-data-td track-data-action-icon">
+                        {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
+                          <BeenhereIcon
+                            style={{ color: blue[500] }}
+                            fontSize="large"
+                          />
+                        ) : (
+                          <AddCircleIcon
+                            className="top-listens-add-track"
+                            style={{ color: green[500] }}
+                            fontSize="large"
+                            onClick={() => {
+                              this.props.addTrackHandler(listValue);
+                            }}
+                          />
                         )}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        <img
-                          alt={listValue.album.name}
-                          src={listValue.album.images[0].url}
-                        />
-                      </a>
-                    </td>
-                    <td className="track-data-td">
-                      <a
-                        href={getSpotifyRedirectURL("track", listValue.id)}
-                        target="_blank"
-                        rel="noreferrer"
-                      >
-                        {listValue.name}
-                      </a>
-                    </td>
-                    <td className="track-data-td">
-                      {listValue.album.artists
-                        .map((artist, index) => (
-                          <a
-                            key={index}
-                            href={getSpotifyRedirectURL("artist", artist.id)}
-                            target="_blank"
-                            rel="noreferrer"
-                          >
-                            {artist.name}
-                          </a>
-                        ))
-                        .reduce((prev, curr) => [prev, ", ", curr])}
-                    </td>
-                  </tr>
-                );
-              })}
-            </tbody>
-          </table>
+                      </td>
+                      <td className="track-data-td track-data-album-cover">
+                        <a
+                          href={getSpotifyRedirectURL(
+                            "album",
+                            listValue.album.id
+                          )}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          <img
+                            alt={listValue.album.name}
+                            src={listValue.album.images[0].url}
+                          />
+                        </a>
+                      </td>
+                      <td className="track-data-td">
+                        <a
+                          href={getSpotifyRedirectURL("track", listValue.id)}
+                          target="_blank"
+                          rel="noreferrer"
+                        >
+                          {listValue.name}
+                        </a>
+                      </td>
+                      <td className="track-data-td">
+                        {listValue.album.artists
+                          .map((artist, index) => (
+                            <a
+                              key={index}
+                              href={getSpotifyRedirectURL("artist", artist.id)}
+                              target="_blank"
+                              rel="noreferrer"
+                            >
+                              {artist.name}
+                            </a>
+                          ))
+                          .reduce((prev, curr) => [prev, ", ", curr])}
+                      </td>
+                    </tr>
+                  );
+                })}
+              </tbody>
+            </table>
+          </div>
         </div>
       </div>
     );
