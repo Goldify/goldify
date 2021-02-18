@@ -28,7 +28,7 @@
 .track-data-table-inner-container thead th {
   position: sticky;
   top: 0;
-  z-index: 10001;
+  z-index: 1001;
 }
 
 .track-data-table-header {
@@ -39,14 +39,14 @@
 }
 
 .track-data-table-tab-panel {
-  display: block;
   float: right;
+  margin: 5px 0 !important;
 }
 
 .track-data-table-header-container {
   left: 0;
   position: sticky;
-  z-index: 9999;
+  z-index: 999;
   margin: auto;
 }
 
@@ -69,14 +69,14 @@
   width: 100px;
   left: 0;
   position: sticky;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .track-data-action-icon {
   width: 10px;
   left: 0;
   position: sticky;
-  z-index: 9999;
+  z-index: 999;
 }
 
 .track-data-td img {
@@ -121,7 +121,7 @@
 .goldify-update-buttons {
   top: 0;
   position: sticky;
-  z-index: 10002;
+  z-index: 1002;
   display: block;
   height: 36px;
   margin: auto;

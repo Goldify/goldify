@@ -16,9 +16,10 @@ import {
   longTermTracksRecommended,
 } from "../../utils/constants";
 
-import Paper from "@material-ui/core/Paper";
-import Tabs from "@material-ui/core/Tabs";
-import Tab from "@material-ui/core/Tab";
+import FormControl from "@material-ui/core/FormControl";
+import InputLabel from "@material-ui/core/InputLabel";
+import MenuItem from "@material-ui/core/MenuItem";
+import Select from "@material-ui/core/Select";
 
 class TopListeningData extends Component {
   newlyCreatedPlaylist = this.props.newlyCreatedPlaylist;
@@ -82,10 +83,11 @@ class TopListeningData extends Component {
    * @param  {number} newValue The value of the tab selected
    * @throws {Error} If the event was not defined
    */
-  updateTopListeningDataTerm(event, newValue) {
-    if (newValue === undefined) {
-      throw Error("Value cannot be undefined: " + JSON.stringify(event));
+  updateTopListeningDataTerm(event) {
+    if (event === undefined) {
+      throw Error("Event cannot be undefined");
     }
+    let newValue = event.target.value;
     let newListeningData;
     switch (newValue) {
       case 0:
@@ -141,20 +143,23 @@ class TopListeningData extends Component {
       <div className="track-data-table-container top-listens-table-container">
         <div className="track-data-table-header-container">
           <h1 className="track-data-table-header">Your Top Hits</h1>
-          <Paper square className="track-data-table-tab-panel">
-            <Tabs
+          <FormControl
+            variant="outlined"
+            className="track-data-table-tab-panel"
+          >
+            <InputLabel id="demo-simple-select-outlined-label">
+              Time Range
+            </InputLabel>
+            <Select
               value={this.state.selectedTerm}
               onChange={this.updateTopListeningDataTerm}
-              variant="fullWidth"
-              indicatorColor="primary"
-              textColor="primary"
-              aria-label="icon label tabs example"
+              label="Time Range"
             >
-              <Tab label="Short Term" />
-              <Tab label="Medium Term" />
-              <Tab label="Long Term" />
-            </Tabs>
-          </Paper>
+              <MenuItem value={0}>Recent</MenuItem>
+              <MenuItem value={1}>Recurring</MenuItem>
+              <MenuItem value={2}>Everlasting</MenuItem>
+            </Select>
+          </FormControl>
         </div>
         <div className="track-data-table-outer-container">
           <div className="track-data-table-inner-container">
