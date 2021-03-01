@@ -23,6 +23,7 @@ class GoldifyPlaylistData extends Component {
     this.state = {
       goldifyPlaylistData: null,
       playlistDirty: false,
+      removedTrackDataMap: new Map(),
     };
 
     this.retrieveGoldifyPlaylistData = this.retrieveGoldifyPlaylistData.bind(
@@ -37,6 +38,7 @@ class GoldifyPlaylistData extends Component {
     );
     this.removeGoldifyTrack = this.removeGoldifyTrack.bind(this);
     this.onSortEnd = this.onSortEnd.bind(this);
+    this.getRemovedTrackData = this.getRemovedTrackData.bind(this);
   }
 
   /**
@@ -150,10 +152,16 @@ class GoldifyPlaylistData extends Component {
     }
     if (index !== -1) {
       this.removeGoldifyPlaylistTrackUri(track.uri);
-      currentPlaylistData.splice(index, 1);
+      let removedTrack = currentPlaylistData.splice(index, 1);
+      let curRemovedTrackDataMap = this.state.removedTrackDataMap;
+      curRemovedTrackDataMap.set(
+        removedTrack[0].track.id,
+        removedTrack[0].track
+      );
       this.setState({
         goldifyPlaylistData: currentPlaylistData,
         playlistDirty: true,
+        removedTrackDataMap: curRemovedTrackDataMap,
       });
     } else {
       throw Error("Track not found: " + track.id);
@@ -171,7 +179,21 @@ class GoldifyPlaylistData extends Component {
     });
   }
 
+  /**
+   * Gets the removedTrackData for this session.
+   * @returns {HTMLElement} JSON data containing the removed tracks data
+   */
+  getRemovedTrackData() {
+    console.log("TIME TO DO THIS THING");
+    let removedTrackData = { items: [] };
+    for (const removedTrackDatum of this.state.removedTrackDataMap.values()) {
+      removedTrackData.items.push(removedTrackDatum);
+    }
+    return removedTrackData;
+  }
+
   getGoldifyPlaylistDiv() {
+    console.log("TIME TO DO THIS THING1");
     return (
       <div>
         <div className="goldify-update-buttons">
@@ -250,6 +272,7 @@ class GoldifyPlaylistData extends Component {
           playlistDirty={this.state.playlistDirty}
           newlyCreatedPlaylist={this.props.newlyCreatedPlaylist}
           onAutoFillCompleteHandler={this.props.autoFillCompletedHandler}
+          getRemovedTrackData={this.getRemovedTrackData}
         />
       </div>
     );

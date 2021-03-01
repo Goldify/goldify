@@ -37,6 +37,9 @@ class TopListeningData extends Component {
     this.updateTopListeningDataTerm = this.updateTopListeningDataTerm.bind(
       this
     );
+    this.updateTopListeningDataTermOnChange = this.updateTopListeningDataTermOnChange.bind(
+      this
+    );
   }
 
   /**
@@ -78,18 +81,27 @@ class TopListeningData extends Component {
   }
 
   /**
-   * Changes which TopListeningData is visible and sets states accordingly
+   * Wrapper to updateTopListeningDataTerm for onChange event
    * @param  {object} event The OnChange event that triggered this call
    * @param  {number} newValue The value of the tab selected
    * @throws {Error} If the event was not defined
    */
-  updateTopListeningDataTerm(event) {
+  updateTopListeningDataTermOnChange(event) {
     if (event === undefined) {
       throw Error("Event cannot be undefined");
     }
-    let newValue = event.target.value;
+    this.updateTopListeningDataTerm(event.target.value);
+  }
+
+  /**
+   * Changes which TopListeningData is visible and sets states accordingly
+   * @param  {object} event The OnChange event that triggered this call
+   * @param  {number} value The value of the tab selected
+   * @throws {Error} If the event was not defined
+   */
+  updateTopListeningDataTerm(value) {
     let newListeningData;
-    switch (newValue) {
+    switch (value) {
       case 0:
         newListeningData = this.state.shortTermListeningData;
         break;
@@ -99,9 +111,12 @@ class TopListeningData extends Component {
       case 2:
         newListeningData = this.state.longTermListeningData;
         break;
+      case 3:
+        newListeningData = this.props.getRemovedTrackData();
+        break;
     }
     this.setState({
-      selectedTerm: newValue,
+      selectedTerm: value,
       topListeningData: newListeningData,
     });
   }
@@ -139,6 +154,8 @@ class TopListeningData extends Component {
    * @returns {HTMLElement} A div containing the retrieved/visible topListeningData
    */
   getTopListeningDataDiv() {
+    console.log("TIME TO DO THIS THING2");
+    this.updateTopListeningDataTerm(this.selectedTerm);
     return (
       <div className="track-data-table-container top-listens-table-container">
         <div className="track-data-table-header-container">
@@ -152,12 +169,13 @@ class TopListeningData extends Component {
             </InputLabel>
             <Select
               value={this.state.selectedTerm}
-              onChange={this.updateTopListeningDataTerm}
+              onChange={this.updateTopListeningDataTermOnChange}
               label="Time Range"
             >
               <MenuItem value={0}>Recent</MenuItem>
               <MenuItem value={1}>Recurring</MenuItem>
               <MenuItem value={2}>Everlasting</MenuItem>
+              <MenuItem value={3}>Recently Removed</MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -271,6 +289,7 @@ TopListeningData.propTypes = {
   playlistDirty: PropTypes.bool.isRequired,
   newlyCreatedPlaylist: PropTypes.bool.isRequired,
   onAutoFillCompleteHandler: PropTypes.func.isRequired,
+  getRemovedTrackData: PropTypes.func.isRequired,
 };
 
 export default TopListeningData;
