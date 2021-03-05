@@ -112,8 +112,15 @@ class GoldifyPlaylistData extends Component {
       this.props.goldifyPlaylistId,
       this.goldifyPlaylistTrackUriList
     );
+    let newRemovedTrackDataMap = this.state.removedTrackDataMap;
+    for (const uriKey of newRemovedTrackDataMap.keys()) {
+      if (this.goldifyPlaylistTrackUriList.includes(uriKey)) {
+        newRemovedTrackDataMap.delete(uriKey);
+      }
+    }
     this.setState({
       playlistDirty: false,
+      removedTrackDataMap: newRemovedTrackDataMap,
     });
     this.setSavedGoldifyPlaylistData(this.state.goldifyPlaylistData);
   }
@@ -155,7 +162,7 @@ class GoldifyPlaylistData extends Component {
       let removedTrack = currentPlaylistData.splice(index, 1);
       let curRemovedTrackDataMap = this.state.removedTrackDataMap;
       curRemovedTrackDataMap.set(
-        removedTrack[0].track.id,
+        removedTrack[0].track.uri,
         removedTrack[0].track
       );
       this.setState({
@@ -184,7 +191,6 @@ class GoldifyPlaylistData extends Component {
    * @returns {HTMLElement} JSON data containing the removed tracks data
    */
   getRemovedTrackData() {
-    console.log("TIME TO DO THIS THING");
     let removedTrackData = { items: [] };
     for (const removedTrackDatum of this.state.removedTrackDataMap.values()) {
       removedTrackData.items.push(removedTrackDatum);
@@ -193,7 +199,6 @@ class GoldifyPlaylistData extends Component {
   }
 
   getGoldifyPlaylistDiv() {
-    console.log("TIME TO DO THIS THING1");
     return (
       <div>
         <div className="goldify-update-buttons">

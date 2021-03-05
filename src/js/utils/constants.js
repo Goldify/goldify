@@ -9,3 +9,7 @@ export const longTermTracksRecommended = 2;
 export const spotifyWebPlayerDomain = "https://open.spotify.com";
 export const spotifyHomePageUrl = "https://www.spotify.com/";
 export const goldifyGitHubUrl = "https://github.com/Goldify/Goldify";
+export const RECENT_TAB_VALUE = 0;
+export const RECURRING_TAB_VALUE = 1;
+export const EVERLASTING_TAB_VALUE = 2;
+export const RECENTLY_REMOVED_TAB_VALUE = 3;

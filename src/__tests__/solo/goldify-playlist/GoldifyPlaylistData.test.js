@@ -211,6 +211,7 @@ test("Confirm updateGoldifyPlaylist updates goldify playlist", () => {
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
     playlistDirty: false,
+    removedTrackDataMap: new Map(),
   });
 });
 
@@ -323,6 +324,64 @@ test("Expect onSortEnd to call setState", () => {
   wrapper.instance().setState = jest.fn();
   wrapper.instance().onSortEnd(0, 1, getPlaylistTracksData());
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+});
+
+test("Expect getRemovedTrackData() to return proper data", () => {
+  const wrapper = goldifyPlaylistDataWrapper();
+
+  expect(wrapper.instance().getRemovedTrackData()).toEqual({ items: [] });
+  let testRemovedTrackDataMap = new Map();
+  testRemovedTrackDataMap.set(
+    getPlaylistTracksData()[0].uri,
+    getPlaylistTracksData()[0]
+  );
+  wrapper.instance().state = {
+    removedTrackDataMap: testRemovedTrackDataMap,
+  };
+  expect(wrapper.instance().getRemovedTrackData()).toEqual({
+    items: [getPlaylistTracksData()[0]],
+  });
+});
+
+test("Expect updateGoldifyPlaylist to clean re-added removed tracks", () => {
+  const wrapper = goldifyPlaylistDataWrapper();
+  wrapper.instance().setURIListFromPlaylistData = jest.fn();
+  wrapper.instance().setSavedGoldifyPlaylistData = jest.fn();
+  wrapper.instance().setState = jest.fn();
+
+  let testRemovedTrackDataMap = new Map();
+  let expectedFinalRemovedTrackDataMap = new Map();
+  testRemovedTrackDataMap.set(
+    getPlaylistTracksData()[0].track.uri,
+    getPlaylistTracksData()[0]
+  );
+  testRemovedTrackDataMap.set(
+    getPlaylistTracksData()[1].track.uri,
+    getPlaylistTracksData()[1]
+  );
+  expectedFinalRemovedTrackDataMap.set(
+    getPlaylistTracksData()[1].track.uri,
+    getPlaylistTracksData()[1]
+  );
+  let testPlaylistTracksData = getPlaylistTracksData();
+  console.log(testPlaylistTracksData);
+  testPlaylistTracksData.splice(0, 1);
+  console.log(testPlaylistTracksData);
+
+  wrapper.instance().goldifyPlaylistTrackUriList = [
+    getPlaylistTracksData()[0].track.uri,
+  ];
+  wrapper.instance().state = {
+    removedTrackDataMap: testRemovedTrackDataMap,
+    goldifyPlaylistData: testPlaylistTracksData,
+  };
+  wrapper.instance().updateGoldifyPlaylist();
+
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    playlistDirty: false,
+    removedTrackDataMap: expectedFinalRemovedTrackDataMap,
+  });
 });
 
 test("Use ReactDOM Render to render the SortableList", () => {

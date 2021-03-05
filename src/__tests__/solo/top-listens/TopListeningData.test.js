@@ -12,6 +12,10 @@ import {
   shortTermTracksRecommended,
   mediumTermTracksRecommended,
   longTermTracksRecommended,
+  RECENT_TAB_VALUE,
+  RECURRING_TAB_VALUE,
+  EVERLASTING_TAB_VALUE,
+  RECENTLY_REMOVED_TAB_VALUE,
 } from "../../../js/utils/constants";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
@@ -37,6 +41,11 @@ const getTopListeningDataWrapper = () => {
       playlistDirty={false}
       newlyCreatedPlaylist={false}
       onAutoFillCompleteHandler={jest.fn()}
+      getRemovedTrackData={jest
+        .fn()
+        .mockReturnValue(
+          topListeningDataFixtures.getTopListeningData().long_term
+        )}
     />
   );
 };
@@ -263,25 +272,40 @@ test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
   };
   wrapper.instance().setState = jest.fn();
 
-  wrapper.instance().updateTopListeningDataTerm({ target: { value: 0 } });
+  wrapper
+    .instance()
+    .updateTopListeningDataTerm({ target: { value: RECENT_TAB_VALUE } });
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    selectedTerm: 0,
+    selectedTerm: RECENT_TAB_VALUE,
     topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
   });
 
-  wrapper.instance().updateTopListeningDataTerm({ target: { value: 1 } });
+  wrapper
+    .instance()
+    .updateTopListeningDataTerm({ target: { value: RECURRING_TAB_VALUE } });
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(2);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    selectedTerm: 1,
+    selectedTerm: RECURRING_TAB_VALUE,
     topListeningData: topListeningDataFixtures.getTopListeningData()
       .medium_term,
   });
 
-  wrapper.instance().updateTopListeningDataTerm({ target: { value: 2 } });
+  wrapper
+    .instance()
+    .updateTopListeningDataTerm({ target: { value: EVERLASTING_TAB_VALUE } });
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(3);
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
-    selectedTerm: 1,
+    selectedTerm: EVERLASTING_TAB_VALUE,
+    topListeningData: topListeningDataFixtures.getTopListeningData().long_term,
+  });
+
+  wrapper.instance().updateTopListeningDataTerm({
+    target: { value: RECENTLY_REMOVED_TAB_VALUE },
+  });
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(4);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    selectedTerm: RECENTLY_REMOVED_TAB_VALUE,
     topListeningData: topListeningDataFixtures.getTopListeningData().long_term,
   });
 
@@ -293,4 +317,54 @@ test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
     errorThrown = true;
   }
   expect(errorThrown);
+});
+
+test("Expect getRemovedTrackData() called only for Recently Removed", () => {
+  const wrapper = getTopListeningDataWrapper();
+  wrapper.instance().getTopListeningDataItemDiv = jest.fn();
+  wrapper.instance().render = jest.fn();
+  let NUM_LONG_TERM_ITEMS = topListeningDataFixtures.getTopListeningData()
+    .long_term.items.length;
+
+  wrapper.instance().state = {
+    selectedTerm: RECENT_TAB_VALUE,
+    topListeningData: topListeningDataFixtures.getTopListeningData().long_term,
+  };
+  wrapper.instance().getTopListeningDataDiv();
+  expect(wrapper.instance().props.getRemovedTrackData).not.toHaveBeenCalled();
+  // Start at 2, as on load of the wrapper
+  // instance this function will be called once
+  expect(wrapper.instance().getTopListeningDataItemDiv).toHaveBeenCalledTimes(
+    NUM_LONG_TERM_ITEMS
+  );
+
+  wrapper.instance().state = {
+    selectedTerm: RECURRING_TAB_VALUE,
+    topListeningData: topListeningDataFixtures.getTopListeningData().long_term,
+  };
+  wrapper.instance().getTopListeningDataDiv();
+  expect(wrapper.instance().props.getRemovedTrackData).not.toHaveBeenCalled();
+  expect(wrapper.instance().getTopListeningDataItemDiv).toHaveBeenCalledTimes(
+    NUM_LONG_TERM_ITEMS * 2
+  );
+
+  wrapper.instance().state = {
+    selectedTerm: EVERLASTING_TAB_VALUE,
+    topListeningData: topListeningDataFixtures.getTopListeningData().long_term,
+  };
+  wrapper.instance().getTopListeningDataDiv();
+  expect(wrapper.instance().props.getRemovedTrackData).not.toHaveBeenCalled();
+  expect(wrapper.instance().getTopListeningDataItemDiv).toHaveBeenCalledTimes(
+    NUM_LONG_TERM_ITEMS * 3
+  );
+
+  wrapper.instance().state = {
+    selectedTerm: RECENTLY_REMOVED_TAB_VALUE,
+    topListeningData: topListeningDataFixtures.getTopListeningData().long_term,
+  };
+  wrapper.instance().getTopListeningDataDiv();
+  expect(wrapper.instance().props.getRemovedTrackData).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().getTopListeningDataItemDiv).toHaveBeenCalledTimes(
+    NUM_LONG_TERM_ITEMS * 4
+  );
 });
