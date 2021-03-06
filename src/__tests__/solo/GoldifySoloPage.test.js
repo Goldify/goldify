@@ -10,6 +10,7 @@ import {
   getLoadingPage,
 } from "../../js/utils/GoldifySoloUtils";
 import { retrieveUserDataAxios } from "../../js/utils/UserInfoUtils";
+import { HOME_PAGE_PATH } from "../../js/utils/constants";
 
 jest.mock("../../js/utils/GoldifySoloUtils", () => ({
   retrieveAuthenticationCode: jest.fn(),
@@ -77,7 +78,7 @@ test("Expect home page to load when running retrieveTokensAxios with bad data", 
     .instance()
     .retrieveDataOnPageLoad(goldifySoloFixtures.testAuthenticationCode);
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
-  expect(replaceWindowURL).toHaveBeenCalledWith("/");
+  expect(replaceWindowURL).toHaveBeenCalledWith(HOME_PAGE_PATH);
 });
 
 test("Expect home page to load when running retrieveUserDataAxios with bad data", async () => {
@@ -91,7 +92,7 @@ test("Expect home page to load when running retrieveUserDataAxios with bad data"
     .instance()
     .retrieveDataOnPageLoad(goldifySoloFixtures.testAuthenticationCode);
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
-  expect(replaceWindowURL).toHaveBeenCalledWith("/");
+  expect(replaceWindowURL).toHaveBeenCalledWith(HOME_PAGE_PATH);
 });
 
 test("Check for which page is loaded on render for GoldifySoloPage", () => {

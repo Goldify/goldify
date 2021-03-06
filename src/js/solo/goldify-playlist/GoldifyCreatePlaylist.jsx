@@ -11,6 +11,7 @@ import {
   GOLDIFY_PLAYLIST_NAME,
   GOLDIFY_PLAYLIST_DESCRIPTION,
   spotifyHomePageUrl,
+  HOME_PAGE_PATH,
 } from "../../utils/constants";
 import { green } from "@material-ui/core/colors";
 import Button from "@material-ui/core/Button";
@@ -50,7 +51,7 @@ class GoldifyCreatePlaylist extends Component {
       .then((data) => {
         if (_.isEmpty(data) || data.error) {
           alert(`Unable to create your ${GOLDIFY_PLAYLIST_NAME} playlist.`);
-          replaceWindowURL("/");
+          replaceWindowURL(HOME_PAGE_PATH);
         } else {
           this.handlePlaylistCreated(data);
           return data.id;

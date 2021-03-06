@@ -10,7 +10,7 @@ import {
   replaceWindowURL,
   getLoadingPage,
 } from "../utils/GoldifySoloUtils";
-import { GOLDIFY_PLAYLIST_NAME } from "../utils/constants";
+import { GOLDIFY_PLAYLIST_NAME, HOME_PAGE_PATH } from "../utils/constants";
 import { retrieveUserDataAxios } from "../utils/UserInfoUtils";
 import Snackbar from "@material-ui/core/Snackbar";
 import Alert from "@material-ui/lab/Alert";
@@ -48,7 +48,7 @@ class GoldifySoloPage extends Component {
     await retrieveTokensAxios(code)
       .then((data) => {
         if (data === undefined || data.error) {
-          replaceWindowURL("/");
+          replaceWindowURL(HOME_PAGE_PATH);
         } else {
           this.setState({
             retrievedTokenData: data,
@@ -60,7 +60,7 @@ class GoldifySoloPage extends Component {
         if (!_.isEmpty(tokenData)) {
           retrieveUserDataAxios(tokenData).then((userData) => {
             if (userData === undefined || userData.error) {
-              replaceWindowURL("/");
+              replaceWindowURL(HOME_PAGE_PATH);
             } else {
               this.setState({
                 userData: userData,

@@ -9,7 +9,10 @@ import {
   getSpotifyRedirectURL,
 } from "../../../js/utils/GoldifySoloUtils";
 import { getPlaylistTracksById } from "../../../js/utils/playlistTracks";
-import { GOLDIFY_PLAYLIST_NAME } from "../../../js/utils/constants";
+import {
+  GOLDIFY_PLAYLIST_NAME,
+  HOME_PAGE_PATH,
+} from "../../../js/utils/constants";
 import { SortableList } from "../../../js/utils/GoldifyPlaylistDataElements";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
@@ -102,7 +105,7 @@ test("Expect home page to load when running retrieveGoldifyPlaylistData with bad
       TEST_PLAYLIST_ID
     );
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
-  expect(replaceWindowURL).toHaveBeenCalledWith("/");
+  expect(replaceWindowURL).toHaveBeenCalledWith(HOME_PAGE_PATH);
 });
 
 test("Check for goldify playlist data in goldify playlist data page after setting the state", () => {

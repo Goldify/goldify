@@ -4,7 +4,7 @@ import GoldifyPlaylistData from "./GoldifyPlaylistData";
 import GoldifyCreatePlaylist from "./GoldifyCreatePlaylist";
 import { findExistingGoldifyPlaylistByName } from "../../utils/playlist";
 import { replaceWindowURL } from "../../utils/GoldifySoloUtils";
-import { GOLDIFY_PLAYLIST_NAME } from "../../utils/constants";
+import { GOLDIFY_PLAYLIST_NAME, HOME_PAGE_PATH } from "../../utils/constants";
 import _ from "lodash";
 
 class GoldifyPlaylist extends Component {
@@ -57,7 +57,7 @@ class GoldifyPlaylist extends Component {
           goldifyPlaylist: null,
         });
       } else if (data === undefined || data.error) {
-        replaceWindowURL("/");
+        replaceWindowURL(HOME_PAGE_PATH);
       } else {
         this.setState({
           goldifyPlaylist: data,

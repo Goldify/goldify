@@ -10,7 +10,7 @@ import {
   replacePlaylistTracks,
   getPlaylistTracksById,
 } from "../../utils/playlistTracks";
-import { GOLDIFY_PLAYLIST_NAME } from "../../utils/constants";
+import { GOLDIFY_PLAYLIST_NAME, HOME_PAGE_PATH } from "../../utils/constants";
 import arrayMove from "array-move";
 import { SortableList } from "../../utils/GoldifyPlaylistDataElements";
 
@@ -63,7 +63,7 @@ class GoldifyPlaylistData extends Component {
     await getPlaylistTracksById(retrievedTokenData, goldifyPlaylistId).then(
       (data) => {
         if (data === undefined || data.error) {
-          replaceWindowURL("/");
+          replaceWindowURL(HOME_PAGE_PATH);
         } else {
           this.setInitialGoldifyPlaylistData(data.items);
         }

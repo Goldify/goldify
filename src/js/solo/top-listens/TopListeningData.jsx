@@ -18,6 +18,7 @@ import {
   RECURRING_TAB_VALUE,
   EVERLASTING_TAB_VALUE,
   RECENTLY_REMOVED_TAB_VALUE,
+  HOME_PAGE_PATH,
 } from "../../utils/constants";
 
 import FormControl from "@material-ui/core/FormControl";
@@ -60,7 +61,7 @@ class TopListeningData extends Component {
   async retrieveTopListeningData(retrievedTokenData) {
     await retrieveTopListeningDataAxios(retrievedTokenData).then((data) => {
       if (data === undefined || data.error) {
-        replaceWindowURL("/");
+        replaceWindowURL(HOME_PAGE_PATH);
       } else {
         this.setState({
           topListeningData: data.short_term,
