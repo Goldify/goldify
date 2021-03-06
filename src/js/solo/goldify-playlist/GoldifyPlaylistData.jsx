@@ -39,6 +39,7 @@ class GoldifyPlaylistData extends Component {
     this.removeGoldifyTrack = this.removeGoldifyTrack.bind(this);
     this.onSortEnd = this.onSortEnd.bind(this);
     this.getRemovedTrackData = this.getRemovedTrackData.bind(this);
+    this.inSavedGoldifyPlaylist = this.inSavedGoldifyPlaylist.bind(this);
   }
 
   /**
@@ -155,6 +156,12 @@ class GoldifyPlaylistData extends Component {
     }
   }
 
+  inSavedGoldifyPlaylist(removedTrack) {
+    return this.savedGoldifyPlaylistData.some((savedTrack) => {
+      return savedTrack.track.uri == removedTrack.track.uri;
+    });
+  }
+
   removeGoldifyTrack(track) {
     let currentPlaylistData = this.state.goldifyPlaylistData;
     let index = -1;
@@ -168,10 +175,12 @@ class GoldifyPlaylistData extends Component {
       this.removeGoldifyPlaylistTrackUri(track.uri);
       let removedTrack = currentPlaylistData.splice(index, 1);
       let curRemovedTrackDataMap = this.state.removedTrackDataMap;
-      curRemovedTrackDataMap.set(
-        removedTrack[0].track.uri,
-        removedTrack[0].track
-      );
+      if (this.inSavedGoldifyPlaylist(removedTrack[0])) {
+        curRemovedTrackDataMap.set(
+          removedTrack[0].track.uri,
+          removedTrack[0].track
+        );
+      }
       this.setState({
         goldifyPlaylistData: currentPlaylistData,
         playlistDirty: true,

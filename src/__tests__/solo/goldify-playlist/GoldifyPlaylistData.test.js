@@ -301,23 +301,50 @@ test("Confirm addTrackFromTopListensData adds track", () => {
   ]);
 });
 
-test("Confirm removeGoldifyTrack removes the track", () => {
+test("Confirm removeGoldifyTrack removes correctly", () => {
   const wrapper = goldifyPlaylistDataWrapper();
   wrapper.instance().setState = jest.fn();
   wrapper.instance().removeGoldifyPlaylistTrackUri = jest.fn();
+  // Run remove with saved track
   wrapper.instance().state.goldifyPlaylistData = getPlaylistTracksData();
-  wrapper
-    .instance()
-    .removeGoldifyTrack(
-      playlistTracksFixtures.testTrack("TEST_NAME", "TEST_SONG_ID_1").track
-    );
+  wrapper.instance().state.removedTrackDataMap = new Map();
+  wrapper.instance().savedGoldifyPlaylistData = getPlaylistTracksData();
+  let expectedGoldifyPlaylistData = getPlaylistTracksData();
+  let removedTrack = expectedGoldifyPlaylistData.splice(0, 1)[0];
+  let expectedRemovedTrackMap = new Map();
+  expectedRemovedTrackMap.set(removedTrack.track.uri, removedTrack.track);
+  wrapper.instance().removeGoldifyTrack(removedTrack.track);
   expect(
     wrapper.instance().removeGoldifyPlaylistTrackUri
   ).toHaveBeenCalledTimes(1);
   expect(wrapper.instance().removeGoldifyPlaylistTrackUri).toHaveBeenCalledWith(
-    playlistTracksFixtures.testTrack("TEST_NAME", "TEST_SONG_ID_1").track.uri
+    removedTrack.track.uri
   );
   expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    goldifyPlaylistData: expectedGoldifyPlaylistData,
+    playlistDirty: true,
+    removedTrackDataMap: expectedRemovedTrackMap,
+  });
+  // Run remove with recently added (but not saved) track
+  wrapper.instance().state.goldifyPlaylistData = getPlaylistTracksData();
+  wrapper.instance().state.removedTrackDataMap = new Map();
+  wrapper.instance().savedGoldifyPlaylistData = [];
+  expectedGoldifyPlaylistData = getPlaylistTracksData();
+  expectedGoldifyPlaylistData.splice(0, 1)[0];
+  wrapper.instance().removeGoldifyTrack(removedTrack.track);
+  expect(
+    wrapper.instance().removeGoldifyPlaylistTrackUri
+  ).toHaveBeenCalledTimes(2);
+  expect(wrapper.instance().removeGoldifyPlaylistTrackUri).toHaveBeenCalledWith(
+    removedTrack.track.uri
+  );
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(2);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    goldifyPlaylistData: expectedGoldifyPlaylistData,
+    playlistDirty: true,
+    removedTrackDataMap: new Map(),
+  });
 
   let errorThrown = false;
   try {
