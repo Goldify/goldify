@@ -3,6 +3,7 @@ import "../../../css/UserInfo.css";
 import PropTypes from "prop-types";
 import _ from "lodash";
 import spotifyLogo from "../../../assets/spotify_logo.png";
+import goldifyLogo from "../../../assets/goldify_logo.png";
 import Avatar from "@material-ui/core/Avatar";
 
 class UserInfo extends Component {
@@ -28,6 +29,10 @@ class UserInfo extends Component {
    * @param   {object} userData Object containing the user's profile data
    */
   async setUserData(userData) {
+    // If the user has no profile image, use the goldify image
+    if (userData.images.length == 0) {
+      userData.images.push({ url: goldifyLogo });
+    }
     this.setState({
       userData: userData,
     });

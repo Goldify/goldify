@@ -3,6 +3,7 @@ import "@testing-library/jest-dom";
 import { configure, shallow } from "enzyme";
 import Adapter from "enzyme-adapter-react-16";
 import UserInfo from "../../../js/solo/user-info/UserInfo";
+import goldifyLogo from "../../../assets/goldify_logo.png";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
   replaceWindowURL: jest.fn(),
@@ -69,4 +70,13 @@ test("Confirm openUserSpotifyProfile opens a new tab with the User's Profile", (
     userInfoFixtures.testUserExternalUrlSpotify,
     "_blank"
   );
+});
+
+test("Check that default image is displayed if user has no profile picture", () => {
+  let userDataNoImage = userInfoFixtures.getUserTestData();
+  userDataNoImage.images = [];
+  const wrapper = shallow(<UserInfo userData={userDataNoImage} />);
+  let userInfoDivString = JSON.stringify(wrapper.instance().getUserInfoDiv());
+  expect(userInfoDivString).toContain(goldifyLogo);
+  expect(userInfoDivString).toContain(userInfoFixtures.testUserDisplayName);
 });
