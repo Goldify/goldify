@@ -14,6 +14,10 @@ import {
   shortTermTracksRecommended,
   mediumTermTracksRecommended,
   longTermTracksRecommended,
+  RECENT_TAB_VALUE,
+  RECURRING_TAB_VALUE,
+  EVERLASTING_TAB_VALUE,
+  RECENTLY_REMOVED_TAB_VALUE,
 } from "../../utils/constants";
 
 import FormControl from "@material-ui/core/FormControl";
@@ -80,7 +84,7 @@ class TopListeningData extends Component {
   /**
    * Changes which TopListeningData is visible and sets states accordingly
    * @param  {object} event The OnChange event that triggered this call
-   * @param  {number} newValue The value of the tab selected
+   * @param  {number} value The value of the tab selected
    * @throws {Error} If the event was not defined
    */
   updateTopListeningDataTerm(event) {
@@ -90,14 +94,17 @@ class TopListeningData extends Component {
     let newValue = event.target.value;
     let newListeningData;
     switch (newValue) {
-      case 0:
+      case RECENT_TAB_VALUE:
         newListeningData = this.state.shortTermListeningData;
         break;
-      case 1:
+      case RECURRING_TAB_VALUE:
         newListeningData = this.state.mediumTermListeningData;
         break;
-      case 2:
+      case EVERLASTING_TAB_VALUE:
         newListeningData = this.state.longTermListeningData;
+        break;
+      case RECENTLY_REMOVED_TAB_VALUE:
+        newListeningData = this.props.getRemovedTrackData();
         break;
     }
     this.setState({
@@ -133,6 +140,62 @@ class TopListeningData extends Component {
     this.props.onAutoFillCompleteHandler();
   }
 
+  getTopListeningDataItemDiv(listValue, index) {
+    return (
+      <tr key={index} className="track-data-tr">
+        <td className="track-data-td track-data-action-icon">
+          {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
+            <BeenhereIcon style={{ color: blue[500] }} fontSize="large" />
+          ) : (
+            <AddCircleIcon
+              className="top-listens-add-track"
+              style={{ color: green[500] }}
+              fontSize="large"
+              onClick={() => {
+                this.props.addTrackHandler(listValue);
+              }}
+            />
+          )}
+        </td>
+        <td className="track-data-td track-data-album-cover">
+          <a
+            href={getSpotifyRedirectURL("album", listValue.album.id)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            <img
+              alt={listValue.album.name}
+              src={listValue.album.images[0].url}
+            />
+          </a>
+        </td>
+        <td className="track-data-td">
+          <a
+            href={getSpotifyRedirectURL("track", listValue.id)}
+            target="_blank"
+            rel="noreferrer"
+          >
+            {listValue.name}
+          </a>
+        </td>
+        <td className="track-data-td">
+          {listValue.album.artists
+            .map((artist, index) => (
+              <a
+                key={index}
+                href={getSpotifyRedirectURL("artist", artist.id)}
+                target="_blank"
+                rel="noreferrer"
+              >
+                {artist.name}
+              </a>
+            ))
+            .reduce((prev, curr) => [prev, ", ", curr])}
+        </td>
+      </tr>
+    );
+  }
+
   /**
    * Displays the top listening data set in the props
    * Will also call the props.addTrackHandler to add songs to the user's goldify playlist
@@ -155,9 +218,12 @@ class TopListeningData extends Component {
               onChange={this.updateTopListeningDataTerm}
               label="Time Range"
             >
-              <MenuItem value={0}>Recent</MenuItem>
-              <MenuItem value={1}>Recurring</MenuItem>
-              <MenuItem value={2}>Everlasting</MenuItem>
+              <MenuItem value={RECENT_TAB_VALUE}>Recent</MenuItem>
+              <MenuItem value={RECURRING_TAB_VALUE}>Recurring</MenuItem>
+              <MenuItem value={EVERLASTING_TAB_VALUE}>Everlasting</MenuItem>
+              <MenuItem value={RECENTLY_REMOVED_TAB_VALUE}>
+                Recently Removed
+              </MenuItem>
             </Select>
           </FormControl>
         </div>
@@ -173,67 +239,16 @@ class TopListeningData extends Component {
                 </tr>
               </thead>
               <tbody className="track-data-tbody">
-                {this.state.topListeningData.items.map((listValue, index) => {
-                  return (
-                    <tr key={index} className="track-data-tr">
-                      <td className="track-data-td track-data-action-icon">
-                        {this.goldifyPlaylistContainsTrack(listValue.uri) ? (
-                          <BeenhereIcon
-                            style={{ color: blue[500] }}
-                            fontSize="large"
-                          />
-                        ) : (
-                          <AddCircleIcon
-                            className="top-listens-add-track"
-                            style={{ color: green[500] }}
-                            fontSize="large"
-                            onClick={() => {
-                              this.props.addTrackHandler(listValue);
-                            }}
-                          />
-                        )}
-                      </td>
-                      <td className="track-data-td track-data-album-cover">
-                        <a
-                          href={getSpotifyRedirectURL(
-                            "album",
-                            listValue.album.id
-                          )}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          <img
-                            alt={listValue.album.name}
-                            src={listValue.album.images[0].url}
-                          />
-                        </a>
-                      </td>
-                      <td className="track-data-td">
-                        <a
-                          href={getSpotifyRedirectURL("track", listValue.id)}
-                          target="_blank"
-                          rel="noreferrer"
-                        >
-                          {listValue.name}
-                        </a>
-                      </td>
-                      <td className="track-data-td">
-                        {listValue.album.artists
-                          .map((artist, index) => (
-                            <a
-                              key={index}
-                              href={getSpotifyRedirectURL("artist", artist.id)}
-                              target="_blank"
-                              rel="noreferrer"
-                            >
-                              {artist.name}
-                            </a>
-                          ))
-                          .reduce((prev, curr) => [prev, ", ", curr])}
-                      </td>
-                    </tr>
-                  );
-                })}
+                {this.state.selectedTerm != RECENTLY_REMOVED_TAB_VALUE &&
+                  this.state.topListeningData.items.map((listValue, index) => {
+                    return this.getTopListeningDataItemDiv(listValue, index);
+                  })}
+                {this.state.selectedTerm == RECENTLY_REMOVED_TAB_VALUE &&
+                  this.props
+                    .getRemovedTrackData()
+                    .items.map((listValue, index) => {
+                      return this.getTopListeningDataItemDiv(listValue, index);
+                    })}
               </tbody>
             </table>
           </div>
@@ -271,6 +286,7 @@ TopListeningData.propTypes = {
   playlistDirty: PropTypes.bool.isRequired,
   newlyCreatedPlaylist: PropTypes.bool.isRequired,
   onAutoFillCompleteHandler: PropTypes.func.isRequired,
+  getRemovedTrackData: PropTypes.func.isRequired,
 };
 
 export default TopListeningData;
