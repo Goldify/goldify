@@ -32,33 +32,19 @@ configure({ adapter: new Adapter() });
 const goldifySoloFixtures = require("../../../__fixtures__/GoldifySoloFixtures");
 const topListeningDataFixtures = require("../../../__fixtures__/TopListeningDataFixtures");
 
-const getTopListeningDataWrapper = () => {
+const getTopListeningDataWrapper = (
+  removedTrackDataRetVal = { items: [] },
+  trackListRetValue = [topListeningDataFixtures.testUri]
+) => {
   return shallow(
     <TopListeningData
       retrievedTokenData={{}}
-      goldifyUriList={[topListeningDataFixtures.testUri]}
+      goldifyUriList={trackListRetValue}
       addTrackHandler={jest.fn()}
       playlistDirty={false}
       newlyCreatedPlaylist={false}
       onAutoFillCompleteHandler={jest.fn()}
-      getRemovedTrackData={jest
-        .fn()
-        .mockReturnValue(
-          topListeningDataFixtures.getTopListeningData().long_term
-        )}
-    />
-  );
-};
-
-const getTopListeningDataWrapperEmptyPlaylist = () => {
-  return shallow(
-    <TopListeningData
-      retrievedTokenData={{}}
-      goldifyUriList={[]}
-      addTrackHandler={jest.fn()}
-      playlistDirty={false}
-      newlyCreatedPlaylist={false}
-      onAutoFillCompleteHandler={jest.fn()}
+      getRemovedTrackData={jest.fn().mockReturnValue(removedTrackDataRetVal)}
     />
   );
 };
@@ -177,7 +163,7 @@ test("Check for which div is loaded on render for TopListeningData", () => {
 });
 
 test("Check that empty playlists are automatically given recommendations", () => {
-  const wrapper = getTopListeningDataWrapperEmptyPlaylist();
+  const wrapper = getTopListeningDataWrapper({ items: [] }, []);
   wrapper.instance().getTopListeningDataDiv = jest
     .fn()
     .mockReturnValue("Top Listens Table!");
@@ -196,7 +182,7 @@ test("Check that empty playlists are automatically given recommendations", () =>
 });
 
 test("Feed autoFillGoldifyPlaylist empty data and expect no callouts", () => {
-  const wrapper = getTopListeningDataWrapperEmptyPlaylist();
+  const wrapper = getTopListeningDataWrapper({ items: [] }, []);
   wrapper.instance().state.shortTermListeningData = {
     items: [],
   };
@@ -211,7 +197,7 @@ test("Feed autoFillGoldifyPlaylist empty data and expect no callouts", () => {
 });
 
 test("Check that empty playlists are not given tracks if top listening data wasn't retrieved", () => {
-  const wrapper = getTopListeningDataWrapperEmptyPlaylist();
+  const wrapper = getTopListeningDataWrapper({ items: [] }, []);
   wrapper.instance().getTopListeningDataDiv = jest
     .fn()
     .mockReturnValue("Top Listens Table!");
@@ -259,7 +245,9 @@ test("Expect add handler called on AddCircleIcon button", () => {
 });
 
 test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
-  const wrapper = getTopListeningDataWrapper();
+  const wrapper = getTopListeningDataWrapper(
+    topListeningDataFixtures.getTopListeningData().long_term
+  );
   wrapper.instance().state = {
     selectedTerm: 0,
     topListeningData: topListeningDataFixtures.getTopListeningData().short_term,
@@ -320,7 +308,9 @@ test("Confirm updateTopListeningDataTerm updates the top listens term", () => {
 });
 
 test("Expect getRemovedTrackData() called only for Recently Removed", () => {
-  const wrapper = getTopListeningDataWrapper();
+  const wrapper = getTopListeningDataWrapper(
+    topListeningDataFixtures.getTopListeningData().long_term
+  );
   wrapper.instance().getTopListeningDataItemDiv = jest.fn();
   wrapper.instance().render = jest.fn();
   let NUM_LONG_TERM_ITEMS = topListeningDataFixtures.getTopListeningData()

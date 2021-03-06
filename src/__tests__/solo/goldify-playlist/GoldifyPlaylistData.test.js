@@ -226,6 +226,51 @@ test("Confirm cancelUpdatesToGoldifyPlaylist cancels any updates", () => {
   expect(wrapper.instance().setState).toHaveBeenCalledWith({
     goldifyPlaylistData: getPlaylistTracksData(),
     playlistDirty: false,
+    removedTrackDataMap: new Map(),
+  });
+});
+
+test("Confirm cancelUpdatesToGoldifyPlaylist cleans removed tracks", () => {
+  const wrapper = goldifyPlaylistDataWrapper();
+  wrapper.instance().setURIListFromPlaylistData = jest.fn();
+  wrapper.instance().setSavedGoldifyPlaylistData = jest.fn();
+  wrapper.instance().setState = jest.fn();
+
+  let testRemovedTrackDataMap = new Map();
+  let expectedFinalRemovedTrackDataMap = new Map();
+  testRemovedTrackDataMap.set(
+    getPlaylistTracksData()[0].track.uri,
+    getPlaylistTracksData()[0]
+  );
+  testRemovedTrackDataMap.set(
+    getPlaylistTracksData()[1].track.uri,
+    getPlaylistTracksData()[1]
+  );
+  expectedFinalRemovedTrackDataMap.set(
+    getPlaylistTracksData()[0].track.uri,
+    getPlaylistTracksData()[0]
+  );
+  let testPlaylistTracksData = getPlaylistTracksData();
+  testPlaylistTracksData.splice(0, 2);
+
+  wrapper.instance().goldifyPlaylistTrackUriList = [
+    getPlaylistTracksData()[1].track.uri,
+  ];
+  wrapper.instance().savedGoldifyPlaylistData = getPlaylistTracksData().splice(
+    0,
+    1
+  );
+  wrapper.instance().state = {
+    removedTrackDataMap: testRemovedTrackDataMap,
+    goldifyPlaylistData: testPlaylistTracksData,
+  };
+  wrapper.instance().cancelUpdatesToGoldifyPlaylist();
+
+  expect(wrapper.instance().setState).toHaveBeenCalledTimes(1);
+  expect(wrapper.instance().setState).toHaveBeenCalledWith({
+    goldifyPlaylistData: getPlaylistTracksData().splice(0, 1),
+    playlistDirty: false,
+    removedTrackDataMap: expectedFinalRemovedTrackDataMap,
   });
 });
 
@@ -364,9 +409,7 @@ test("Expect updateGoldifyPlaylist to clean re-added removed tracks", () => {
     getPlaylistTracksData()[1]
   );
   let testPlaylistTracksData = getPlaylistTracksData();
-  console.log(testPlaylistTracksData);
   testPlaylistTracksData.splice(0, 1);
-  console.log(testPlaylistTracksData);
 
   wrapper.instance().goldifyPlaylistTrackUriList = [
     getPlaylistTracksData()[0].track.uri,

@@ -127,9 +127,16 @@ class GoldifyPlaylistData extends Component {
 
   cancelUpdatesToGoldifyPlaylist() {
     this.setURIListFromPlaylistData(this.savedGoldifyPlaylistData);
+    let newRemovedTrackDataMap = this.state.removedTrackDataMap;
+    for (const uriKey of newRemovedTrackDataMap.keys()) {
+      if (this.goldifyPlaylistTrackUriList.includes(uriKey)) {
+        newRemovedTrackDataMap.delete(uriKey);
+      }
+    }
     this.setState({
       goldifyPlaylistData: this.savedGoldifyPlaylistData,
       playlistDirty: false,
+      removedTrackDataMap: newRemovedTrackDataMap,
     });
     this.setSavedGoldifyPlaylistData(this.savedGoldifyPlaylistData);
   }
