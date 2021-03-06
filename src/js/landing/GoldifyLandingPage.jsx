@@ -82,10 +82,9 @@ class GoldifyLandingPage extends Component {
           <div className="landing-split-body">
             <h3>How do I get started?</h3>
             <p>
-              Great question! At the top of this page, you will see the tabs
-              named &quot;Home&quot; and &quot;Solo&quot;. You will want to
-              click the &quot;Solo&quot; tab, and you&apos;ll be on your way to
-              building musical magic!
+              Great question! At the top of this page, you will see the tab
+              named &quot;Solo&quot;. Upon clicking this, you&apos;ll be on your
+              way to building musical magic!
             </p>
           </div>
           <div className="landing-split-body">
@@ -97,14 +96,30 @@ class GoldifyLandingPage extends Component {
             </p>
           </div>
           <div className="landing-split-body">
+            <h3>Does Goldify store any of my data?</h3>
+            <p>
+              Goldify does not store or retain any data. Our website only runs
+              client side, and does not save your Spotify data to any server.
+            </p>
+          </div>
+          <div className="landing-split-body">
+            <h3>How does Goldify access my Spotify account?</h3>
+            <p>
+              All external requests are made directly with Spotify&apos;s API.
+              With your permission, we retrieve your listening data and use that
+              to generate a playlist for your account. We also present you with
+              a variety of your favorite tracks to personalize this playlist.
+            </p>
+          </div>
+          <div className="landing-split-body">
             <h3>Can I come back later to update the playlist?</h3>
             <p>
               Of course! If you have visited this page before and created your
               masterpiece of a playlist, just simply click the &quot;Solo&quot;
-              tab above and you&apos;ll be presented with your up-to-date Top
-              Hits as well as your up-to-date Goldify playlist! Plus,
-              you&apos;ll get to see all the updates to the application by the
-              Goldify team. Pretty neat!
+              tab above and you&apos;ll be presented with your latest Top Hits
+              as well as your current Goldify playlist! Plus, you&apos;ll get to
+              see all the updates to the application by the Goldify team. Pretty
+              neat!
             </p>
           </div>
           <div className="landing-split-body">
