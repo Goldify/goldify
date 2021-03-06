@@ -16,6 +16,7 @@ import {
   RECURRING_TAB_VALUE,
   EVERLASTING_TAB_VALUE,
   RECENTLY_REMOVED_TAB_VALUE,
+  HOME_PAGE_PATH,
 } from "../../../js/utils/constants";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
@@ -95,7 +96,7 @@ test("Expect home page to load when running retrieveTopListeningData with bad da
     .instance()
     .retrieveTopListeningData(goldifySoloFixtures.getTokensTestData());
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
-  expect(replaceWindowURL).toHaveBeenCalledWith("/");
+  expect(replaceWindowURL).toHaveBeenCalledWith(HOME_PAGE_PATH);
 });
 
 test("Confirm an error occurs when attempting to grab the top listen data component without setting the top listen data", () => {

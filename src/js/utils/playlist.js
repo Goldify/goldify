@@ -62,7 +62,7 @@ export const findExistingGoldifyPlaylistByName = async (
     const playlists = response.data.items;
     let playlistFound = null; // null if no playlist found
     playlists.forEach((playlist) => {
-      if (playlist.name == playlistName) {
+      if (playlist.name === playlistName) {
         playlistFound = playlist;
       }
     });
@@ -133,7 +133,7 @@ export const uploadPlaylistImage = async (
       data,
       headers
     );
-    if (response.status == 202) {
+    if (response.status === 202) {
       return response;
     } // won't return anything substantial
     throw Error("Spotify did not accept the image uploaded");

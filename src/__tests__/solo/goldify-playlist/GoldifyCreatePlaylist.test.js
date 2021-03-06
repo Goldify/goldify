@@ -11,6 +11,7 @@ import {
 import {
   GOLDIFY_PLAYLIST_NAME,
   GOLDIFY_PLAYLIST_DESCRIPTION,
+  HOME_PAGE_PATH,
 } from "../../../js/utils/constants";
 
 jest.mock("../../../js/utils/GoldifySoloUtils", () => ({
@@ -83,7 +84,7 @@ test("Expect alert, home page when running createGoldifyPlaylist with bad data",
   // Don't attempt to upload image if playlist isn't created
   expect(uploadPlaylistImage).not.toHaveBeenCalled();
   expect(replaceWindowURL).toHaveBeenCalledTimes(1);
-  expect(replaceWindowURL).toHaveBeenCalledWith("/");
+  expect(replaceWindowURL).toHaveBeenCalledWith(HOME_PAGE_PATH);
 });
 
 test("Check for which div is loaded on render for createGoldifyPlaylist", () => {

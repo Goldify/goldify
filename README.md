@@ -3,6 +3,10 @@
 
 Goldify is an application built to help you easily design your golden Spotify playlist. Built using Spotify's APIs, we provide you with an easy-to-use interface which presents you with all your top hits to build your personal playlist from. Within minutes, you will have a Spotify playlist that is molded exactly to your musical taste. We're excited for you to be here and can't wait for you to enjoy your golden tracks!
 
+## Try it Yourself!
+
+Visit [https://www.goldify.app](https://www.goldify.app) to get started.
+
 ## Demo
 ![Goldify Demo](public/goldify_demo.gif)
 

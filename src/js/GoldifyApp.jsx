@@ -50,7 +50,9 @@ class GoldifyApp extends Component {
               </a>
             </div>
             <div className="goldify-title">
-              <h1>Goldify</h1>
+              <a href={HOME_PAGE_PATH}>
+                <h1 className="goldify-title-h1">Goldify</h1>
+              </a>
             </div>
             <div className="goldify-tabs-bar">
               <Paper square className="goldify-tabs-paper">

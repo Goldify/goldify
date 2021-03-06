@@ -10,7 +10,7 @@ import {
   replacePlaylistTracks,
   getPlaylistTracksById,
 } from "../../utils/playlistTracks";
-import { GOLDIFY_PLAYLIST_NAME } from "../../utils/constants";
+import { GOLDIFY_PLAYLIST_NAME, HOME_PAGE_PATH } from "../../utils/constants";
 import arrayMove from "array-move";
 import { SortableList } from "../../utils/GoldifyPlaylistDataElements";
 
@@ -46,7 +46,7 @@ class GoldifyPlaylistData extends Component {
    * Retrieves the tracks of the user's playlist once the user's token data is available
    */
   componentDidMount() {
-    if (this.props.retrievedTokenData.access_token != undefined) {
+    if (this.props.retrievedTokenData.access_token !== undefined) {
       this.retrieveGoldifyPlaylistData(
         this.props.retrievedTokenData,
         this.props.goldifyPlaylistId
@@ -63,7 +63,7 @@ class GoldifyPlaylistData extends Component {
     await getPlaylistTracksById(retrievedTokenData, goldifyPlaylistId).then(
       (data) => {
         if (data === undefined || data.error) {
-          replaceWindowURL("/");
+          replaceWindowURL(HOME_PAGE_PATH);
         } else {
           this.setInitialGoldifyPlaylistData(data.items);
         }
@@ -158,7 +158,7 @@ class GoldifyPlaylistData extends Component {
 
   inSavedGoldifyPlaylist(removedTrack) {
     return this.savedGoldifyPlaylistData.some((savedTrack) => {
-      return savedTrack.track.uri == removedTrack.track.uri;
+      return savedTrack.track.uri === removedTrack.track.uri;
     });
   }
 
@@ -300,7 +300,7 @@ class GoldifyPlaylistData extends Component {
   }
 
   render() {
-    if (this.state.goldifyPlaylistData == null) {
+    if (this.state.goldifyPlaylistData === null) {
       return <div />;
     } else {
       return this.getGoldifyPlaylistDiv();
