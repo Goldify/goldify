@@ -34,8 +34,9 @@
   text-align: left;
 }
 
-.goldify-title h1 {
+.goldify-title-h1 {
   font-size: 2.5em;
+  color: #fcc201;
 }
 
 .goldify-tabs-bar {
