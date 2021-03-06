@@ -68,7 +68,7 @@ class UserInfo extends Component {
    * @returns {HTMLElement} An empty div or a div displaying the user's information
    */
   render() {
-    if (this.state.userData == null) {
+    if (this.state.userData === null) {
       return <div />;
     } else {
       return this.getUserInfoDiv();

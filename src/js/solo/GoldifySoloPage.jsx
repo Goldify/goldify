@@ -33,7 +33,7 @@ class GoldifySoloPage extends Component {
    */
   componentDidMount() {
     let code = retrieveAuthenticationCode();
-    if (code == undefined || code == null) {
+    if (code === undefined || code === null) {
       retrieveAuthorization();
     } else {
       this.retrieveDataOnPageLoad(code);
@@ -125,7 +125,10 @@ class GoldifySoloPage extends Component {
    * @returns {HTMLElement} Div of either the loading page or the goldify page
    */
   render() {
-    if (this.state.retrievedTokenData == null || this.state.userData == null) {
+    if (
+      this.state.retrievedTokenData === null ||
+      this.state.userData === null
+    ) {
       return getLoadingPage();
     } else {
       return this.getGoldifyPage();

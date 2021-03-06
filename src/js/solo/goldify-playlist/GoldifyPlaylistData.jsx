@@ -46,7 +46,7 @@ class GoldifyPlaylistData extends Component {
    * Retrieves the tracks of the user's playlist once the user's token data is available
    */
   componentDidMount() {
-    if (this.props.retrievedTokenData.access_token != undefined) {
+    if (this.props.retrievedTokenData.access_token !== undefined) {
       this.retrieveGoldifyPlaylistData(
         this.props.retrievedTokenData,
         this.props.goldifyPlaylistId
@@ -158,7 +158,7 @@ class GoldifyPlaylistData extends Component {
 
   inSavedGoldifyPlaylist(removedTrack) {
     return this.savedGoldifyPlaylistData.some((savedTrack) => {
-      return savedTrack.track.uri == removedTrack.track.uri;
+      return savedTrack.track.uri === removedTrack.track.uri;
     });
   }
 
@@ -300,7 +300,7 @@ class GoldifyPlaylistData extends Component {
   }
 
   render() {
-    if (this.state.goldifyPlaylistData == null) {
+    if (this.state.goldifyPlaylistData === null) {
       return <div />;
     } else {
       return this.getGoldifyPlaylistDiv();

@@ -47,7 +47,7 @@ class TopListeningData extends Component {
    * Retrieves the user's top listening data once retrievedTokenData is available
    */
   componentDidMount() {
-    if (this.props.retrievedTokenData.access_token != undefined) {
+    if (this.props.retrievedTokenData.access_token !== undefined) {
       this.retrieveTopListeningData(this.props.retrievedTokenData);
     }
   }
@@ -239,11 +239,11 @@ class TopListeningData extends Component {
                 </tr>
               </thead>
               <tbody className="track-data-tbody">
-                {this.state.selectedTerm != RECENTLY_REMOVED_TAB_VALUE &&
+                {this.state.selectedTerm !== RECENTLY_REMOVED_TAB_VALUE &&
                   this.state.topListeningData.items.map((listValue, index) => {
                     return this.getTopListeningDataItemDiv(listValue, index);
                   })}
-                {this.state.selectedTerm == RECENTLY_REMOVED_TAB_VALUE &&
+                {this.state.selectedTerm === RECENTLY_REMOVED_TAB_VALUE &&
                   this.props
                     .getRemovedTrackData()
                     .items.map((listValue, index) => {
@@ -263,7 +263,7 @@ class TopListeningData extends Component {
    * @returns {HTMLElement} Empty div or div containing top listening data
    */
   render() {
-    if (this.state.topListeningData == null) {
+    if (this.state.topListeningData === null) {
       return <div />;
     } else {
       if (
