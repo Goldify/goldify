@@ -1,5 +1,6 @@
 ![Goldify Logo](public/goldify_logo.png)
 # Goldify
+[![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/it-works-why.svg)](https://forthebadge.com)
 
 Goldify is an application built to help you easily design your golden Spotify playlist. Built using Spotify's APIs, we provide you with an easy-to-use interface which presents you with all your top hits to build your personal playlist from. Within minutes, you will have a Spotify playlist that is molded exactly to your musical taste. We're excited for you to be here and can't wait for you to enjoy your golden tracks!
 
