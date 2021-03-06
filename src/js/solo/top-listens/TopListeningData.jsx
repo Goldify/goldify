@@ -219,9 +219,9 @@ class TopListeningData extends Component {
               onChange={this.updateTopListeningDataTerm}
               label="Time Range"
             >
-              <MenuItem value={RECENT_TAB_VALUE}>Recent</MenuItem>
-              <MenuItem value={RECURRING_TAB_VALUE}>Recurring</MenuItem>
-              <MenuItem value={EVERLASTING_TAB_VALUE}>Everlasting</MenuItem>
+              <MenuItem value={RECENT_TAB_VALUE}>Latest</MenuItem>
+              <MenuItem value={RECURRING_TAB_VALUE}>Recap</MenuItem>
+              <MenuItem value={EVERLASTING_TAB_VALUE}>All-Time</MenuItem>
               <MenuItem value={RECENTLY_REMOVED_TAB_VALUE}>
                 Recently Removed
               </MenuItem>
