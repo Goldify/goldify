@@ -2,6 +2,11 @@
 # Goldify
 [![forthebadge](https://forthebadge.com/images/badges/made-with-javascript.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/built-with-love.svg)](https://forthebadge.com) [![forthebadge](https://forthebadge.com/images/badges/it-works-why.svg)](https://forthebadge.com)
 
+## NOTE
+Goldify has been deprecated as of January 24, 2022. Thank you to anyone that used this application, we hope you were able to craft quite the golden playlist for yourself! :)
+
+---------------
+
 Goldify is an application built to help you easily design your golden Spotify playlist. Built using Spotify's APIs, we provide you with an easy-to-use interface which presents you with all your top hits to build your personal playlist from. Within minutes, you will have a Spotify playlist that is molded exactly to your musical taste. We're excited for you to be here and can't wait for you to enjoy your golden tracks!
 
 ## Try it Yourself!
