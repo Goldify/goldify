@@ -105,7 +105,9 @@ test("Confirm an error occurs when attempting to grab the top listen data compon
   try {
     wrapper.instance().getTopListeningDataDiv();
   } catch (err) {
-    expect(err).toEqual(TypeError("Cannot read property 'items' of null"));
+    expect(err).toEqual(
+      TypeError("Cannot read properties of null (reading 'items')")
+    );
     errorThrown = true;
   }
   expect(errorThrown).toBe(true);

@@ -18,14 +18,14 @@ test("Check for to make sure retrieveTopListeningDataAxios throws error on bad d
   console.log = jest.fn();
   await retrieveTopListeningDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
   await retrieveTopListeningDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
 

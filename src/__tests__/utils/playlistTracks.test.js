@@ -46,7 +46,7 @@ test("GetTracks throws error on bad data", async () => {
     playlistId
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.get.mockResolvedValue(undefined);
@@ -56,7 +56,7 @@ test("GetTracks throws error on bad data", async () => {
     playlistId
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
 
@@ -92,7 +92,7 @@ test("GetTracks throws error on bad data", async () => {
     trackURIs
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.put.mockResolvedValue(undefined);
@@ -103,7 +103,7 @@ test("GetTracks throws error on bad data", async () => {
     trackURIs
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
 

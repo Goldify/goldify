@@ -35,7 +35,9 @@ test("Confirm an error occurs when attempting to grab the user data component wi
   try {
     wrapper.instance().getUserInfoDiv();
   } catch (err) {
-    expect(err).toEqual(TypeError("Cannot read property 'images' of null"));
+    expect(err).toEqual(
+      TypeError("Cannot read properties of null (reading 'images')")
+    );
     errorThrown = true;
   }
   expect(errorThrown).toBe(true);
