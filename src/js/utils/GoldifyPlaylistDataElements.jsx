@@ -1,7 +1,7 @@
 import React from "react";
 import { red } from "@material-ui/core/colors";
 import RemoveCircleIcon from "@material-ui/icons/RemoveCircle";
-import { getSpotifyRedirectURL } from "../utils/GoldifySoloUtils";
+import { getSpotifyRedirectURL } from "./GoldifySoloUtils";
 import {
   sortableContainer,
   sortableElement,
