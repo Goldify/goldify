@@ -75,14 +75,14 @@ test("Check for to make sure retrieveTokensAxios throws error on bad data", asyn
   console.log = jest.fn();
   await retrieveTokensAxios();
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.post.mockResolvedValue(undefined);
   console.log = jest.fn();
   await retrieveTokensAxios();
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
 

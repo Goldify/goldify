@@ -23,13 +23,13 @@ test("Check for to make sure retrieveUserDataAxios throws error on bad data", as
   console.log = jest.fn();
   await retrieveUserDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
   await retrieveUserDataAxios(goldifySoloFixtures.getTokensTestData());
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
