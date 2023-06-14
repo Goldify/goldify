@@ -21,7 +21,7 @@
     "react-scripts": "^4.0.3",
     "react-sortable-hoc": "^1.11.0",
     "shell-quote": "^1.7.3",
-    "simple-git": "^3.5.0",
+    "simple-git": "^3.16.0",
     "terser": "^5.14.2",
     "web-vitals": "^0.2.4"
   },
