@@ -81,7 +81,7 @@ test("CreatePlaylist throws error on bad data", async () => {
     playlistDescription
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.post.mockResolvedValue(undefined);
@@ -93,7 +93,7 @@ test("CreatePlaylist throws error on bad data", async () => {
     playlistDescription
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
 
@@ -118,14 +118,14 @@ test("GetPlaylistById throws error on bad data", async () => {
   console.log = jest.fn();
   await getPlaylistById(goldifySoloFixtures.getTokensTestData(), playlistId);
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.get.mockResolvedValue(undefined);
   console.log = jest.fn();
   await getPlaylistById(goldifySoloFixtures.getTokensTestData(), playlistId);
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
 
@@ -193,7 +193,7 @@ test("findExistingGoldifyPlaylistByName throws error on bad data", async () => {
     playlistName
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of null")
+    TypeError("Cannot read properties of null (reading 'data')")
   );
 
   axios.get.mockResolvedValue(undefined);
@@ -203,7 +203,7 @@ test("findExistingGoldifyPlaylistByName throws error on bad data", async () => {
     playlistName
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'data' of undefined")
+    TypeError("Cannot read properties of undefined (reading 'data')")
   );
 });
 
@@ -234,7 +234,7 @@ test("Upload Goldify Playlist throws error on bad data", async () => {
     base64Image
   );
   expect(console.log).toHaveBeenCalledWith(
-    TypeError("Cannot read property 'status' of null")
+    TypeError("Cannot read properties of null (reading 'status')")
   );
 
   axios.put.mockResolvedValue({ status: 400 });
